@@ -25,7 +25,7 @@ namespace ProjectoFinal
                 string contraseña = Console.ReadLine();
                 Console.Write("Escriba su correo: ");
                 string correo = Console.ReadLine(); //Make it check if the email is valid.
-                if(!(correo.Contains("@") && correo.Contains(".com")))
+                if (!(correo.Contains("@") && correo.Contains(".com")))
                 {
                     Console.WriteLine("Correo Invalido");
                     Console.ReadLine();
@@ -33,11 +33,13 @@ namespace ProjectoFinal
                 }
                 Console.Write("Escriba su edad: ");
                 byte edad;
-
+                
                 if (byte.TryParse(Console.ReadLine(), out edad))
                 {
                     Perfil newPerfil = new Perfil(nombreCompleto, correo, contraseña, edad);
-                    SQLManager.llenartabla(newPerfil.Nombre, newPerfil.Contraseña, newPerfil.Correo, newPerfil.Edad);
+                    SQLManager.llenartabla(newPerfil.Nombre,newPerfil.Contraseña,newPerfil.Correo,newPerfil.Edad);
+                    Console.WriteLine("Usuario registrado");
+                    appState.ChangeState(new InicioState(appState));
                 }
                 else
                     continue;
