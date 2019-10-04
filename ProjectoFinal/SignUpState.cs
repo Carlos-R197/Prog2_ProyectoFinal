@@ -30,6 +30,7 @@ namespace ProjectoFinal
                 if (byte.TryParse(Console.ReadLine(), out edad))
                 {
                     Perfil newPerfil = new Perfil(nombreCompleto, correo, contraseña, edad);
+                    SQLManager.llenartabla(newPerfil.Nombre,newPerfil.Contraseña,newPerfil.Correo,newPerfil.Edad);
                 }
                 else
                     continue;

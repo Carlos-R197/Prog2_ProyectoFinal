@@ -21,7 +21,7 @@ namespace ProjectoFinal.Data
 
         public static void llenartabla(string nombre, string contrasena, string correo, byte edad)
         {
-            string query = "INSERT perfiles_registrados(nombre,contrasena,correo,edad) VALUE($'"+nombre+"','"+ contrasena+"','" +correo+"','" +edad+"')";
+            string query = "INSERT perfiles_registrados (nombre,contrasena,correo,edad) VALUE ('"+nombre+"','"+ contrasena+"','" +correo+"','" +edad+"')";
             AbrirConexion();
             MySqlCommand comando = new MySqlCommand(query, conexion);
             comando.ExecuteNonQuery();

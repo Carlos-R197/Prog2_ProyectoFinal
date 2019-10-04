@@ -9,7 +9,7 @@ namespace ProjectoFinal
         {
             StateMachine appState = new StateMachine();
 
-            try
+           /* try
             {
                 SQLManager.AbrirConexion();
                 Console.WriteLine("Papa ute e un mmg");
@@ -20,9 +20,9 @@ namespace ProjectoFinal
 
                 Console.WriteLine("error");
 
-            }
+            }*/
 
-            //appState.ChangeState(new InicioState(appState));
+            appState.ChangeState(new InicioState(appState));
         }
     }
 }
