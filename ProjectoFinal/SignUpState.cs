@@ -42,7 +42,7 @@ namespace ProjectoFinal
                     appState.ChangeState(new InicioState(appState));
                 }
                 else
-                    continue;
+                    continue; //Make the user write everything again.
             }
 
             //Create a instace of perfil, save the data to the database and change the state.
