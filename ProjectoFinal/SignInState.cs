@@ -15,6 +15,7 @@ namespace ProjectoFinal
 
         public void Enter()
         {
+            Console.Clear();
             Console.Write("Escriba sus nombres y apellidos: ");
             string nombreCompleto = Console.ReadLine();
             Console.Write("Escriba su contraseña: ");

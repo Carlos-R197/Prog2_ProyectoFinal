@@ -19,6 +19,7 @@ namespace ProjectoFinal
         {
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("¿Qué desea hacer?");
                 Console.WriteLine("1. Ver propio perfil");
                 Console.WriteLine("2. Buscar un perfil existente");
