@@ -1,4 +1,5 @@
 ﻿using System;
+using ProjectoFinal.Data;
 
 namespace ProjectoFinal
 {
@@ -8,8 +9,20 @@ namespace ProjectoFinal
         {
             StateMachine appState = new StateMachine();
 
-           
-            appState.ChangeState(new InicioState(appState));
+            try
+            {
+                SQLManager.AbrirConexion();
+                Console.WriteLine("Papa ute e un mmg");
+                SQLManager.CerrarConexion();
+            }
+            catch (Exception)
+            {
+
+                Console.WriteLine("error");
+
+            }
+
+            //appState.ChangeState(new InicioState(appState));
         }
     }
 }
