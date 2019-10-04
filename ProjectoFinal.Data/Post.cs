@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectoFinal
+namespace ProjectoFinal.Data
 {
     public class Post : IComentario
     {

@@ -9,8 +9,4 @@
     <PackageReference Include="MySql.Data" Version="8.0.17" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ProjectoFinal.Data\ProjectoFinal.Data.csproj" />
-  </ItemGroup>
-
 </Project>
