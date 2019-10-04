@@ -25,6 +25,8 @@ namespace ProjectoFinal.Data
         {
             Console.WriteLine("Nombre: {0}", this.Nombre);
             Console.WriteLine("Correo: {0}", this.Correo);
+            Console.WriteLine("Edad: {0}", this.Edad);
+            Console.WriteLine("Rating general: {0}", this.RatingGeneral);
         }
         public void SubirRating()
         {
