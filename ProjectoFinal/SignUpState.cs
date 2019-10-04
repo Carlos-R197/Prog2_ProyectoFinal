@@ -24,13 +24,7 @@ namespace ProjectoFinal
                 Console.Write("Escriba su contraseña: ");
                 string contraseña = Console.ReadLine();
                 Console.Write("Escriba su correo: ");
-                string correo = Console.ReadLine(); //Make it check if the email is valid.
-                if (!(correo.Contains("@") && correo.Contains(".com")))
-                {
-                    Console.WriteLine("Correo Invalido");
-                    Console.ReadLine();
-                    continue;
-                }
+                string correo = Console.ReadLine(); //Make it check if the email is valid.Si
                 Console.Write("Escriba su edad: ");
                 byte edad;
                 
