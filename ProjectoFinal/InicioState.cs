@@ -17,6 +17,7 @@ namespace ProjectoFinal
         {
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("¿Qué desea hacer?");
                 Console.WriteLine("1. Ingresar");
                 Console.WriteLine("2. Registrarse");
@@ -34,6 +35,7 @@ namespace ProjectoFinal
                             appState.ChangeState(new SignUpState(appState));
                             break;
                         case 3:
+                            System.Environment.Exit(0);
                             break;
                         default:
                             continue;
