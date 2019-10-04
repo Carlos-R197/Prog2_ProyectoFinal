@@ -20,7 +20,7 @@ namespace ProjectoFinal
             Console.Write("Escriba su contraseña: ");
             string contraseña = Console.ReadLine();
             Console.WriteLine("Escriba su edad: ");
-            
+
             Console.Write("Escriba su correo: ");
             string correo = Console.ReadLine(); //Make it check if the email is valid.
             
