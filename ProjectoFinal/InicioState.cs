@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MySql.Data.MySqlClient;
 
 namespace ProjectoFinal
 {
@@ -27,11 +28,13 @@ namespace ProjectoFinal
                     switch (input)
                     {
                         case 1:
+                            appState.ChangeState(new SignInState(appState));
                             break;
                         case 2:
+                            appState.ChangeState(new SignUpState(appState));
                             break;
                         case 3:
-                            return;
+                            break;
                         default:
                             continue;
                     }
