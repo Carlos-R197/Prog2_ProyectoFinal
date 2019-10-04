@@ -9,20 +9,20 @@ namespace ProjectoFinal
         {
             StateMachine appState = new StateMachine();
 
-            try
-            {
-                SQLManager.AbrirConexion();
-                Console.WriteLine("Papa ute e un mmg");
-                SQLManager.CerrarConexion();
-            }
-            catch (Exception)
-            {
+            //try
+            //{
+            //    SQLManager.AbrirConexion();
+            //    Console.WriteLine("Papa ute e un mmg");
+            //    SQLManager.CerrarConexion();
+            //}
+            //catch (Exception)
+            //{
 
-                Console.WriteLine("error");
+            //    Console.WriteLine("error");
 
-            }
+            //}
 
-            //appState.ChangeState(new InicioState(appState));
+            appState.ChangeState(new InicioState(appState));
         }
     }
 }
