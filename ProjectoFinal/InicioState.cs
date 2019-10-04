@@ -4,14 +4,12 @@ using System.Text;
 
 namespace ProjectoFinal
 {
-    public class MainMenuState : IState
+    public class InicioState : IState
     {
-        private Perfil currentPerfil;
         private StateMachine appState;
-        public MainMenuState(StateMachine machine, Perfil perfil)
+        public InicioState(StateMachine machine)
         {
             this.appState = machine;
-            currentPerfil = perfil;
         }
 
         public void Enter()
@@ -19,12 +17,9 @@ namespace ProjectoFinal
             while (true)
             {
                 Console.WriteLine("¿Qué desea hacer?");
-                Console.WriteLine("1. Ver propio perfil");
-                Console.WriteLine("2. Buscar un perfil existente");
-                Console.WriteLine("3. Crear un chat privado");
-                Console.WriteLine("4. Ver Lista de circulos existente");
-                Console.WriteLine("5. Salir de la aplicación");
-                Console.Write("R: ");
+                Console.WriteLine("1. Ingresar");
+                Console.WriteLine("2. Registrarse");
+                Console.WriteLine("3. Salir de la aplicación");
                 byte input;
 
                 if (byte.TryParse(Console.ReadLine(), out input))
@@ -32,15 +27,10 @@ namespace ProjectoFinal
                     switch (input)
                     {
                         case 1:
-                            currentPerfil.ImprimirInformacion();
                             break;
                         case 2:
                             break;
                         case 3:
-                            break;
-                        case 4:
-                            break;
-                        case 5:
                             return;
                         default:
                             continue;
