@@ -18,31 +18,22 @@ namespace ProjectoFinal
         {
             while (true)
             {
+                Console.Clear();
                 Console.Write("Escriba sus nombres y apellidos: ");
                 string nombreCompleto = Console.ReadLine();
                 Console.Write("Escriba su contraseña: ");
                 string contraseña = Console.ReadLine();
                 Console.Write("Escriba su correo: ");
                 string correo = Console.ReadLine(); //Make it check if the email is valid.
-                Console.WriteLine("Escriba su edad: ");
+                Console.Write("Escriba su edad: ");
                 byte edad;
-
+                
                 if (byte.TryParse(Console.ReadLine(), out edad))
                 {
                     Perfil newPerfil = new Perfil(nombreCompleto, correo, contraseña, edad);
                     SQLManager.llenartabla(newPerfil.Nombre,newPerfil.Contraseña,newPerfil.Correo,newPerfil.Edad);
-
-                    if (SQLManager.comprobar(nombreCompleto, contraseña) == true)
-                    {
-                        Console.WriteLine("Usuario Existe");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Datos Erroneos");
-
-                    }
-
-
+                    appState.ChangeState(new InicioState(appState));
+                    Console.WriteLine("Usuario registrado");
                 }
                 else
                     continue;
