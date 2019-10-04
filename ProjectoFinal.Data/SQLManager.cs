@@ -22,17 +22,17 @@ namespace ProjectoFinal.Data
         public static void llenartabla(string nombre, string contrasena, string correo, byte edad)
         {
             string query = "INSERT perfiles_registrados (nombre,contrasena,correo,edad) VALUE ('"+nombre+"','"+ contrasena+"','" +correo+"','" +edad+"')";
-            conexion.Open();
+            AbrirConexion();
             MySqlCommand comando = new MySqlCommand(query, conexion);
             comando.ExecuteNonQuery();
-            conexion.Close();
+            CerrarConexion();
         }
 
         public static bool comprobar(string nombre, string contrasena)
         {
             bool result = false;
-            string query = "SELECT nombre,contrasena FROM perfiles_registrados WHERE nombre='"+nombre+"' AND contrasena='"+contrasena+"'";
-            conexion.Open();
+            string query = "SELECT * FROM perfiles_registrados WHERE nombre='"+nombre+"' AND contrasena='"+contrasena+"'";
+            AbrirConexion();
             MySqlCommand comando = new MySqlCommand(query, conexion);
             MySqlDataReader reg = null;
             reg = comando.ExecuteReader();
@@ -43,7 +43,7 @@ namespace ProjectoFinal.Data
             }
             else
                 result = false;
-            conexion.Close();
+            CerrarConexion();
             return result;
         }
     }

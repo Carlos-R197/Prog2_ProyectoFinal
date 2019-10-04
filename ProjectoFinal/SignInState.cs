@@ -24,8 +24,11 @@ namespace ProjectoFinal
             string nombreCompleto = Console.ReadLine();
             Console.Write("Escriba su contraseña: ");
             string contraseña = Console.ReadLine();
-
-           
+            SQLManager.AbrirConexion();
+            string datos = "Select correo from perfiles_registrados where nombre='" + nombreCompleto + "';";
+            MySqlCommand comando = new MySqlCommand(datos, SQLManager.conexion);
+            string dat = Convert.ToString(comando.ExecuteScalar());
+            Console.WriteLine(dat);
             //Check if the perfil exist in the database y log in if it does.
             if (SQLManager.comprobar(nombreCompleto,contraseña) == true)
             {
