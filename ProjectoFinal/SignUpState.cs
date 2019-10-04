@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ProjectoFinal.Data;
 
 namespace ProjectoFinal
 {
@@ -15,15 +16,25 @@ namespace ProjectoFinal
 
         public void Enter()
         {
-            Console.Write("Escriba sus nombres y apellidos: ");
-            string nombreCompleto = Console.ReadLine();
-            Console.Write("Escriba su contraseña: ");
-            string contraseña = Console.ReadLine();
-            Console.WriteLine("Escriba su edad: ");
-            
-            Console.Write("Escriba su correo: ");
-            string correo = Console.ReadLine(); //Make it check if the email is valid.
-            
+            while (true)
+            {
+                Console.Write("Escriba sus nombres y apellidos: ");
+                string nombreCompleto = Console.ReadLine();
+                Console.Write("Escriba su contraseña: ");
+                string contraseña = Console.ReadLine();
+                Console.Write("Escriba su correo: ");
+                string correo = Console.ReadLine(); //Make it check if the email is valid.
+                Console.WriteLine("Escriba su edad: ");
+                byte edad;
+
+                if (byte.TryParse(Console.ReadLine(), out edad))
+                {
+                    Perfil newPerfil = new Perfil(nombreCompleto, correo, contraseña, edad);
+                }
+                else
+                    continue;
+            }
+
             //Create a instace of perfil, save the data to the database and change the state.
         }
     }
