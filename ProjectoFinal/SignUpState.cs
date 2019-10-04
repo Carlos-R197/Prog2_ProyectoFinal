@@ -31,6 +31,18 @@ namespace ProjectoFinal
                 {
                     Perfil newPerfil = new Perfil(nombreCompleto, correo, contraseña, edad);
                     SQLManager.llenartabla(newPerfil.Nombre,newPerfil.Contraseña,newPerfil.Correo,newPerfil.Edad);
+
+                    if (SQLManager.comprobar(nombreCompleto, contraseña) == true)
+                    {
+                        Console.WriteLine("Usuario Existe");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Datos Erroneos");
+
+                    }
+
+
                 }
                 else
                     continue;
