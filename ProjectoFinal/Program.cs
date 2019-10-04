@@ -8,7 +8,6 @@ namespace ProjectoFinal
         {
             StateMachine appState = new StateMachine();
 
-            //Perfil newPerfil = new Perfil();
             //appState.ChangeState(new MainMenuState(newPerfil));
         }
     }
