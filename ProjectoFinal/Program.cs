@@ -1,4 +1,5 @@
 ﻿using System;
+using ProjectoFinal.Data;
 
 namespace ProjectoFinal
 {
@@ -8,7 +9,7 @@ namespace ProjectoFinal
         {
             StateMachine appState = new StateMachine();
 
-            //appState.ChangeState(new MainMenuState(newPerfil));
+            appState.ChangeState(new InicioState(appState));
         }
     }
 }
