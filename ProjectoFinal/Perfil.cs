@@ -10,6 +10,12 @@ namespace ProjectoFinal
         public string Correo { get; private set; }
         public string Contraseña { get; private set; }
 
+        public Perfil(string nombre, string correo, string contraseña)
+        {
+            this.Nombre = nombre;
+            this.Correo = correo;
+            this.Contraseña = contraseña;
+        }
 
         public void ImprimirInformacion()
         {

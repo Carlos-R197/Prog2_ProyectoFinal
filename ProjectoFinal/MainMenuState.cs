@@ -6,6 +6,12 @@ namespace ProjectoFinal
 {
     public class MainMenuState : IState
     {
+        Perfil currentPerfil;
+        public MainMenuState(Perfil perfil)
+        {
+            currentPerfil = perfil;
+        }
+
         public void Enter()
         {
             while (true)
@@ -24,7 +30,7 @@ namespace ProjectoFinal
                     switch (input)
                     {
                         case 1:
-
+                            currentPerfil.ImprimirInformacion();
                             break;
                         case 2:
                             break;
