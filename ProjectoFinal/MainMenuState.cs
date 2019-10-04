@@ -20,6 +20,10 @@ namespace ProjectoFinal
             while (true)
             {
                 Console.Clear();
+
+                Console.WriteLine("Nombre: {0}", currentPerfil.Nombre);
+                Console.WriteLine("Rating General: {0} \n", currentPerfil.RatingGeneral);
+
                 Console.WriteLine("¿Qué desea hacer?");
                 Console.WriteLine("1. Ver propio perfil");
                 Console.WriteLine("2. Buscar un perfil existente");
@@ -42,9 +46,10 @@ namespace ProjectoFinal
                         case 3:
                             break;
                         case 4:
+                            Environment.Exit(0);
                             break;
                         case 5:
-                            return;
+                            
                         default:
                             continue;
                     }
