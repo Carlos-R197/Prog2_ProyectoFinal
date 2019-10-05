@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ProjectoFinal.Data
 {
-    class Mensaje
+    public class Mensaje
     {
         public DateTime HoraEnvio { get; set; }
         public Perfil perfil { get; set; }

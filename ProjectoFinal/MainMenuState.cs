@@ -25,7 +25,7 @@ namespace ProjectoFinal
                 Console.WriteLine("Rating General: {0} \n", currentPerfil.RatingGeneral);
 
                 Console.WriteLine("¿Qué desea hacer?");
-                Console.WriteLine("1. Ver propio perfil");
+                Console.WriteLine("1. Revisar propio perfil");
                 Console.WriteLine("2. Buscar un perfil existente");
                 Console.WriteLine("3. Crear un chat privado");
                 Console.WriteLine("4. Ver Lista de circulos existente");
