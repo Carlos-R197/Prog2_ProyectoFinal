@@ -187,6 +187,15 @@ namespace ProjectoFinal.Data
             }
             return new string(MayusNombre);
         }
+
+        public static void AñadirCirculo(Circulo nuevoCirculo)
+        {
+            string query = "INSERT INTO circulos VALUE( '"+ nuevoCirculo.Nombre + "')";
+            AbrirConexion();
+            MySqlCommand comando = new MySqlCommand(query, conexion);
+            comando.ExecuteNonQuery();
+            CerrarConexion();
+        }
        
     }
 }
