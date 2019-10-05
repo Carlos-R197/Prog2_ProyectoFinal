@@ -20,18 +20,16 @@ namespace ProjectoFinal
             Console.Clear();
             while (true)
             {
-                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Clear();
                 Console.WriteLine("Nombre: {0}", currentPerfil.Nombre);
                 Console.WriteLine("Rating General: {0} \n", currentPerfil.RatingGeneral);
-                Console.ForegroundColor = ConsoleColor.Gray;
 
                 Console.WriteLine("¿Qué desea hacer?");
                 Console.WriteLine("1. Revisar propio perfil");
                 Console.WriteLine("2. Buscar un perfil existente");
                 Console.WriteLine("3. Crear un chat privado");
-                Console.WriteLine("4. Crear un nuevo circulo");
-                Console.WriteLine("5. Ver lista de circulos existentes");
-                Console.WriteLine("6. Salir de la aplicación");
+                Console.WriteLine("4. Ver Lista de circulos existente");
+                Console.WriteLine("5. Salir de la aplicación");
                 Console.Write("R: ");
                 byte input;
 
@@ -41,20 +39,22 @@ namespace ProjectoFinal
                     {
                         case 1:
                             currentPerfil.ImprimirInformacion();
-                            System.Threading.Thread.Sleep(1000);
+                            Console.ReadLine();
                             break;
                         case 2:
+                            Console.Write("Escriba el nombre: ");
+                            string nom = Console.ReadLine();
+                            SQLManager.EncuentraPerfilesQueContienen(nom);
+                            Console.ReadLine();
                             break;
                         case 3:
-                            appState.ChangeState(new CreatingChatState(appState, currentPerfil));
+                            appState.ChangeState(new ChatState(appState, currentPerfil));
                             break;
                         case 4:
-                            appState.ChangeState(new CreatingCirculoState(appState));
+                            SQLManager.ImprimirTodosCirculos();
+                            Console.ReadLine();
                             break;
                         case 5:
-                            SQLManager.ImprimirTodosCirculos();
-                            break;
-                        case 6:
                             Environment.Exit(0);
                             break;
                         default:
