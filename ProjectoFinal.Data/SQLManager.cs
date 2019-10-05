@@ -102,7 +102,7 @@ namespace ProjectoFinal.Data
         public static bool RevisaSiNombreExiste(string nombreTabla, string nombre)
         {
             bool result = false;
-            string query = "Select " + nombre + " FROM " + nombreTabla;
+            string query = "Select nombre" + " FROM " + nombreTabla + " WHERE nombre = " + "\"" + nombre + "\"";
             AbrirConexion();
             MySqlCommand comando = new MySqlCommand(query, conexion);
 
@@ -146,12 +146,7 @@ namespace ProjectoFinal.Data
             CerrarConexion();
 
             Perfil[] perfilArray = new Perfil[table.Rows.Count];
-            /*
-            foreach (DataRow row in table.Rows)
-            {
-                byte edad = byte.Parse(row.ItemArray[3].ToString());
-            }
-            */
+
             for (int i = 0; i < table.Rows.Count; i++)
             {
                 byte edad = byte.Parse(table.Rows[i].ItemArray[3].ToString());

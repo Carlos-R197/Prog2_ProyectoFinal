@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ProjectoFinal.Data;
+using System.Linq;
 
 namespace ProjectoFinal
 {
@@ -19,16 +20,41 @@ namespace ProjectoFinal
         }
         public void Enter()
         {
-            Console.WriteLine("Escribe el nombre de la persona que quieres invitar al chat: ");
+            Console.WriteLine("Escriba el nombre de los perfiles que desea encontrar: ");
             string perfilNombre = Console.ReadLine();
             //Check if that perfil exist, if it does then add it to the chat class.
-            if (SQLManager.RevisaSiNombreExiste("perfiles_registrados", perfilNombre))
+            Perfil[] perfilesEncontrados = SQLManager.EncuentraPerfilesQueContienen(perfilNombre);
+            
+            if (perfilesEncontrados.Length > 0)
             {
-                //Perfil newPerfil
+                foreach (Perfil perfil in perfilesEncontrados)
+                {
+                    perfil.ImprimirNombre();
+                }
+
+                Console.Write("Escriba el nombre del perfil que desea añadir al chat: ");
+                string input = Console.ReadLine();
+
+                if (SQLManager.RevisaSiNombreExiste("perfiles_registrados", input))
+                {
+                    Perfil person2 = new Perfil();
+
+                    for (int i = 0; i < perfilesEncontrados.Length; i++)
+                    {
+                        if (perfilesEncontrados[i].Nombre == input)
+                            person2 = perfilesEncontrados[i];
+                    }
+
+                    currentChat = new Chat(person1, person2);
+                }
+                else
+                {
+                    Console.WriteLine("Lo escrito no coincide con ningun perfil");
+                }
             }
             else
             {
-                Console.WriteLine("Ese perfil no existe");
+                Console.WriteLine("No se encontro ningun perfil.");
             }
         }
     }

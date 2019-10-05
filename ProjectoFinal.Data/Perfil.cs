@@ -12,6 +12,8 @@ namespace ProjectoFinal.Data
         public byte Edad { get; private set; }
         public short RatingGeneral { get; private set; }
 
+        public Perfil() { }
+
         public Perfil(string nombre, string correo, string contraseña, byte edad)
         {
             this.Nombre = nombre;
@@ -28,6 +30,12 @@ namespace ProjectoFinal.Data
             Console.WriteLine("Edad: {0}", this.Edad);
             Console.WriteLine("Rating general: {0}", this.RatingGeneral);
         }
+
+        public void ImprimirNombre()
+        {
+            Console.WriteLine("Nombre: {0}", this.Nombre);
+        }
+
         public void SubirRating()
         {
             RatingGeneral++;

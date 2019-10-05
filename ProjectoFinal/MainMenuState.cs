@@ -43,6 +43,7 @@ namespace ProjectoFinal
                         case 2:
                             break;
                         case 3:
+                            appState.ChangeState(new ChatState(appState, currentPerfil));
                             break;
                         case 4:
                             SQLManager.ImprimirTodosCirculos();
