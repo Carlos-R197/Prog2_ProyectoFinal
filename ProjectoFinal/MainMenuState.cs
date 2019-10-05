@@ -26,7 +26,7 @@ namespace ProjectoFinal
                 Console.WriteLine("1. Revisar propio perfil");
                 Console.WriteLine("2. Buscar un perfil existente");
                 Console.WriteLine("3. Crear un chat privado");
-                Console.WriteLine("4. Ver Lista de circulos existente");
+                Console.WriteLine("4. Ver Lista de circulos existentes");
                 Console.WriteLine("5. Crear nuevo círculo.");
                 Console.WriteLine("6. Borrar un circulo existente");
                 Console.WriteLine("7. Salir de la aplicación");

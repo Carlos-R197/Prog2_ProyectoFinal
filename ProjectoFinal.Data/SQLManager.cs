@@ -194,6 +194,11 @@ namespace ProjectoFinal.Data
             AbrirConexion();
             MySqlCommand comando = new MySqlCommand(query, conexion);
             comando.ExecuteNonQuery();
+
+            //Create a table specifically for this circle.
+            string query2 = "CREATE TABLE circulo" + nuevoCirculo.Nombre + "(nombre VARCHAR(20)  )";
+            MySqlCommand comando2 = new MySqlCommand(query2, conexion);
+            comando2.ExecuteNonQuery();
             CerrarConexion();
         }
 
@@ -203,8 +208,16 @@ namespace ProjectoFinal.Data
             AbrirConexion();
             MySqlCommand comando = new MySqlCommand(query, conexion);
             comando.ExecuteNonQuery();
+
+            string query2 = "DROP TABLE circulo" + nombreCirculo;
+            MySqlCommand comando2 = new MySqlCommand(query2, conexion);
+            comando2.ExecuteNonQuery();
             CerrarConexion();
         }
-       
+
+        public static void AñadirPerfilCirculo(string nombreCirculo, string nombrePerfil)
+        {
+
+        }
     }
 }
