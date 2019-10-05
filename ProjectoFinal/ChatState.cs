@@ -6,14 +6,14 @@ using System.Linq;
 
 namespace ProjectoFinal
 {
-    public class ChatState : IState
+    public class CreatingChatState : IState
     {
         StateMachine appState = new StateMachine();
 
         private Perfil person1;
         private Chat currentChat;
 
-        public ChatState(StateMachine machine, Perfil currentPerfil)
+        public CreatingChatState(StateMachine machine, Perfil currentPerfil)
         {
             this.appState = machine;
             this.person1 = currentPerfil;

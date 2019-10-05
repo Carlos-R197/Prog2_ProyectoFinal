@@ -155,6 +155,14 @@ namespace ProjectoFinal.Data
 
             return perfilArray;
         }
-       
+
+        public static void AñadirCirculo(Circulo nuevoCirculo)
+        {
+            string query = "INSERT INTO circulos VALUE('" + nuevoCirculo.Nombre + "')";
+            AbrirConexion();
+            MySqlCommand comando = new MySqlCommand(query, conexion);
+            comando.ExecuteNonQuery();
+            CerrarConexion();
+        }
     }
 }
