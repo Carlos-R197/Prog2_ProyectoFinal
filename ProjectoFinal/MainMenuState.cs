@@ -48,7 +48,7 @@ namespace ProjectoFinal
                             Console.ReadLine();
                             break;
                         case 3:
-                            appState.ChangeState(new ChatState(appState, currentPerfil));
+                            appState.ChangeState(new CreatingChatState(appState, currentPerfil));
                             break;
                         case 4:
                             SQLManager.ImprimirTodosCirculos();
