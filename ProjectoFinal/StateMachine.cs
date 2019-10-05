@@ -20,7 +20,7 @@ namespace ProjectoFinal
                 firstState = newState;
 
             currentState = newState;
-            currentState.Enter();
+            currentState.Handle(this);
         }
     }
 }

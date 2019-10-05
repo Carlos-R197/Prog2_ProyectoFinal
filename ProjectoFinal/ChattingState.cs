@@ -8,14 +8,12 @@ namespace ProjectoFinal
     public class ChattingState : IState
     {
         private readonly Chat currentChat;
-        private readonly StateMachine appState;
-        public ChattingState(StateMachine machine, Chat chat)
+        public ChattingState(Chat chat)
         {
             this.currentChat = chat;
-            this.appState = machine;
         }
 
-        public void Enter()
+        public void Handle(StateMachine appState)
         {
             Console.Clear();
             Console.WriteLine("Presione 1 para salir");
@@ -29,7 +27,7 @@ namespace ProjectoFinal
                     currentChat.AddMensaje(mensaje);
                 }
                 else
-                    appState.ChangeState(new MainMenuState(appState, currentChat.Perfil1));
+                    appState.ChangeState(new MainMenuState(currentChat.Perfil1));
             }
         }
     }

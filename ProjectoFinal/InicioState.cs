@@ -8,13 +8,7 @@ namespace ProjectoFinal
 {
     public class InicioState : IState
     {
-        private StateMachine appState;
-        public InicioState(StateMachine machine)
-        {
-            this.appState = machine;
-        }
-
-        public void Enter()
+        public void Handle(StateMachine appState)
         {
             while (true)
             {
@@ -31,10 +25,10 @@ namespace ProjectoFinal
                     switch (input)
                     {
                         case 1:
-                            appState.ChangeState(new SignInState(appState));
+                            appState.ChangeState(new SignInState());
                             break;
                         case 2:
-                            appState.ChangeState(new SignUpState(appState));
+                            appState.ChangeState(new SignUpState());
                             break;
                         case 3:
                             System.Environment.Exit(0);

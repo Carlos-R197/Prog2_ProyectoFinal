@@ -7,14 +7,7 @@ namespace ProjectoFinal
 {
     public class CreatingCirculoState : IState
     {
-        private StateMachine appState;
-
-        public CreatingCirculoState(StateMachine appState)
-        {
-            this.appState = appState;
-        }
-
-        public void Enter()
+        public void Handle(StateMachine appState)
         {
             Console.WriteLine("¿Qué nombre desea para el círculo? ");
             string nombreCirculo = Console.ReadLine();

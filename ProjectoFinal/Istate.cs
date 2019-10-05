@@ -6,6 +6,6 @@ namespace ProjectoFinal
 {
     public interface IState
     {
-        void Enter();
+        void Handle(StateMachine appState);
     }
 }

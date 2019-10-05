@@ -10,14 +10,7 @@ namespace ProjectoFinal
 {
     public class SignInState : IState
     {
-        private StateMachine appState;
-
-        public SignInState(StateMachine machine)
-        {
-            this.appState = machine;
-        }
-
-        public void Enter()
+        public void Handle(StateMachine appState)
         {
             Console.Clear();
             Console.Write("Escriba sus nombres y apellidos: ");
@@ -38,7 +31,7 @@ namespace ProjectoFinal
                 Perfil perfil = new Perfil(nombreCompleto,contraseña,correo,edad);
                 SQLManager.CerrarConexion();
                 //Console.WriteLine("Usuario Existe");
-                appState.ChangeState(new MainMenuState(appState, perfil));
+                appState.ChangeState(new MainMenuState(perfil));
             }
             else
             {

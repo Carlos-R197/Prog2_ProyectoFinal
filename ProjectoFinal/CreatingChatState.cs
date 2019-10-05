@@ -8,17 +8,14 @@ namespace ProjectoFinal
 {
     public class CreatingChatState : IState
     {
-        StateMachine appState = new StateMachine();
-
         private Perfil person1;
         private Chat currentChat;
 
-        public CreatingChatState(StateMachine machine, Perfil currentPerfil)
+        public CreatingChatState(Perfil currentPerfil)
         {
-            this.appState = machine;
             this.person1 = currentPerfil;
         }
-        public void Enter()
+        public void Handle(StateMachine appState)
         {
             Console.WriteLine("Escriba el nombre de los perfiles que desea encontrar: ");
             string perfilNombre = Console.ReadLine();

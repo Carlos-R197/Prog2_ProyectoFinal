@@ -7,14 +7,7 @@ namespace ProjectoFinal
 {
     public class SignUpState : IState
     {
-        private StateMachine appState;
-
-        public SignUpState(StateMachine machine)
-        {
-            this.appState = machine;
-        }
-
-        public void Enter()
+        public void Handle(StateMachine appState)
         {
             while (true)
             {
@@ -39,7 +32,7 @@ namespace ProjectoFinal
                     Perfil newPerfil = new Perfil(nombreCompleto, correo, contraseña, edad);
                     SQLManager.LlenarTabla(newPerfil.Nombre,newPerfil.Contraseña,newPerfil.Correo,newPerfil.Edad);
                     Console.WriteLine("Usuario registrado");
-                    appState.ChangeState(new InicioState(appState));
+                    appState.ChangeState(new InicioState());
                 }
                 else
                     continue; //Make the user write everything again.
