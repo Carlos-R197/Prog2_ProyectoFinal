@@ -58,7 +58,17 @@ namespace ProjectoFinal
                             appState.ChangeState(new CreatingCirculoState());
                             break;
                         case 6:
-                            
+                            Console.Write("Escriba el nombre del circulo que desea borrar: ");
+                            string nombreCirculo = Console.ReadLine();
+
+                            if (SQLManager.RevisaSiNombreExiste("circulos", nombreCirculo))
+                            {
+                                SQLManager.BorrarCirculo(nombreCirculo);
+                                Console.WriteLine("El círculo fue borrado.");
+                            }
+                            else
+                                Console.WriteLine("Ese círculo no existe.");
+                            Console.ReadLine();
                             break;
                         case 7:
                             Environment.Exit(0);

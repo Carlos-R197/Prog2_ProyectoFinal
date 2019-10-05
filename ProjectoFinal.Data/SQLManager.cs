@@ -196,6 +196,15 @@ namespace ProjectoFinal.Data
             comando.ExecuteNonQuery();
             CerrarConexion();
         }
+
+        public static void BorrarCirculo(string nombreCirculo)
+        {
+            string query = "DELETE FROM circulos WHERE nombre = " + "'" + nombreCirculo + "'";
+            AbrirConexion();
+            MySqlCommand comando = new MySqlCommand(query, conexion);
+            comando.ExecuteNonQuery();
+            CerrarConexion();
+        }
        
     }
 }
