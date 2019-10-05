@@ -39,6 +39,7 @@ namespace ProjectoFinal
                     {
                         case 1:
                             currentPerfil.ImprimirInformacion();
+                            System.Threading.Thread.Sleep(1000);
                             break;
                         case 2:
                             break;

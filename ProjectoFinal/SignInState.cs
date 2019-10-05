@@ -38,8 +38,7 @@ namespace ProjectoFinal
                 Perfil perfil = new Perfil(nombreCompleto,contraseña,correo,edad);
                 appState.ChangeState(new MainMenuState(appState,perfil));
                 SQLManager.CerrarConexion();
-                Console.WriteLine("Usuario Existe");
-                //appState.ChangeState(new MainMenuState(appState, ));
+                Console.WriteLine("Usuario Existe");              
             }
             else
             {
