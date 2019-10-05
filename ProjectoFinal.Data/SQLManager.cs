@@ -153,7 +153,39 @@ namespace ProjectoFinal.Data
                 perfilArray[i] = new Perfil((string)table.Rows[i].ItemArray[0], (string)table.Rows[i].ItemArray[1], (string)table.Rows[i].ItemArray[2], edad);
             }
 
+            foreach (Perfil perfil in perfilArray)
+            {
+                string PerfilNombre = MayusculasNombres(perfil.Nombre);
+                Console.WriteLine("{0}", PerfilNombre);
+            }
+
             return perfilArray;
+        }
+
+        public static string MayusculasNombres(string nombre)
+        {
+            char[] MayusNombre = nombre.ToCharArray();
+            // Handle the first letter in the string.  
+            if (MayusNombre.Length >= 1)
+            {
+                if (char.IsLower(MayusNombre[0]))
+                {
+                    MayusNombre[0] = char.ToUpper(MayusNombre[0]);
+                }
+            }
+            // Scan through the letters, checking for spaces.  
+            // ... Uppercase the lowercase letters following spaces.  
+            for (int i = 1; i < MayusNombre.Length; i++)
+            {
+                if (MayusNombre[i - 1] == ' ')
+                {
+                    if (char.IsLower(MayusNombre[i]))
+                    {
+                        MayusNombre[i] = char.ToUpper(MayusNombre[i]);
+                    }
+                }
+            }
+            return new string(MayusNombre);
         }
        
     }

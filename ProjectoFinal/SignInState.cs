@@ -37,7 +37,7 @@ namespace ProjectoFinal
                 byte edad = byte.Parse(tempedad);
                 Perfil perfil = new Perfil(nombreCompleto,contraseña,correo,edad);
                 SQLManager.CerrarConexion();
-                Console.WriteLine("Usuario Existe");
+                //Console.WriteLine("Usuario Existe");
                 appState.ChangeState(new MainMenuState(appState, perfil));
             }
             else

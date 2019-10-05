@@ -20,6 +20,7 @@ namespace ProjectoFinal
             Console.Clear();
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("Nombre: {0}", currentPerfil.Nombre);
                 Console.WriteLine("Rating General: {0} \n", currentPerfil.RatingGeneral);
 
@@ -38,15 +39,20 @@ namespace ProjectoFinal
                     {
                         case 1:
                             currentPerfil.ImprimirInformacion();
-                            System.Threading.Thread.Sleep(1000);
+                            Console.ReadLine();
                             break;
                         case 2:
+                            Console.Write("Escriba el nombre: ");
+                            string nom = Console.ReadLine();
+                            SQLManager.EncuentraPerfilesQueContienen(nom);
+                            Console.ReadLine();
                             break;
                         case 3:
                             appState.ChangeState(new ChatState(appState, currentPerfil));
                             break;
                         case 4:
                             SQLManager.ImprimirTodosCirculos();
+                            Console.ReadLine();
                             break;
                         case 5:
                             Environment.Exit(0);
