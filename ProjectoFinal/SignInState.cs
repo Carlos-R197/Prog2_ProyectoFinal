@@ -25,7 +25,7 @@ namespace ProjectoFinal
             Console.Write("Escriba su contraseña: ");
             string contraseña = Console.ReadLine(); 
             //Check if the perfil exist in the database y log in if it does.
-            if (SQLManager.comprobar(nombreCompleto,contraseña) == true)
+            if (SQLManager.Comprobar(nombreCompleto,contraseña) == true)
             {
                 SQLManager.AbrirConexion();
                 string Querycorreo = "Select correo from perfiles_registrados where nombre='" + nombreCompleto + "';";
@@ -36,9 +36,9 @@ namespace ProjectoFinal
                 string tempedad = Convert.ToString(Edadcomando.ExecuteScalar());
                 byte edad = byte.Parse(tempedad);
                 Perfil perfil = new Perfil(nombreCompleto,contraseña,correo,edad);
-                appState.ChangeState(new MainMenuState(appState,perfil));
                 SQLManager.CerrarConexion();
-                Console.WriteLine("Usuario Existe");              
+                Console.WriteLine("Usuario Existe");
+                appState.ChangeState(new MainMenuState(appState, perfil));
             }
             else
             {

@@ -9,7 +9,7 @@ namespace ProjectoFinal
     {
         static void Main(string[] args)
         {
-            //StateMachine appState = new StateMachine();
+            StateMachine appState = new StateMachine();
 
             //try
             //{
@@ -24,7 +24,8 @@ namespace ProjectoFinal
 
             //}
 
-            //appState.ChangeState(new InicioState(appState));
+            appState.ChangeState(new InicioState(appState));
+            /*
             Console.WriteLine("Escriba un nombre");
             string nombre = Console.ReadLine();
             DataTable table = new DataTable();
@@ -45,6 +46,7 @@ namespace ProjectoFinal
 
                 }
             }
+            */
 
         }
     }

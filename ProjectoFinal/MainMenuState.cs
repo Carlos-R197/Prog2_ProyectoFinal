@@ -12,15 +12,14 @@ namespace ProjectoFinal
         public MainMenuState(StateMachine machine, Perfil perfil)
         {
             this.appState = machine;
-            currentPerfil = perfil;
+            this.currentPerfil = perfil;
         }
 
         public void Enter()
         {
+            Console.Clear();
             while (true)
             {
-                Console.Clear();
-
                 Console.WriteLine("Nombre: {0}", currentPerfil.Nombre);
                 Console.WriteLine("Rating General: {0} \n", currentPerfil.RatingGeneral);
 
@@ -46,10 +45,11 @@ namespace ProjectoFinal
                         case 3:
                             break;
                         case 4:
-                            Environment.Exit(0);
+                            SQLManager.ImprimirTodosCirculos();
                             break;
                         case 5:
-                            
+                            Environment.Exit(0);
+                            break;
                         default:
                             continue;
                     }

@@ -37,7 +37,7 @@ namespace ProjectoFinal
                 if (byte.TryParse(Console.ReadLine(), out edad))
                 {
                     Perfil newPerfil = new Perfil(nombreCompleto, correo, contraseña, edad);
-                    SQLManager.llenartabla(newPerfil.Nombre,newPerfil.Contraseña,newPerfil.Correo,newPerfil.Edad);
+                    SQLManager.LlenarTabla(newPerfil.Nombre,newPerfil.Contraseña,newPerfil.Correo,newPerfil.Edad);
                     Console.WriteLine("Usuario registrado");
                     appState.ChangeState(new InicioState(appState));
                 }
