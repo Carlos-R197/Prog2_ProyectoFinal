@@ -29,7 +29,8 @@ namespace ProjectoFinal
                 Console.WriteLine("2. Buscar un perfil existente");
                 Console.WriteLine("3. Crear un chat privado");
                 Console.WriteLine("4. Ver Lista de circulos existente");
-                Console.WriteLine("5. Salir de la aplicación");
+                Console.WriteLine("5. Crear nuevo círculo.");
+                Console.WriteLine("6. Salir de la aplicación");
                 Console.Write("R: ");
                 byte input;
 
@@ -55,6 +56,9 @@ namespace ProjectoFinal
                             Console.ReadLine();
                             break;
                         case 5:
+                            appState.ChangeState(new CreatingCirculoState(appState));
+                            break;
+                        case 6:
                             Environment.Exit(0);
                             break;
                         default:
