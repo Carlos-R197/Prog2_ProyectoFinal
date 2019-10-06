@@ -28,6 +28,8 @@ namespace ProjectoFinal
                 Console.WriteLine("¿Qué desea hacer? ");
                 Console.WriteLine("1. Escribir un comentario dentro del post");
                 Console.WriteLine("2. Eliminar un comentario dentro del post");
+                Console.WriteLine("3. Subir el rating de un comentario");
+                Console.WriteLine("4. Bajar el rating de un comentario");
                 byte choice;
 
                 if (byte.TryParse(Console.ReadLine(), out choice))

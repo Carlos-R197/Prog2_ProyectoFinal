@@ -57,7 +57,8 @@ namespace ProjectoFinal
                             if (SQLManager.RevisaSiNombreExiste("posts", nombrePost))
                             {
                                 string query = "DELETE FROM posts WHERE nombre = " + "'" + nombrePost + "'";
-                                SQLManager.EjecutarQuery(query);
+                                string query2 = "DELETE FROM comentarios WHERE post_pertenece = " + "'" + nombrePost + "'";
+                                SQLManager.EjecutarQuery(query, query2);
                                 Console.Write("El post fue borrado");
                             }
                             else
