@@ -116,7 +116,27 @@ namespace ProjectoFinal.Data
 
             return new Perfil((string)table.Rows[0].ItemArray[0], (string)table.Rows[0].ItemArray[1], (string)table.Rows[0].ItemArray[2], edad, (int)table.Rows[0].ItemArray[4]);
         }
+        public static void ObtenerAmigos(Perfil perfil) 
+        {
+            string query = "SELECT `amigo` FROM `lista_amigos` WHERE `usuario` = \"" + perfil.Nombre + "\"";
+            AbrirConexion();
+            MySqlCommand comando = new MySqlCommand(query, conexion);
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter(comando);
 
+            adapter.Fill(table);
+            CerrarConexion();
+
+            List<string> list = new List<string>();
+            foreach (DataRow row in table.Rows)
+            {
+                list.Add(row[0].ToString());
+            }
+            foreach (string nombre in list)
+            {
+                Console.WriteLine(nombre);
+            }
+        }
         public static Perfil[] EncuentraPerfilesQueContienen(string nombre)
         {
             string query = "SELECT * FROM perfiles_registrados WHERE nombre LIKE '%" + nombre + "%' ";

@@ -119,6 +119,10 @@ namespace ProjectoFinal
                         case 8:
                             Environment.Exit(0);
                             break;
+                        case 9:
+                            SQLManager.ObtenerAmigos(this.currentPerfil);
+                            Console.ReadLine();
+                            break;
                         default:
                             continue;
                     }
