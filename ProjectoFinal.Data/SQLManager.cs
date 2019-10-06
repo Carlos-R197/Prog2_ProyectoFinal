@@ -188,6 +188,20 @@ namespace ProjectoFinal.Data
             return table;
         }
 
+        public static DataTable ObtenTodosComentarios(string nombrePost)
+        {
+            DataTable table = new DataTable();
+            string query = "SELECT * FROM comentarios WHERE post_pertenece = " + "'" + nombrePost + "'";
+            using (MySqlConnection conexion = new MySqlConnection(conexionString))
+            {
+                conexion.Open();
+                MySqlCommand comando = new MySqlCommand(query, conexion);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(comando);
+                adapter.Fill(table);
+            }
+            return table;
+        }
+
         public static string MayusculasNombres(string nombre)
         {
             char[] MayusNombre = nombre.ToCharArray();

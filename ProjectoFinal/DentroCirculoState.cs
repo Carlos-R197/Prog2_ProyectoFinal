@@ -66,7 +66,40 @@ namespace ProjectoFinal
                         }
                     case 3:
                         {
+                            Console.Write("Escriba el nombre del post al que desea entrar: ");
+                            string nombrePost = Console.ReadLine();
+                            if (SQLManager.RevisaSiNombreExiste("posts", nombrePost))
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Has entrado al post: {0}", nombrePost);
+                                //Imprime todos los comentarios existentes.
+                                ImprimirTodosComentarios(nombrePost);
+                                //Preguntale al usuario que desea hacer
+                                Console.WriteLine("¿Qué desea hacer? ");
+                                Console.WriteLine("1.Escribir un comentario dentro del post");
+                                byte choice;
 
+                                if (byte.TryParse(Console.ReadLine(), out choice))
+                                {
+                                    switch (choice)
+                                    {
+                                        case 1:
+                                            Console.Write("Escriba su comentario: ");
+                                            string comentario = Console.ReadLine();
+                                            int rating = 0;
+                                            DateTime today = DateTime.Today;
+
+                                            string query = "INSERT INTO comentarios VALUES('" + currentPerfil + "', '" + nombrePost + "','" +
+                                                comentario + "', " + rating + ", '" + today.ToString("yyyy-MM-dd") + "')";
+                                            SQLManager.EjecutarQuery(query);
+
+                                            Console.Write("Su comentario ha sido añadido al post");
+                                            break;
+                                    }
+                                }
+                            }
+                            else
+                                Console.Write("Ese post no existe");
                         }
                         break;
                 }
@@ -82,6 +115,18 @@ namespace ProjectoFinal
             foreach (DataRow row in table.Rows)
             {
                 Console.WriteLine("Post: {0}, por {1} - {2}", row.ItemArray[0], row.ItemArray[1], row.ItemArray[3]);
+            }
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
+        private void ImprimirTodosComentarios(string nombrePost)
+        {
+            DataTable table = SQLManager.ObtenTodosComentarios(nombrePost);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            foreach (DataRow row in table.Rows)
+            {
+                Console.WriteLine("Comentario: {0} - {1} opina: {2}", row.ItemArray[3], row.ItemArray[0], row.ItemArray[2]);
             }
             Console.ForegroundColor = ConsoleColor.Gray;
         }
