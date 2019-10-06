@@ -217,7 +217,11 @@ namespace ProjectoFinal.Data
 
         public static void AñadirPerfilCirculo(string nombreCirculo, string nombrePerfil)
         {
-
+            string query = "INSERT INTO circulo" + nombreCirculo + " VALUES('" + nombrePerfil + "')";
+            AbrirConexion();
+            MySqlCommand comando = new MySqlCommand(query, conexion);
+            comando.ExecuteNonQuery();
+            CerrarConexion();
         }
     }
 }

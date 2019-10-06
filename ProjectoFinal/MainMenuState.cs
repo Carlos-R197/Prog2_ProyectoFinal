@@ -29,7 +29,8 @@ namespace ProjectoFinal
                 Console.WriteLine("4. Ver Lista de circulos existentes");
                 Console.WriteLine("5. Crear nuevo círculo.");
                 Console.WriteLine("6. Borrar un circulo existente");
-                Console.WriteLine("7. Salir de la aplicación");
+                Console.WriteLine("7. Suscribirse a circulo");
+                Console.WriteLine("8. Salir de la aplicación");
                 Console.Write("R: ");
                 byte input;
 
@@ -58,19 +59,42 @@ namespace ProjectoFinal
                             appState.ChangeState(new CreatingCirculoState());
                             break;
                         case 6:
-                            Console.Write("Escriba el nombre del circulo que desea borrar: ");
-                            string nombreCirculo = Console.ReadLine();
-
-                            if (SQLManager.RevisaSiNombreExiste("circulos", nombreCirculo))
                             {
-                                SQLManager.BorrarCirculo(nombreCirculo);
-                                Console.WriteLine("El círculo fue borrado.");
+                                Console.Write("Escriba el nombre del circulo que desea borrar: ");
+                                string nombreCirculo = Console.ReadLine();
+
+                                if (SQLManager.RevisaSiNombreExiste("circulos", nombreCirculo))
+                                {
+                                    SQLManager.BorrarCirculo(nombreCirculo);
+                                    Console.WriteLine("El círculo fue borrado.");
+                                }
+                                else
+                                    Console.WriteLine("Ese círculo no existe.");
+                                Console.ReadLine();
+                                break;
                             }
-                            else
-                                Console.WriteLine("Ese círculo no existe.");
-                            Console.ReadLine();
-                            break;
                         case 7:
+                            {
+                                Console.ForegroundColor = ConsoleColor.Cyan;
+                                Console.WriteLine("Círculos existentes: ");
+                                SQLManager.ImprimirTodosNombre("circulos");
+                                Console.ForegroundColor = ConsoleColor.Gray;
+
+                                Console.Write("Escriba el nombre del círculo al que desea suscribirse: ");
+                                string nombreCirculo = Console.ReadLine();
+
+                                if (SQLManager.RevisaSiNombreExiste("circulos", nombreCirculo))
+                                {
+                                    SQLManager.AñadirPerfilCirculo(nombreCirculo, currentPerfil.Nombre);
+                                    Console.WriteLine("Usted se ha suscrito al círculo {0}", nombreCirculo);
+                                }
+                                else
+                                    Console.WriteLine("Ese círculo no existe");
+
+                                Console.ReadLine();
+                                break;
+                            }
+                        case 8:
                             Environment.Exit(0);
                             break;
                         default:
