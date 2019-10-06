@@ -145,6 +145,26 @@ namespace ProjectoFinal.Data
             return perfilArray;
         }
 
+        public static Circulo ObtenCirculo(string nombre)
+        {
+            string query = "SELECT * FROM circulos WHERE nombre = " + "\"" + nombre + "\"";
+            DataTable table = new DataTable();
+            using (MySqlConnection conexion= new MySqlConnection(conexionString))
+            {
+                AbrirConexion();
+                MySqlCommand comando = new MySqlCommand(query, conexion);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(comando);
+
+                adapter.Fill(table);
+                CerrarConexion();
+            }
+
+            Console.WriteLine(table.Rows.Count);
+            byte edad = byte.Parse(table.Rows[0].ItemArray[3].ToString());
+
+            return new Circulo(table.Rows[0].ItemArray[0].ToString());
+        }
+
         public static string MayusculasNombres(string nombre)
         {
             char[] MayusNombre = nombre.ToCharArray();

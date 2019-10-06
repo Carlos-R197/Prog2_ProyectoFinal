@@ -17,9 +17,8 @@ namespace ProjectoFinal
             {
                 Circulo nuevoCirculo = new Circulo(nombreCirculo);
                 string query1 = "INSERT INTO circulos VALUE( '" + nuevoCirculo.Nombre + "')";
-                string query2 = "CREATE TABLE circulo" + nuevoCirculo.Nombre + "(nombre VARCHAR(20)  )";
                 //SQLManager.AñadirCirculo(nuevoCirculo);
-                SQLManager.EjecutarQuery(query1, query2);
+                SQLManager.EjecutarQuery(query1);
                 Console.Write("El círculo fue creado exitosamente.");
                 Console.ReadLine();
             }

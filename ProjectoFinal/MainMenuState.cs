@@ -52,8 +52,20 @@ namespace ProjectoFinal
                             appState.ChangeState(new CreatingChatState(currentPerfil));
                             break;
                         case 4:
-                            SQLManager.ImprimirTodosCirculos();
-                            Console.ReadLine();
+                            {
+                                SQLManager.ImprimirTodosCirculos();
+                                Console.Write("Escriba el nombre del circulo al que desea entrar: ");
+                                string nombreCirculo = Console.ReadLine();
+
+                                if (SQLManager.RevisaSiNombreExiste("circulos", nombreCirculo))
+                                {
+                                    appState.ChangeState(new DentroCirculoState(currentPerfil, SQLManager.ObtenCirculo(nombreCirculo)));
+
+                                }
+                                else
+                                    Console.WriteLine("No existe ese circulo");
+                                Console.ReadLine();
+                            }
                             break;
                         case 5:
                             appState.ChangeState(new CreatingCirculoState());
@@ -66,9 +78,8 @@ namespace ProjectoFinal
                                 if (SQLManager.RevisaSiNombreExiste("circulos", nombreCirculo))
                                 {
                                     string query = "DELETE FROM circulos WHERE nombre = " + "'" + nombreCirculo + "'";
-                                    string query2 = "DROP TABLE circulo" + nombreCirculo;
                                     //SQLManager.BorrarCirculo(nombreCirculo);
-                                    SQLManager.EjecutarQuery(query, query2);
+                                    SQLManager.EjecutarQuery(query);
                                     Console.WriteLine("El círculo fue borrado.");
                                 }
                                 else
