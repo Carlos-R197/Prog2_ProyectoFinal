@@ -142,8 +142,12 @@ namespace ProjectoFinal
                                 Console.WriteLine("Escriba (aceptar) o (rechazar) dependiendo de lo que desee hacer con cada una de las invitaciones");
                                 Console.WriteLine("Esriba (1) para salir");
                                 SQLManager.VerInvitaciones("invitaciones", this.currentPerfil);
-                                SQLManager.AceptarRechazar(this.currentPerfil);
-                                Console.ReadLine();
+                                string s = SQLManager.AceptarRechazar(this.currentPerfil);
+
+                                if (s == "1") 
+                                {
+                                    break;
+                                }
                             }
                             break;
                         //Casos de prueba debajo, deben de ser implementados corretamente

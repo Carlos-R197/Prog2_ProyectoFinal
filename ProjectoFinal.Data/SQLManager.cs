@@ -166,7 +166,7 @@ namespace ProjectoFinal.Data
             }
             Console.ResetColor();
         }
-        public static void AceptarRechazar(Perfil perfil) 
+        public static string AceptarRechazar(Perfil perfil) 
         {
             char separador = ' ';
             int count = 2;
@@ -183,15 +183,19 @@ namespace ProjectoFinal.Data
                         SQLManager.EjecutarQuery(query1);
                         SQLManager.EjecutarQuery(query2);
                         Console.WriteLine("Invitacion aceptada");
+                        Console.ReadLine();
                     }
-                    return;
+                    return desicion[0];
                 case "rechazar":
                     string query22 = "DELETE FROM `invitaciones` WHERE `invitador` = \"" + desicion[1] + "\" AND `invitado` = \"" + perfil.Nombre + "\"";
                     EjecutarQuery(query22);
                     Console.WriteLine("Invitacion rechazada");
-                    return;
+                    Console.ReadLine();
+                    return desicion[0];
+                case "1":
+                    return desicion[0];
                 default:
-                    return;
+                    return desicion[0];
             }
         }
         public static void ObtenerAmigos(Perfil perfil) 
