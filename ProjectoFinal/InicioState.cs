@@ -13,9 +13,6 @@ namespace ProjectoFinal
             while (true)
             {
                 Console.Clear();
-                //Cambio en el perfil
-                Console.WriteLine("UPDATE 'perfiles_registrados' SET 'nombre' = \"" + "a" + "\", 'contasena' = \"" + "b" + "\", 'correo' = \"" + "c" + "\", 'edad' = \"" + "d" + "\" WHERE 'nombre' = \"" + "e" + "\"");
-                //Cambio en el perfil
                 Console.WriteLine("¿Qué desea hacer?");
                 Console.WriteLine("1. Ingresar");
                 Console.WriteLine("2. Registrarse");

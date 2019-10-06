@@ -28,7 +28,7 @@ namespace ProjectoFinal
                 string correo = Convert.ToString(Correocomando.ExecuteScalar());
                 string tempedad = Convert.ToString(Edadcomando.ExecuteScalar());
                 byte edad = byte.Parse(tempedad);
-                Perfil perfil = new Perfil(nombreCompleto,contraseña,correo,edad);
+                Perfil perfil = new Perfil(nombreCompleto,correo,contraseña,edad);
                 SQLManager.CerrarConexion();
                 //Console.WriteLine("Usuario Existe");
                 appState.ChangeState(new MainMenuState(perfil));

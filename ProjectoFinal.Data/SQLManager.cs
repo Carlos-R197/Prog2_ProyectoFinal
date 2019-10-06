@@ -184,19 +184,20 @@ namespace ProjectoFinal.Data
             }
         }
 
-        public static void CambiarPerfil()
+        public static void CambiarPerfil(Perfil perfil)
         {
-            string nombre = "yipee";
-            string contraseña = "nojodas";
-            string correo = "doscorreo@gmail.com";
-            byte edad = 22;
-            string nombreViejo = "juja";
+            string nombre = perfil.Nombre;
+            string correo = perfil.Correo;
+            string contraseña = perfil.Contraseña;
+            byte edad = perfil.Edad;
             //Query funcional dentro de sql
             //UPDATE `perfiles_registrados` SET `nombre`="a",`contrasena`="b",`correo`="c",`edad`="14" WHERE `nombre`="juju"
-            string query = "UPDATE 'perfiles_registrados' SET 'nombre' = \""+nombre+"\", 'contasena' = \""+contraseña+"\", 'correo' = \""+correo+"\", 'edad' = \""+edad+"\" WHERE 'nombre' = \""+nombreViejo+"\"";
+            //UPDATE `perfiles_registrados` SET `nombre`=[value-1],`contrasena`=[value-2],`correo`=[value-3],`edad`=[value-4] WHERE 1
+            string query = "UPDATE `perfiles_registrados` SET `nombre`= \"" + nombre + "\", `contrasena`= \""+contraseña+"\", `edad`= \""+edad+"\" WHERE `correo`= \""+correo+"\"" ;
             AbrirConexion();
             MySqlCommand comando = new MySqlCommand(query, conexion);
-            Console.WriteLine("modificado exitosamente");
+            comando.ExecuteNonQuery();
+            Console.WriteLine("Modificado exitosamente");
             CerrarConexion();
         }
     }
