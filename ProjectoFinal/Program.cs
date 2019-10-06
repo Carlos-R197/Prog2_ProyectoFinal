@@ -9,12 +9,12 @@ namespace ProjectoFinal
     {
         static void Main(string[] args)
         {
-            //StateMachine appState = new StateMachine();
+            StateMachine appState = new StateMachine();
 
             //try
             //{
             //    SQLManager.AbrirConexion();
-            //    Console.WriteLine("Papa ute e un mmg");
+            //    Console.WriteLine("Papa ute");
             //    SQLManager.CerrarConexion();
             //}
             //catch (Exception)
@@ -24,11 +24,11 @@ namespace ProjectoFinal
 
             //}
 
-            //appState.ChangeState(new InicioState(appState));
-            Console.WriteLine("Escriba un nombre");
+            appState.ChangeState(new InicioState(appState));
+            /*Console.WriteLine("Escriba un nombre");
             string nombre = Console.ReadLine();
             DataTable table = new DataTable();
-            using (MySqlCommand cmd = new MySqlCommand("SELECT nombre FROM perfiles_registrados WHERE nombre='"+nombre+"'", SQLManager.conexion))
+            using (MySqlCommand cmd = new MySqlCommand("SELECT nombre FROM perfiles_registrados WHERE nombre LIKE %carlos%", SQLManager.conexion))
             {
                 MySqlDataAdapter dap = new MySqlDataAdapter(cmd);
                 SQLManager.AbrirConexion();
@@ -44,7 +44,7 @@ namespace ProjectoFinal
                     Console.WriteLine("{0} \n", item);
 
                 }
-            }
+            }*/
 
         }
     }
