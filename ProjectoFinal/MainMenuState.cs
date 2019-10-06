@@ -67,8 +67,7 @@ namespace ProjectoFinal
 
                                 if (SQLManager.RevisaSiNombreExiste("circulos", nombreCirculo))
                                 {
-                                    appState.ChangeState(new DentroCirculoState(currentPerfil, SQLManager.ObtenCirculo(nombreCirculo)));
-
+                                    appState.ChangeState(new DentroCirculoState(currentPerfil.Nombre, nombreCirculo));
                                 }
                                 else
                                     Console.WriteLine("No existe ese circulo");

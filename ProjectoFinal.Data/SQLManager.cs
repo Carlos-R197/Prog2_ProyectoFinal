@@ -174,24 +174,18 @@ namespace ProjectoFinal.Data
             return perfilArray;
         }
 
-        public static Circulo ObtenCirculo(string nombre)
+        public static DataTable ObtenTodosPost(string nombreCirculo)
         {
-            string query = "SELECT * FROM circulos WHERE nombre = " + "\"" + nombre + "\"";
             DataTable table = new DataTable();
-            using (MySqlConnection conexion= new MySqlConnection(conexionString))
+            string query = "SELECT * FROM posts WHERE circulo_pertenece = " + "'" + nombreCirculo + "'"; 
+            using (MySqlConnection conexion = new MySqlConnection(conexionString))
             {
-                AbrirConexion();
+                conexion.Open();
                 MySqlCommand comando = new MySqlCommand(query, conexion);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(comando);
-
                 adapter.Fill(table);
-                CerrarConexion();
             }
-
-            Console.WriteLine(table.Rows.Count);
-            byte edad = byte.Parse(table.Rows[0].ItemArray[3].ToString());
-
-            return new Circulo(table.Rows[0].ItemArray[0].ToString());
+            return table;
         }
 
         public static string MayusculasNombres(string nombre)
