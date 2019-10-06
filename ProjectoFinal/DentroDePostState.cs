@@ -13,43 +13,67 @@ namespace ProjectoFinal
         public DentroDePostState(string nombrePost, string nombrePerfil)
         {
             this.postActual = nombrePost;
-            this.perfilActual = nombrePost;
+            this.perfilActual = nombrePerfil;
         }
         public void Handle(StateMachine appState)
         {
-            Console.Clear();
-            Console.WriteLine("Has entrado al post: {0}", postActual);
-            //Imprime todos los comentarios existentes.
-            ImprimirTodosComentarios(postActual);
-            //Preguntale al usuario que desea hacer
-            Console.WriteLine("¿Qué desea hacer? ");
-            Console.WriteLine("1. Escribir un comentario dentro del post");
-            Console.WriteLine("2. Eliminar un comentario dentro del post");
-            byte choice;
-
-            if (byte.TryParse(Console.ReadLine(), out choice))
+            while (true)
             {
-                switch (choice)
+                Console.Clear();
+                Console.WriteLine("Has entrado al post: {0}", postActual);
+                //Imprime todos los comentarios existentes.
+                ImprimirComentarioDeAutor(postActual);
+                ImprimirTodosComentarios(postActual);
+                //Preguntale al usuario que desea hacer
+                Console.WriteLine("¿Qué desea hacer? ");
+                Console.WriteLine("1. Escribir un comentario dentro del post");
+                Console.WriteLine("2. Eliminar un comentario dentro del post");
+                byte choice;
+
+                if (byte.TryParse(Console.ReadLine(), out choice))
                 {
-                    case 1:
-                        Console.Write("Escriba su comentario: ");
-                        string comentario = Console.ReadLine();
-                        int rating = 0;
-                        DateTime today = DateTime.Today;
-                        int numeroDeComentario = ObtenNumeroComentarios(postActual) + 1;
+                    switch (choice)
+                    {
+                        case 1:
+                            {
+                                Console.Write("Escriba su comentario: ");
+                                string comentario = Console.ReadLine();
+                                int rating = 0;
+                                DateTime today = DateTime.Today;
+                                int numeroDeComentario = ObtenNumeroComentarios(postActual) + 1;
 
-                        string query = "INSERT INTO comentarios VALUES('" + perfilActual + "', '" + postActual + "', '" +
-                            comentario + "', " + rating + ", '" + today.ToString("yyyy-MM-dd") + "', '"  + numeroDeComentario + "')";
-                        SQLManager.EjecutarQuery(query);
+                                string query = "INSERT INTO comentarios VALUES('" + perfilActual + "', '" + postActual + "', '" +
+                                    comentario + "', " + rating + ", '" + today.ToString("yyyy-MM-dd") + "', '" + numeroDeComentario + "')";
+                                SQLManager.EjecutarQuery(query);
 
-                        Console.Write("Su comentario ha sido añadido al post");
-                        break;
-                    case 2:
-                        Console.Write("Escriba el numero del comentario que desea borrar: ");
-                        
-                        break;
+                                Console.Write("Su comentario ha sido añadido al post");
+                                break;
+                            }
+                        case 2:
+                            {
+                                Console.Write("Escriba el numero del comentario que desea borrar: ");
+                                short opcion;
+                                if (short.TryParse(Console.ReadLine(), out opcion))
+                                {
+                                    if (opcion <= ObtenNumeroComentarios(postActual))
+                                    {
+                                        string query = "DELETE FROM comentarios WHERE post_pertenece = " + "'" + postActual + "'" + " AND numero = " + opcion;
+                                        SQLManager.EjecutarQuery(query);
+                                    }
+                                }
+                                else
+                                    Console.Write("Ese comentario no existe.");
+                                break;
+                            }
+                    }
                 }
             }
+        }
+
+        private void ImprimirComentarioDeAutor(string nombrePost)
+        {
+            DataTable table = SQLManager.ObtenComentarioAutor(nombrePost);
+            Console.WriteLine("Autor: {0}", table.Rows[0].ItemArray[0]);
         }
         private void ImprimirTodosComentarios(string nombrePost)
         {
