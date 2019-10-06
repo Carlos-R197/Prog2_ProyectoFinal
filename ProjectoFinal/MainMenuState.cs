@@ -31,6 +31,12 @@ namespace ProjectoFinal
                 Console.WriteLine("6. Borrar un circulo existente");
                 Console.WriteLine("7. Suscribirse a circulo");
                 Console.WriteLine("8. Salir de la aplicación");
+                if (SQLManager.RevisaSiInvitado(this.currentPerfil)) 
+                {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("9. Revisar invitaciones");
+                    Console.ResetColor();
+                }
                 Console.Write("R: ");
                 byte input;
 
@@ -40,14 +46,24 @@ namespace ProjectoFinal
                     {
                         case 1:
                             currentPerfil.ImprimirInformacion();
+                            Console.WriteLine("Presione (U) para visualizar su lista de amigos");
                             Console.WriteLine("Presione (Y) para modificar sus datos");
                             char desicion = Console.ReadLine()[0];
-                            if (char.ToLower(desicion) == 'y')
+                            switch (char.ToLower(desicion))
                             {
-                                Console.Clear();
-                                currentPerfil.ModificarInfo();
-                                SQLManager.CambiarPerfil(this.currentPerfil);
-                                Console.ReadLine();
+                                case 'y':
+                                    Console.Clear();
+                                    currentPerfil.ModificarInfo();
+                                    SQLManager.CambiarPerfil(this.currentPerfil);
+                                    Console.ReadLine();
+                                    break;
+                                case 'u':
+                                    Console.Clear();
+                                    SQLManager.ObtenerAmigos(this.currentPerfil);
+                                    Console.ReadLine();
+                                    break;
+                                default:
+                                    continue;
                             }
                             break;
                         case 2:
@@ -119,11 +135,18 @@ namespace ProjectoFinal
                         case 8:
                             Environment.Exit(0);
                             break;
-                        //Casos de prueba debajo, deben de ser implementados corretamente
                         case 9:
-                            SQLManager.ObtenerAmigos(this.currentPerfil);
-                            Console.ReadLine();
+                            while (true)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Escriba (aceptar) o (rechazar) dependiendo de lo que desee hacer con cada una de las invitaciones");
+                                Console.WriteLine("Esriba (1) para salir");
+                                SQLManager.VerInvitaciones("invitaciones", this.currentPerfil);
+                                SQLManager.AceptarRechazar(this.currentPerfil);
+                                Console.ReadLine();
+                            }
                             break;
+                        //Casos de prueba debajo, deben de ser implementados corretamente
                         case 10:
                             Console.Write("Escriba el nombre de la persona: ");
                             string nombre = Console.ReadLine();
