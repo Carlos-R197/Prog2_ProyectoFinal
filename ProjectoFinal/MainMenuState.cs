@@ -40,7 +40,7 @@ namespace ProjectoFinal
                     {
                         case 1:
                             currentPerfil.ImprimirInformacion();
-                            Console.WriteLine("Presione Y para modificar sus datos");
+                            Console.WriteLine("Presione (Y) para modificar sus datos");
                             char desicion = Console.ReadLine()[0];
                             if (char.ToLower(desicion) == 'y')
                             {

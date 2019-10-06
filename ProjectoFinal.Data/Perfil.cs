@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ProjectoFinal;
 
 namespace ProjectoFinal.Data
 {
@@ -46,28 +47,43 @@ namespace ProjectoFinal.Data
         }
         public void ModificarInfo()
         {
-            Console.Clear();
-            Console.WriteLine("Que dato desea modificar?");
-            Console.WriteLine("1. Nombre y apellido");
-            Console.WriteLine("2. Contraseña");
-            Console.WriteLine("3. Edad");
-            byte desicion;
-            if (byte.TryParse(Console.ReadLine(), out desicion))
+            while (true)
             {
-                switch (desicion)
+                Console.Clear();
+                Console.WriteLine("Que dato desea modificar?");
+                Console.WriteLine("1. Nombre y apellido");
+                Console.WriteLine("2. Contraseña");
+                Console.WriteLine("3. Edad");
+                Console.WriteLine("4. Terminar Cambios");
+                byte desicion;
+                if (byte.TryParse(Console.ReadLine(), out desicion))
                 {
-                    case 1:
-                        Console.Write("Escriba su nuevo Nombre: ");
-                        this.Nombre = Console.ReadLine();
-                        return;
-                    case 2:
-                        Console.Write("Escriba su nueva Constraseña: ");
-                        this.Contraseña = Console.ReadLine();
-                        return;
-                    case 3:
-                        Console.WriteLine("Modifique su Edad: ");
-                        this.Edad = byte.Parse(Console.ReadLine());
-                        return;
+                    switch (desicion)
+                    {
+                        case 1:
+                            Console.Write("Escriba su nuevo Nombre: ");
+                            this.Nombre = Console.ReadLine();
+                            break;
+                        case 2:
+                            Console.Write("Escriba su nueva Constraseña: ");
+                            this.Contraseña = Console.ReadLine();
+                            break;
+                        case 3:
+                            Console.Write("Modifique su Edad: ");
+                            this.Edad = byte.Parse(Console.ReadLine());
+                            break;
+                        case 4:
+                            Console.WriteLine("Esta de acuerdo con los cambios? (Y) (N)");
+                            char n = Console.ReadLine()[0];
+                            if (char.ToLower(n) == 'n')
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                return; 
+                            }
+                    }
                 }
             }
         }
