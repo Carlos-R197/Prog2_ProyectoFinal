@@ -119,8 +119,15 @@ namespace ProjectoFinal
                         case 8:
                             Environment.Exit(0);
                             break;
+                        //Casos de prueba debajo, deben de ser implementados corretamente
                         case 9:
                             SQLManager.ObtenerAmigos(this.currentPerfil);
+                            Console.ReadLine();
+                            break;
+                        case 10:
+                            Console.Write("Escriba el nombre de la persona: ");
+                            string nombre = Console.ReadLine();
+                            SQLManager.EnviarInvitacion("perfiles_registrados", nombre, this.currentPerfil);
                             Console.ReadLine();
                             break;
                         default:
