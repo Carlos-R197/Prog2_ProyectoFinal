@@ -107,8 +107,7 @@ namespace ProjectoFinal
 
                                 if (SQLManager.RevisaSiNombreExiste("circulos", nombreCirculo))
                                 {
-                                    string query = "INSERT INTO circulo" + nombreCirculo + " VALUES('" + currentPerfil.Nombre + "')";
-                                    //SQLManager.AñadirPerfilCirculo(nombreCirculo, currentPerfil.Nombre);
+                                    string query = "INSERT INTO circulos_perfiles VALUES('" + nombreCirculo + "', '"+ currentPerfil.Nombre +"' )";
                                     SQLManager.EjecutarQuery(query);
                                     Console.WriteLine("Usted se ha suscrito al círculo {0}", nombreCirculo);
                                 }
