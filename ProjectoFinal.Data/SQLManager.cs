@@ -192,10 +192,10 @@ namespace ProjectoFinal.Data
             byte edad = 22;
             string nombreViejo = "juja";
             //Query funcional dentro de sql
-            //UPDATE `perfiles_registrados` SET `nombre`="juju",`contrasena`="hehe",`correo`="@gmail.com",`edad`="17" WHERE `nombre`="jbjb"
-            string query;
+            //UPDATE `perfiles_registrados` SET `nombre`="a",`contrasena`="b",`correo`="c",`edad`="14" WHERE `nombre`="juju"
+            string query = "UPDATE 'perfiles_registrados' SET 'nombre' = \""+nombre+"\", 'contasena' = \""+contraseña+"\", 'correo' = \""+correo+"\", 'edad' = \""+edad+"\" WHERE 'nombre' = \""+nombreViejo+"\"";
             AbrirConexion();
-            MySqlCommand comando = new MySqlCommand(null, conexion);
+            MySqlCommand comando = new MySqlCommand(query, conexion);
             Console.WriteLine("modificado exitosamente");
             CerrarConexion();
         }
