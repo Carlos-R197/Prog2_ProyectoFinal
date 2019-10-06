@@ -19,6 +19,9 @@ namespace ProjectoFinal
             while (true)
             {
                 Console.Clear();
+                //Prueba del cambio de perfil
+                SQLManager.CambiarPerfil();
+                //prueba del cambio de perfil
                 Console.WriteLine("Nombre: {0}", currentPerfil.Nombre);
                 Console.WriteLine("Rating General: {0} \n", currentPerfil.RatingGeneral);
 
@@ -40,7 +43,13 @@ namespace ProjectoFinal
                     {
                         case 1:
                             currentPerfil.ImprimirInformacion();
-                            Console.ReadLine();
+                            Console.WriteLine("Presione Y para modificar sus datos");
+                            char desicion = Console.ReadLine()[0];
+                            if (char.ToLower(desicion) == 'y')
+                            {
+                                Console.WriteLine("funciona");
+                                Console.ReadLine();
+                            }
                             break;
                         case 2:
                             Console.Write("Escriba el nombre: ");

@@ -183,5 +183,21 @@ namespace ProjectoFinal.Data
                 }
             }
         }
+
+        public static void CambiarPerfil()
+        {
+            string nombre = "yipee";
+            string contraseña = "nojodas";
+            string correo = "doscorreo@gmail.com";
+            byte edad = 22;
+            string nombreViejo = "juja";
+            //Query funcional dentro de sql
+            //UPDATE `perfiles_registrados` SET `nombre`="juju",`contrasena`="hehe",`correo`="@gmail.com",`edad`="17" WHERE `nombre`="jbjb"
+            string query;
+            AbrirConexion();
+            MySqlCommand comando = new MySqlCommand(null, conexion);
+            Console.WriteLine("modificado exitosamente");
+            CerrarConexion();
+        }
     }
 }
