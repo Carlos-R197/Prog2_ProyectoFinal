@@ -116,6 +116,15 @@ namespace ProjectoFinal.Data
 
             return new Perfil((string)table.Rows[0].ItemArray[0], (string)table.Rows[0].ItemArray[1], (string)table.Rows[0].ItemArray[2], edad, (int)table.Rows[0].ItemArray[4]);
         }
+        public static void EnviarInvitacion(string nombreTabla, string nombre, Perfil perfil)
+        {
+            if (RevisaSiNombreExiste(nombreTabla, nombre))
+            {
+                string query = "INSERT INTO `invitaciones`(`usuario`, `amigo`) VALUE(\"" + perfil.Nombre + "\", \"" + nombre + "\")";
+                SQLManager.EjecutarQuery(query);
+                Console.WriteLine("Invitacion enviada");
+            }
+        }
         public static void ObtenerAmigos(Perfil perfil) 
         {
             string query = "SELECT `amigo` FROM `lista_amigos` WHERE `usuario` = \"" + perfil.Nombre + "\"";
