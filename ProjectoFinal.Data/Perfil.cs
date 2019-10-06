@@ -12,6 +12,7 @@ namespace ProjectoFinal.Data
         public string Contraseña { get; private set; }
         public byte Edad { get; private set; }
         public int RatingGeneral { get; private set; }
+        public List<string> Amigos { get; private set; }
 
         public Perfil() { }
 
