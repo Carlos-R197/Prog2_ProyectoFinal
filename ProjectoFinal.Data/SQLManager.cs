@@ -171,16 +171,6 @@ namespace ProjectoFinal.Data
             return new string(MayusNombre);
         }
 
-        public static void EjecutarQuery(string query)
-        {
-            using (MySqlConnection conexion = new MySqlConnection(conexionString))
-            {
-                conexion.Open();
-                MySqlCommand comando = new MySqlCommand(query, conexion);
-                comando.ExecuteNonQuery();
-            }
-        }
-
         public static void EjecutarQuery(params string[] querys)
         {
             foreach (string query in querys)
