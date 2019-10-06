@@ -65,7 +65,10 @@ namespace ProjectoFinal
 
                                 if (SQLManager.RevisaSiNombreExiste("circulos", nombreCirculo))
                                 {
-                                    SQLManager.BorrarCirculo(nombreCirculo);
+                                    string query = "DELETE FROM circulos WHERE nombre = " + "'" + nombreCirculo + "'";
+                                    string query2 = "DROP TABLE circulo" + nombreCirculo;
+                                    //SQLManager.BorrarCirculo(nombreCirculo);
+                                    SQLManager.EjecutarQuery(query, query2);
                                     Console.WriteLine("El círculo fue borrado.");
                                 }
                                 else
@@ -85,7 +88,9 @@ namespace ProjectoFinal
 
                                 if (SQLManager.RevisaSiNombreExiste("circulos", nombreCirculo))
                                 {
-                                    SQLManager.AñadirPerfilCirculo(nombreCirculo, currentPerfil.Nombre);
+                                    string query = "INSERT INTO circulo" + nombreCirculo + " VALUES('" + currentPerfil.Nombre + "')";
+                                    //SQLManager.AñadirPerfilCirculo(nombreCirculo, currentPerfil.Nombre);
+                                    SQLManager.EjecutarQuery(query);
                                     Console.WriteLine("Usted se ha suscrito al círculo {0}", nombreCirculo);
                                 }
                                 else

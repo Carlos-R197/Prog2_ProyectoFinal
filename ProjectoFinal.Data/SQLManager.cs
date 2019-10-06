@@ -9,6 +9,7 @@ namespace ProjectoFinal.Data
     public static class SQLManager
     {
         public static MySqlConnection conexion = new MySqlConnection("Server=remotemysql.com; Database=QRqGefDOkx; Uid=QRqGefDOkx; Pwd=P80kXnXOFM;");
+        private static string conexionString = "Server=remotemysql.com; Database=QRqGefDOkx; Uid=QRqGefDOkx; Pwd=P80kXnXOFM;";
 
         public static void AbrirConexion()
         {
@@ -18,15 +19,6 @@ namespace ProjectoFinal.Data
         public static void CerrarConexion()
         {
             conexion.Close();
-        }
-
-        public static void LlenarTabla(string nombre, string contrasena, string correo, byte edad)
-        {
-            string query = "INSERT perfiles_registrados (nombre,contrasena,correo,edad) VALUE ('"+nombre+"','"+ contrasena+"','" +correo+"','" +edad+"')";
-            AbrirConexion();
-            MySqlCommand comando = new MySqlCommand(query, conexion);
-            comando.ExecuteNonQuery();
-            CerrarConexion();
         }
 
         public static bool Comprobar(string nombre, string contrasena)
@@ -46,15 +38,6 @@ namespace ProjectoFinal.Data
                 result = false;
             CerrarConexion();
             return result;
-        }
-
-        public static void LlenarTablaCirculo(string nombre)
-        {
-            string query = "INSERT INTO circulos VALUE('" + nombre + "')";
-            AbrirConexion();
-            MySqlCommand comando = new MySqlCommand(query, conexion);
-            comando.ExecuteNonQuery();
-            CerrarConexion();
         }
 
         public static void ImprimirTodosCirculos()
@@ -188,40 +171,27 @@ namespace ProjectoFinal.Data
             return new string(MayusNombre);
         }
 
-        public static void AñadirCirculo(Circulo nuevoCirculo)
+        public static void EjecutarQuery(string query)
         {
-            string query = "INSERT INTO circulos VALUE( '"+ nuevoCirculo.Nombre + "')";
-            AbrirConexion();
-            MySqlCommand comando = new MySqlCommand(query, conexion);
-            comando.ExecuteNonQuery();
-
-            //Create a table specifically for this circle.
-            string query2 = "CREATE TABLE circulo" + nuevoCirculo.Nombre + "(nombre VARCHAR(20)  )";
-            MySqlCommand comando2 = new MySqlCommand(query2, conexion);
-            comando2.ExecuteNonQuery();
-            CerrarConexion();
+            using (MySqlConnection conexion = new MySqlConnection(conexionString))
+            {
+                conexion.Open();
+                MySqlCommand comando = new MySqlCommand(query, conexion);
+                comando.ExecuteNonQuery();
+            }
         }
 
-        public static void BorrarCirculo(string nombreCirculo)
+        public static void EjecutarQuery(params string[] querys)
         {
-            string query = "DELETE FROM circulos WHERE nombre = " + "'" + nombreCirculo + "'";
-            AbrirConexion();
-            MySqlCommand comando = new MySqlCommand(query, conexion);
-            comando.ExecuteNonQuery();
-
-            string query2 = "DROP TABLE circulo" + nombreCirculo;
-            MySqlCommand comando2 = new MySqlCommand(query2, conexion);
-            comando2.ExecuteNonQuery();
-            CerrarConexion();
-        }
-
-        public static void AñadirPerfilCirculo(string nombreCirculo, string nombrePerfil)
-        {
-            string query = "INSERT INTO circulo" + nombreCirculo + " VALUES('" + nombrePerfil + "')";
-            AbrirConexion();
-            MySqlCommand comando = new MySqlCommand(query, conexion);
-            comando.ExecuteNonQuery();
-            CerrarConexion();
+            foreach (string query in querys)
+            {
+                using (MySqlConnection conexion = new MySqlConnection(conexionString))
+                {
+                    conexion.Open();
+                    MySqlCommand comando = new MySqlCommand(query, conexion);
+                    comando.ExecuteNonQuery();
+                }
+            }
         }
     }
 }

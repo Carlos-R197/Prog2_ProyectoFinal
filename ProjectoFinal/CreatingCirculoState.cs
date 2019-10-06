@@ -9,14 +9,19 @@ namespace ProjectoFinal
     {
         public void Handle(StateMachine appState)
         {
-            Console.WriteLine("¿Qué nombre desea para el círculo? ");
+            Console.Write("¿Qué nombre desea para el círculo? ");
             string nombreCirculo = Console.ReadLine();
 
             //Check if the circle alredy exists, if it doesnt, create it otherwise throw an error.
             if (!SQLManager.RevisaSiNombreExiste("circulos", nombreCirculo))
             {
                 Circulo nuevoCirculo = new Circulo(nombreCirculo);
-                SQLManager.AñadirCirculo(nuevoCirculo);
+                string query1 = "INSERT INTO circulos VALUE( '" + nuevoCirculo.Nombre + "')";
+                string query2 = "CREATE TABLE circulo" + nuevoCirculo.Nombre + "(nombre VARCHAR(20)  )";
+                //SQLManager.AñadirCirculo(nuevoCirculo);
+                SQLManager.EjecutarQuery(query1, query2);
+                Console.Write("El círculo fue creado exitosamente.");
+                Console.ReadLine();
             }
             else
             {
