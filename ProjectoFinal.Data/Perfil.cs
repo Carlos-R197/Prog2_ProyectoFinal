@@ -10,17 +10,17 @@ namespace ProjectoFinal.Data
         public string Correo { get; private set; }
         public string Contraseña { get; private set; }
         public byte Edad { get; private set; }
-        public short RatingGeneral { get; private set; }
+        public int RatingGeneral { get; private set; }
 
         public Perfil() { }
 
-        public Perfil(string nombre, string correo, string contraseña, byte edad)
+        public Perfil(string nombre, string correo, string contraseña, byte edad, int rating)
         {
             this.Nombre = nombre;
             this.Correo = correo;
             this.Contraseña = contraseña;
             this.Edad = edad;
-            this.RatingGeneral = 0;
+            this.RatingGeneral = rating;
         }
 
         public void ImprimirInformacion()

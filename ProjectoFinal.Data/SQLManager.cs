@@ -114,7 +114,7 @@ namespace ProjectoFinal.Data
             Console.WriteLine(table.Rows.Count);
             byte edad = byte.Parse(table.Rows[0].ItemArray[3].ToString());
 
-            return new Perfil((string)table.Rows[0].ItemArray[0], (string)table.Rows[0].ItemArray[1], (string)table.Rows[0].ItemArray[2], edad);
+            return new Perfil((string)table.Rows[0].ItemArray[0], (string)table.Rows[0].ItemArray[1], (string)table.Rows[0].ItemArray[2], edad, (int)table.Rows[0].ItemArray[4]);
         }
 
         public static Perfil[] EncuentraPerfilesQueContienen(string nombre)
@@ -133,7 +133,7 @@ namespace ProjectoFinal.Data
             for (int i = 0; i < table.Rows.Count; i++)
             {
                 byte edad = byte.Parse(table.Rows[i].ItemArray[3].ToString());
-                perfilArray[i] = new Perfil((string)table.Rows[i].ItemArray[0], (string)table.Rows[i].ItemArray[1], (string)table.Rows[i].ItemArray[2], edad);
+                perfilArray[i] = new Perfil((string)table.Rows[i].ItemArray[0], (string)table.Rows[i].ItemArray[1], (string)table.Rows[i].ItemArray[2], edad, (int)table.Rows[i].ItemArray[4]);
             }
 
             foreach (Perfil perfil in perfilArray)
