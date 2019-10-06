@@ -13,7 +13,6 @@ namespace ProjectoFinal
             while (true)
             {
                 Console.Clear();
-
                 Console.WriteLine("¿Qué desea hacer?");
                 Console.WriteLine("1. Ingresar");
                 Console.WriteLine("2. Registrarse");

@@ -21,14 +21,17 @@ namespace ProjectoFinal
             if (SQLManager.Comprobar(nombreCompleto,contraseña) == true)
             {
                 SQLManager.AbrirConexion();
-                string Querycorreo = "Select correo from perfiles_registrados where nombre='" + nombreCompleto + "';";
-                string Queryedad = "Select edad from perfiles_registrados where nombre='" + nombreCompleto + "';";
-                MySqlCommand Correocomando = new MySqlCommand(Querycorreo, SQLManager.conexion);
-                MySqlCommand Edadcomando = new MySqlCommand(Queryedad, SQLManager.conexion);
+                string QueryCorreo = "Select correo from perfiles_registrados where nombre='" + nombreCompleto + "';";
+                string QueryEdad = "Select edad from perfiles_registrados where nombre='" + nombreCompleto + "';";
+                string QueryRating = "Select rating from perfiles_registrados where nombre='" + nombreCompleto + "';";
+                MySqlCommand Correocomando = new MySqlCommand(QueryCorreo, SQLManager.conexion);
+                MySqlCommand Edadcomando = new MySqlCommand(QueryEdad, SQLManager.conexion);
+                MySqlCommand Ratingcomando = new MySqlCommand(QueryRating, SQLManager.conexion);
                 string correo = Convert.ToString(Correocomando.ExecuteScalar());
                 string tempedad = Convert.ToString(Edadcomando.ExecuteScalar());
+                int rating = Convert.ToInt32(Ratingcomando.ExecuteScalar());
                 byte edad = byte.Parse(tempedad);
-                Perfil perfil = new Perfil(nombreCompleto,contraseña,correo,edad);
+                Perfil perfil = new Perfil(nombreCompleto,correo,contraseña,edad, rating);
                 SQLManager.CerrarConexion();
                 //Console.WriteLine("Usuario Existe");
                 appState.ChangeState(new MainMenuState(perfil));

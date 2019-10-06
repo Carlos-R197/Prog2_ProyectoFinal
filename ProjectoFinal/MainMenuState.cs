@@ -40,7 +40,15 @@ namespace ProjectoFinal
                     {
                         case 1:
                             currentPerfil.ImprimirInformacion();
-                            Console.ReadLine();
+                            Console.WriteLine("Presione (Y) para modificar sus datos");
+                            char desicion = Console.ReadLine()[0];
+                            if (char.ToLower(desicion) == 'y')
+                            {
+                                Console.Clear();
+                                currentPerfil.ModificarInfo();
+                                SQLManager.CambiarPerfil(this.currentPerfil);
+                                Console.ReadLine();
+                            }
                             break;
                         case 2:
                             Console.Write("Escriba el nombre: ");
