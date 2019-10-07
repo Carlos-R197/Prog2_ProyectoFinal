@@ -17,7 +17,7 @@ namespace ProjectoFinal
                 Console.Write("Escriba su contraseña: ");
                 string contraseña = Console.ReadLine();
                 Console.Write("Escriba su correo: ");
-                string correo = Console.ReadLine(); //Make it check if the email is valid.Si
+                string correo = Console.ReadLine(); 
                 if(!(correo.Contains("@") && correo.Contains(".com")))
                 {
                     Console.WriteLine("Correo invalido");
@@ -37,10 +37,8 @@ namespace ProjectoFinal
                     appState.ChangeState(new InicioState());
                 }
                 else
-                    continue; //Make the user write everything again.
+                    continue; 
             }
-
-            //Create a instace of perfil, save the data to the database and change the state.
         }
     }
 }

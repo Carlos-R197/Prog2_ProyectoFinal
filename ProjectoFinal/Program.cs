@@ -9,16 +9,8 @@ namespace ProjectoFinal
     {
         static void Main(string[] args)
         {
-            //try
-            //{
-                StateMachine appState = new StateMachine();
-                appState.ChangeState(new InicioState());
-            //}
-            //catch (MySqlException)
-            //{
-             //  Console.WriteLine("Necesita conexión a internet");
-               // Console.ReadKey();
-            //}
+            StateMachine appState = new StateMachine();
+            appState.ChangeState(new InicioState());
         }
     }
 }

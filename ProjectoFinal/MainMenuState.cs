@@ -179,7 +179,6 @@ namespace ProjectoFinal
                                     string query2 = "DELETE FROM posts WHERE circulo_pertenece = " + "'" + nombreCirculo + "'";
                                     string query3 = "DELETE FROM comentarios WHERE circulo_pertenece =" + "'" + nombreCirculo + "'";
                                     string query4 = "DELETE FROM comentarios_comentarios WHERE circulo_pertenece = " + "'" + nombreCirculo + "'";
-                                    //SQLManager.BorrarCirculo(nombreCirculo);
                                     SQLManager.EjecutarQuery(query, query2, query3, query4);
                                     Console.WriteLine("El círculo fue borrado.");
                                 }
