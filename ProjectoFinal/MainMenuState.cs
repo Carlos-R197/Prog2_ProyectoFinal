@@ -11,15 +11,15 @@ namespace ProjectoFinal
 
         public static MainMenuState Instance
         {
-            get { return instance; }
+            get
+            {
+                if (instance == null)
+                    instance = new MainMenuState();
+                return instance;
+            }
         }
 
         private Perfil currentPerfil;
-        public MainMenuState(Perfil perfil)
-        {
-            this.currentPerfil = perfil;
-            instance = this;
-        }
 
         public void Handle(StateMachine appState)
         {
@@ -193,6 +193,16 @@ namespace ProjectoFinal
                             continue;
                     }
                 }
+            }
+        }
+
+
+        public void Inicializar(Perfil perfil)
+        {
+            if (instance == null)
+            {
+                this.currentPerfil = perfil;
+                instance = this;
             }
         }
     }

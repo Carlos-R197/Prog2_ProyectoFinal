@@ -386,8 +386,12 @@ namespace ProjectoFinal.Data
         {
             string mensajero = chat.Perfil1.Nombre;
             string receptor = chat.Perfil2.Nombre;
-            string mensaje = chat.Conversacion.ToString();
-
+            string mensaje = string.Empty;
+            for (int i = 0; i < chat.Conversacion.Count; i++)
+            {
+                mensaje += chat.Conversacion[i] + "\n";
+            }
+           
             string query = "insert into chat(mensajero,receptor,mensaje) value('" + mensajero + "','" + receptor + "','" + mensaje + "')";
             AbrirConexion();
             MySqlCommand cmd = new MySqlCommand(query, conexion);
