@@ -51,14 +51,12 @@ namespace ProjectoFinal.Data
             MySqlDataAdapter dap = new MySqlDataAdapter(comando);
             
             dap.Fill(table);
+            dap.Dispose();
             CerrarConexion();
 
             foreach (DataRow row in table.Rows)
             {
-                foreach (var item in row.ItemArray)
-                {
-                    Console.WriteLine("{0}", item);
-                }
+                Console.WriteLine("{0}", row.ItemArray[0]);
             }
         }
         //Imprimira la columna de nombres de una tabla si le pasas el nombre de la tabla
@@ -501,6 +499,24 @@ namespace ProjectoFinal.Data
             Post post = new Post(table.Rows[0].ItemArray[0].ToString(), table.Rows[0].ItemArray[1].ToString(), table.Rows[0].ItemArray[4].ToString(), 
                 (DateTime)table.Rows[0].ItemArray[5], edad);
             return post;
+        }
+
+        public static bool RevisaSiSuscrito(string nombreCirculo, string nombrePerfil)
+        {
+            string query = "SELECT * FROM circulos_perfiles WHERE circulo_nombre = " + "'" + nombreCirculo + "'" + "AND perfil_nombre = " + "'" + nombrePerfil + "'";
+            DataTable table = new DataTable();
+            using (MySqlConnection conexion = new MySqlConnection(conexionString))
+            {
+                conexion.Open();
+                MySqlCommand comando = new MySqlCommand(query, conexion);
+                MySqlDataAdapter adp = new MySqlDataAdapter(comando);
+                adp.Fill(table);
+            }
+
+            if (table.Rows.Count > 0)
+                return true;
+            else
+                return false;
         }
     }
 }

@@ -123,7 +123,7 @@ namespace ProjectoFinal
                             }
                             break;
                         case 5:
-                            appState.ChangeState(new CreatingCirculoState());
+                            appState.ChangeState(new CreatingCirculoState(currentPerfil.Nombre));
                             break;
                         case 6:
                             {

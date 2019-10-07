@@ -40,7 +40,8 @@ namespace ProjectoFinal
             }
             else
             {
-                Console.WriteLine("Datos Erroneos");
+                Console.Write("Datos Erroneos");
+                Console.ReadLine();
             }
         }
     }
