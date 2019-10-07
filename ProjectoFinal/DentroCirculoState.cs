@@ -26,21 +26,22 @@ namespace ProjectoFinal
                 Console.WriteLine("Has entrado al circulo: {0}", currentCirculo);
 
                 //Hacer que se impriman todos los posts existentes. 
-                SortPorRating();
                 Console.WriteLine("¿Qué desea hacer?");
                 Console.WriteLine("1. Crear un post");
                 Console.WriteLine("2. Eliminar un post");
                 Console.WriteLine("3. Ver un post existente");
+                Console.WriteLine("4. Subir el rating de un post");
+                Console.WriteLine("5. Bajar el rating de un post");
                 if (organizacion == true)
                 {
-                    Console.WriteLine("4. Ordenar por fecha");
+                    Console.WriteLine("6. Ordenar por fecha");
+                    SortPorRating();
                 }
-                else 
+                else
                 {
-                    Console.WriteLine("4. Ordenar por rating");
+                    Console.WriteLine("6. Ordenar por rating");
+                    SortPorFecha();
                 }
-                Console.WriteLine("5. Subir el rating de un post");
-                Console.WriteLine("6. Bajar el rating de un post");
                 byte input = byte.Parse(Console.ReadLine());
 
                 switch (input)
@@ -92,25 +93,28 @@ namespace ProjectoFinal
                         Console.ReadLine();
                         break;
                     case 4:
-                        if (organizacion == true)
-                        {
-                            SortPorFecha();
-                        }
-                        else 
-                        {
-                            SortPorRating();
-                        }
-                        break;
-                    case 5:
                         {
                             Console.Write("Escriba el número del post al que desea subirle el rating: ");
                             ManejaVotos(1);
                             break;
                         }
+                        break;
+                    case 5:
+                        {
+                            Console.Write("Escriba el número del post al que desea bajarle el rating: ");
+                            ManejaVotos(-1);
+                            break;
+                        }
                     case 6:
                         {
-                            Console.Write("Escriba el número del post al que desea subirle el rating: ");
-                            ManejaVotos(-1);
+                            if (organizacion == true)
+                            {
+                                    SortPorFecha();
+                            }
+                            else 
+                            {
+                                SortPorRating();
+                            }
                             break;
                         }
                 }
@@ -121,7 +125,7 @@ namespace ProjectoFinal
             organizacion = true;
             DataTable table = SQLManager.ObtenTodosPost(currentCirculo);
 
-            table.DefaultView.Sort = table.Columns[4].ColumnName + " ASC";
+            table.DefaultView.Sort = table.Columns[3].ColumnName + " DESC";
             table = table.DefaultView.ToTable();
             ImprimirNombreTodosPost(table);
         }
@@ -130,7 +134,7 @@ namespace ProjectoFinal
             organizacion = false;
             DataTable table = SQLManager.ObtenTodosPost(currentCirculo);
 
-            table.DefaultView.Sort = table.Columns[6].ColumnName + " ASC";
+            table.DefaultView.Sort = table.Columns[6].ColumnName + " DESC";
             table = table.DefaultView.ToTable();
             ImprimirNombreTodosPost(table);
         }
@@ -143,17 +147,17 @@ namespace ProjectoFinal
             }
             Console.ForegroundColor = ConsoleColor.Gray;
         }
-        private void ImprimirNombreTodosPost()
-        {
-            DataTable table = SQLManager.ObtenTodosPost(currentCirculo);
+        //private void ImprimirNombreTodosPost()
+        //{
+        //    DataTable table = SQLManager.ObtenTodosPost(currentCirculo);
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            foreach (DataRow row in table.Rows)
-            {
-                Console.WriteLine("{0}. Post: {1}, por {2} - {3}", row.ItemArray[6], row.ItemArray[0], row.ItemArray[1], row.ItemArray[3]);
-            }
-            Console.ForegroundColor = ConsoleColor.Gray;
-        }
+        //    Console.ForegroundColor = ConsoleColor.Yellow;
+        //    foreach (DataRow row in table.Rows)
+        //    {
+        //        Console.WriteLine("{0}. Post: {1}, por {2} - {3}", row.ItemArray[6], row.ItemArray[0], row.ItemArray[1], row.ItemArray[3]);
+        //    }
+        //    Console.ForegroundColor = ConsoleColor.Gray;
+        //}
         private void ManejaVotos(int cantidad)
         {
             string query = "UPDATE posts SET rating = rating + " + cantidad + " WHERE circulo_pertenece = " +

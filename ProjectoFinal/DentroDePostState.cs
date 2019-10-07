@@ -24,7 +24,6 @@ namespace ProjectoFinal
                 Console.WriteLine("Has entrado al post: {0}", postActual);
                 //Imprime todos los comentarios existentes.
                 ImprimirComentarioDeAutor(postActual);
-                SortPorRating(postActual);
                 //Preguntale al usuario que desea hacer
                 Console.WriteLine("¿Qué desea hacer? ");
                 Console.WriteLine("1. Escribir un comentario dentro del post");
@@ -34,10 +33,12 @@ namespace ProjectoFinal
                 if (organizacion == true)
                 {
                     Console.WriteLine("5. Ordenar por fecha");
+                    SortPorRating(postActual);
                 }
                 else
                 {
                     Console.WriteLine("5. Ordenar por rating");
+                    SortPorFecha(postActual);
                 }
                 byte choice;
 
@@ -124,7 +125,7 @@ namespace ProjectoFinal
             organizacion = true;
             DataTable table = SQLManager.ObtenTodosComentarios(nombrePost);
 
-            table.DefaultView.Sort = table.Columns[4].ColumnName + " ASC";
+            table.DefaultView.Sort = table.Columns[3].ColumnName + " DESC";
             table = table.DefaultView.ToTable();
             ImprimirTodosComentarios(table);
         }
@@ -133,7 +134,7 @@ namespace ProjectoFinal
             organizacion = false;
             DataTable table = SQLManager.ObtenTodosComentarios(nombrePost);
 
-            table.DefaultView.Sort = table.Columns[6].ColumnName + " ASC";
+            table.DefaultView.Sort = table.Columns[5].ColumnName + " DESC";
             table = table.DefaultView.ToTable();
             ImprimirTodosComentarios(table);
         }
