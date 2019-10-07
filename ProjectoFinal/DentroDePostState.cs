@@ -10,6 +10,7 @@ namespace ProjectoFinal
     {
         private string postActual;
         private string perfilActual;
+        private bool organizacion;
         public DentroDePostState(string nombrePost, string nombrePerfil)
         {
             this.postActual = nombrePost;
@@ -23,13 +24,21 @@ namespace ProjectoFinal
                 Console.WriteLine("Has entrado al post: {0}", postActual);
                 //Imprime todos los comentarios existentes.
                 ImprimirComentarioDeAutor(postActual);
-                ImprimirTodosComentarios(postActual);
+                SortPorRating(postActual);
                 //Preguntale al usuario que desea hacer
                 Console.WriteLine("¿Qué desea hacer? ");
                 Console.WriteLine("1. Escribir un comentario dentro del post");
                 Console.WriteLine("2. Eliminar un comentario dentro del post");
                 Console.WriteLine("3. Subir el rating de un comentario");
                 Console.WriteLine("4. Bajar el rating de un comentario");
+                if (organizacion == true)
+                {
+                    Console.WriteLine("5. Ordenar por fecha");
+                }
+                else
+                {
+                    Console.WriteLine("5. Ordenar por rating");
+                }
                 byte choice;
 
                 if (byte.TryParse(Console.ReadLine(), out choice))
@@ -74,6 +83,18 @@ namespace ProjectoFinal
                                 AfectarComentario(query);
                                 break;
                             }
+                        case 5:
+                            {
+                                if (organizacion == true)
+                                {
+                                    SortPorFecha(postActual);
+                                }
+                                else
+                                {
+                                    SortPorRating(postActual);
+                                }
+                            }
+                            break;
                     }
                 }
             }
@@ -98,10 +119,26 @@ namespace ProjectoFinal
             DataTable table = SQLManager.ObtenComentarioAutor(nombrePost);
             Console.WriteLine("Autor: {0}", table.Rows[0].ItemArray[0]);
         }
-        private void ImprimirTodosComentarios(string nombrePost)
+        private void SortPorRating(string nombrePost)
         {
+            organizacion = true;
             DataTable table = SQLManager.ObtenTodosComentarios(nombrePost);
 
+            table.DefaultView.Sort = table.Columns[4].ColumnName + " ASC";
+            table = table.DefaultView.ToTable();
+            ImprimirTodosComentarios(table);
+        }
+        private void SortPorFecha(string nombrePost)
+        {
+            organizacion = false;
+            DataTable table = SQLManager.ObtenTodosComentarios(nombrePost);
+
+            table.DefaultView.Sort = table.Columns[6].ColumnName + " ASC";
+            table = table.DefaultView.ToTable();
+            ImprimirTodosComentarios(table);
+        }
+        private void ImprimirTodosComentarios(DataTable table)
+        {
             Console.ForegroundColor = ConsoleColor.Green;
             foreach (DataRow row in table.Rows)
             {

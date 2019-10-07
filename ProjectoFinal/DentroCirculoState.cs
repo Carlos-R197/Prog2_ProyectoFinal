@@ -10,6 +10,7 @@ namespace ProjectoFinal
     {
         private string currentPerfil;
         private string currentCirculo;
+        private bool organizacion = true;
 
         public DentroCirculoState(string nombrePerfil, string nombreCirculoActual)
         {
@@ -25,14 +26,19 @@ namespace ProjectoFinal
                 Console.WriteLine("Has entrado al circulo: {0}", currentCirculo);
 
                 //Hacer que se impriman todos los posts existentes. 
-                ImprimirNombreTodosPost();
-
+                SortPorRating();
                 Console.WriteLine("¿Qué desea hacer?");
                 Console.WriteLine("1. Crear un post");
                 Console.WriteLine("2. Eliminar un post");
                 Console.WriteLine("3. Ver un post existente");
-                Console.WriteLine("4. Subir el rating de un post");
-                Console.WriteLine("5. Bajar el rating de un post");
+                if (organizacion == true)
+                {
+                    Console.WriteLine("4. Ordenar por fecha");
+                }
+                else 
+                {
+                    Console.WriteLine("4. Ordenar por rating");
+                }
                 byte input = byte.Parse(Console.ReadLine());
 
                 switch (input)
@@ -45,12 +51,12 @@ namespace ProjectoFinal
                             string comentario = Console.ReadLine();
                             int rating = 0;
                             DateTime today = DateTime.Today;
-                            int numero = ObtenNumeroPost(currentCirculo) + 1;
 
                             string query = "INSERT INTO posts VALUES('" + tituloPost + "', '" + currentPerfil + "','" +
-                                            currentCirculo + "', " + rating + ", '" + comentario + "', '" + today.ToString("yyyy-MM-dd") + "', " + numero  + ")";
+                                            currentCirculo + "', " + rating + ", '" + comentario + "', '" + today.ToString("yyyy-MM-dd") + "')";
                             SQLManager.EjecutarQuery(query);
                             Console.WriteLine("El post ha sido creado con exito");
+                            Console.ReadLine();
                             break;
                         }
                     case 2:
@@ -65,7 +71,8 @@ namespace ProjectoFinal
                                 Console.Write("El post fue borrado");
                             }
                             else
-                                Console.Write("Ese post no existe.");
+                            { Console.Write("Ese post no existe."); }
+                            Console.ReadLine();
                             break;
                         }
                     case 3:
@@ -78,57 +85,46 @@ namespace ProjectoFinal
                             }
                             else
                                 Console.Write("Ese post no existe");
-                            break;
                         }
+                        Console.ReadLine();
+                        break;
                     case 4:
+                        if (organizacion == true)
                         {
-                            Console.Write("Escriba el número del post al que desea subirle el rating: ");
-                            ManejaVotos(1);
-                            break;
+                            SortPorFecha();
                         }
-                    case 5:
+                        else 
                         {
-                            Console.Write("Escriba el número del post al que desea subirle el rating: ");
-                            ManejaVotos(-1);
-                            break;
+                            SortPorRating();
                         }
-                }
-                Console.ReadLine();
-            }
-        }
-
-        private void ManejaVotos(int cantidad)
-        {
-            string query = "UPDATE posts SET rating = rating + " + cantidad + " WHERE circulo_pertenece = " +
-                                        "'" + currentCirculo + "'" + "AND numero = ";
-
-            short opcion;
-            if (short.TryParse(Console.ReadLine(), out opcion))
-            {
-                if (opcion <= ObtenNumeroPost(currentCirculo))
-                {
-                    query += opcion;
-                    SQLManager.EjecutarQuery(query);
+                        break;
                 }
             }
-            else
-                Console.Write("Ese comentario no existe.");
         }
-
-        private int ObtenNumeroPost(string nombreCirculo)
+        private void SortPorRating() 
         {
-            DataTable table = SQLManager.ObtenTodosPost(nombreCirculo);
-            return table.Rows.Count;
-        }
-
-        private void ImprimirNombreTodosPost()
-        {
+            organizacion = true;
             DataTable table = SQLManager.ObtenTodosPost(currentCirculo);
 
+            table.DefaultView.Sort = table.Columns[4].ColumnName + " ASC";
+            table = table.DefaultView.ToTable();
+            ImprimirNombreTodosPost(table);
+        }
+        private void SortPorFecha() 
+        {
+            organizacion = false;
+            DataTable table = SQLManager.ObtenTodosPost(currentCirculo);
+
+            table.DefaultView.Sort = table.Columns[6].ColumnName + " ASC";
+            table = table.DefaultView.ToTable();
+            ImprimirNombreTodosPost(table);
+        }
+        private void ImprimirNombreTodosPost(DataTable table)
+        {
             Console.ForegroundColor = ConsoleColor.Yellow;
             foreach (DataRow row in table.Rows)
             {
-                Console.WriteLine("{0}. Post: {1}, por {2} - {3}", row.ItemArray[6] , row.ItemArray[0], row.ItemArray[1], row.ItemArray[3]);
+                Console.WriteLine("Post: {0}, por {1} - {2}", row.ItemArray[0], row.ItemArray[1], row.ItemArray[3]);
             }
             Console.ForegroundColor = ConsoleColor.Gray;
         }
