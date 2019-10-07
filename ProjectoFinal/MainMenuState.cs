@@ -82,7 +82,7 @@ namespace ProjectoFinal
                             break;
                         case 2:
                             Console.Clear();
-                            Console.Write("Escriba el nombre: ");
+                            Console.Write("Escriba el nombre de la persona a agregar: ");
                             string nom = Console.ReadLine();
                             SQLManager.EncuentraPerfilesQueContienen(nom);
                             Console.WriteLine("Presione (Y) para agregar a una persona, (N) para ir atras");

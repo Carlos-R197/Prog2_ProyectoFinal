@@ -35,11 +35,13 @@ namespace ProjectoFinal
                 if (organizacion == true)
                 {
                     Console.WriteLine("7. Ordenar por fecha");
+                    Console.WriteLine("\n_________________________________________________\n");
                     SortPorRating(postActual);
                 }
                 else
                 {
                     Console.WriteLine("7. Ordenar por rating");
+                    Console.WriteLine("\n_________________________________________________\n");
                     SortPorFecha(postActual);
                 }
                 byte choice;

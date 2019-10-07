@@ -39,11 +39,13 @@ namespace ProjectoFinal
                     if (organizacion == true)
                     {
                         Console.WriteLine("7. Ordenar por fecha");
+                        Console.WriteLine("\n_________________________________________________\n");
                         SortPorRating();
                     }
                     else
                     {
                         Console.WriteLine("7. Ordenar por rating");
+                        Console.WriteLine("\n_________________________________________________\n");
                         SortPorFecha();
                     }
                     byte input = byte.Parse(Console.ReadLine());
