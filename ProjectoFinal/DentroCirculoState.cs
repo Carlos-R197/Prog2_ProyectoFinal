@@ -85,10 +85,17 @@ namespace ProjectoFinal
                             string nombrePost = Console.ReadLine();
                             if (SQLManager.RevisaSiNombreExiste("posts", nombrePost))
                             {
-                                string query = "DELETE FROM posts WHERE nombre = " + "'" + nombrePost + "'";
-                                string query2 = "DELETE FROM comentarios WHERE post_pertenece = " + "'" + nombrePost + "'";
-                                SQLManager.EjecutarQuery(query, query2);
-                                Console.Write("El post fue borrado");
+                                if (SQLManager.RevisaSiPuedesBorrar(nombrePost, this.currentPerfil))
+                                {
+                                    string query = "DELETE FROM posts WHERE nombre = " + "'" + nombrePost + "'";
+                                    string query2 = "DELETE FROM comentarios WHERE post_pertenece = " + "'" + nombrePost + "'";
+                                    SQLManager.EjecutarQuery(query, query2);
+                                    Console.Write("El post fue borrado");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("No eres el creador de este post");
+                                }
                             }
                             else
                             { Console.Write("Ese post no existe."); }

@@ -360,8 +360,9 @@ namespace ProjectoFinal.Data
             string query9 = "UPDATE `lista_amigos` SET `amigo`= \"" + nombre + "\" WHERE `amigo`= \"" + nombreViejo + "\"";
             //Actualizar post
             string query10 = "UPDATE `posts` SET `autor`= \"" + nombre + "\"  WHERE `autor`= \"" + nombreViejo + "\"";
-
-            SQLManager.EjecutarQuery(query, query2, query3, query4, query5, query6, query7, query8, query9, query10);
+            //Actualizar circulo
+            string query11 = "UPDATE `circulos` SET `creador`= \"" + nombre + "\"  WHERE `creador`= \"" + nombreViejo + "\"";
+            SQLManager.EjecutarQuery(query, query2, query3, query4, query5, query6, query7, query8, query9, query10, query11);
             Console.WriteLine("Modificado exitosamente");
         }
         public static bool RevisaSiNombreExisteInvitacion(string nombreTabla, string nombre)
@@ -450,6 +451,39 @@ namespace ProjectoFinal.Data
                 }
             }
 
+        }
+        public static bool RevisaSiPuedesBorrar(string nombreasunto, string nombre)
+        {
+            bool result = false;
+            string query = "Select `autor` = \"" + nombre + "\" FROM `posts` WHERE `nombre` = \"" + nombreasunto + "\"";
+            //string query2 = "Select `numero` = \"" + nombreasunto + "\" FROM `comentarios` WHERE `autor` = \"" + nombre + "\"";
+            string query3 = "Select `creador` = \"" + nombre + "\" FROM `circulos` WHERE `nombre` = \"" + nombreasunto + "\"";
+            AbrirConexion();
+            MySqlCommand comando = new MySqlCommand(query, conexion);
+            //MySqlCommand comando2 = new MySqlCommand(query2, conexion);
+            MySqlCommand comando3 = new MySqlCommand(query3, conexion);
+
+            MySqlDataReader reg  = comando.ExecuteReader();
+            if (reg.Read())
+            {
+                result = true;
+            }
+            reg.Close();
+            //MySqlDataReader reg2 = comando2.ExecuteReader();
+            //if (reg2.Read())
+            //{
+            //    result = true;
+            //}
+            reg2.Close();
+            MySqlDataReader reg3 = comando3.ExecuteReader();
+
+            if (reg3.Read())
+            {
+                result = true;
+            }
+            reg3.Close();
+            CerrarConexion();
+            return result;
         }
 
         public static Post ObtenPost(string nombrePost)
