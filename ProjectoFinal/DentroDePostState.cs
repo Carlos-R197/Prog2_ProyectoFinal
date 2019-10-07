@@ -65,7 +65,7 @@ namespace ProjectoFinal
                             }
                         case 2:
                             {
-                                Console.Write("Escriba el numero del comentario que desea borrar: ");
+                                string numero = Console.ReadLine();
                                 string query = "DELETE FROM comentarios WHERE post_pertenece = " + "'" + postActual + "'" + " AND numero = ";
                                 AfectarComentario(query);
                                 break;
