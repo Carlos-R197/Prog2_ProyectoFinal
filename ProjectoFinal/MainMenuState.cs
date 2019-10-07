@@ -114,25 +114,34 @@ namespace ProjectoFinal
                                         appState.ChangeState(new CreatingChatState(currentPerfil));
                                         break;
                                     case 2:
-                                        Console.Clear();
-                                        Console.WriteLine("Chats Existentes");
-                                        Console.WriteLine();
-                                        SQLManager.VerChats(currentPerfil);
-                                        Console.WriteLine();
-                                        Console.WriteLine("1. Volver");
-                                        Console.WriteLine("Escriba el nombre del Chat al que desea ingresar");
-                                        string perfil = Console.ReadLine();
-                                        if (perfil == "1")
-                                        {
-                                            break;
-                                        }
-                                        else
-                                        {
-                                            Perfil perfil2 = new Perfil(perfil, "", "", 0, 0);
-                                            Chat chat = new Chat(currentPerfil, perfil2);
-                                            appState.ChangeState(new ChattingState(chat, perfil));
-                                            break;
-                                        }   
+                                        
+                                            Console.Clear();
+                                            Console.WriteLine("Chats Existentes");
+                                            Console.WriteLine();
+                                            SQLManager.VerChats(currentPerfil);
+                                            Console.WriteLine();
+                                            Console.WriteLine("1. Volver");
+                                            Console.WriteLine("Escriba el nombre del Chat al que desea ingresar");
+                                            string perfil = Console.ReadLine();
+
+                                            if (SQLManager.ValidarExistenciaAmigo(this.currentPerfil.Nombre, perfil) == true)
+                                            {
+                                                Perfil perfil2 = new Perfil(perfil, "", "", 0, 0);
+                                                Chat chat = new Chat(currentPerfil, perfil2);
+                                                appState.ChangeState(new ChattingState(chat, perfil));
+                                                break;
+                                            }
+                                            else if(perfil == "1")
+                                            {
+                                                break;
+                                            }         
+                                            else
+                                            {
+                                                Console.WriteLine("El Usuario no esta en su lista de amigo");
+                                                Console.ReadKey();
+                                                continue;
+                                            }
+                                                                         
                                     case 3:
                                         break;
                                     default:
