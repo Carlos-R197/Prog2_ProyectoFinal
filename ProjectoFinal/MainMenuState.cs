@@ -128,7 +128,7 @@ namespace ProjectoFinal
                             }
                             break;
                         case 5:
-                            appState.ChangeState(new CreatingCirculoState());
+                            appState.ChangeState(new CreatingCirculoState(currentPerfil.Nombre));
                             break;
                         case 6:
                             {
@@ -137,10 +137,15 @@ namespace ProjectoFinal
 
                                 if (SQLManager.RevisaSiNombreExiste("circulos", nombreCirculo))
                                 {
-                                    string query = "DELETE FROM circulos WHERE nombre = " + "'" + nombreCirculo + "'";
-                                    //SQLManager.BorrarCirculo(nombreCirculo);
-                                    SQLManager.EjecutarQuery(query);
-                                    Console.WriteLine("El círculo fue borrado.");
+                                    if (SQLManager.RevisaSiPuedesBorrar(nombreCirculo, this.currentPerfil.Nombre))
+                                    {
+                                        string query = "DELETE FROM circulos WHERE nombre = " + "'" + nombreCirculo + "'";
+                                        //SQLManager.BorrarCirculo(nombreCirculo);
+                                        SQLManager.EjecutarQuery(query);
+                                        Console.WriteLine("El círculo fue borrado.");
+                                    }
+                                    else
+                                        Console.WriteLine("No eres el creador de este circulo");
                                 }
                                 else
                                     Console.WriteLine("Ese círculo no existe.");

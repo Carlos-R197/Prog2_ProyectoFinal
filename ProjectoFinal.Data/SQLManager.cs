@@ -51,14 +51,12 @@ namespace ProjectoFinal.Data
             MySqlDataAdapter dap = new MySqlDataAdapter(comando);
             
             dap.Fill(table);
+            dap.Dispose();
             CerrarConexion();
 
             foreach (DataRow row in table.Rows)
             {
-                foreach (var item in row.ItemArray)
-                {
-                    Console.WriteLine("{0}", item);
-                }
+                Console.WriteLine("{0}", row.ItemArray[0]);
             }
         }
         //Imprimira la columna de nombres de una tabla si le pasas el nombre de la tabla
@@ -360,8 +358,9 @@ namespace ProjectoFinal.Data
             string query9 = "UPDATE `lista_amigos` SET `amigo`= \"" + nombre + "\" WHERE `amigo`= \"" + nombreViejo + "\"";
             //Actualizar post
             string query10 = "UPDATE `posts` SET `autor`= \"" + nombre + "\"  WHERE `autor`= \"" + nombreViejo + "\"";
-
-            SQLManager.EjecutarQuery(query, query2, query3, query4, query5, query6, query7, query8, query9, query10);
+            //Actualizar circulo
+            string query11 = "UPDATE `circulos` SET `creador`= \"" + nombre + "\"  WHERE `creador`= \"" + nombreViejo + "\"";
+            SQLManager.EjecutarQuery(query, query2, query3, query4, query5, query6, query7, query8, query9, query10, query11);
             Console.WriteLine("Modificado exitosamente");
         }
         public static bool RevisaSiNombreExisteInvitacion(string nombreTabla, string nombre)
@@ -474,6 +473,39 @@ namespace ProjectoFinal.Data
             }
             return result;
         }
+        public static bool RevisaSiPuedesBorrar(string nombreasunto, string nombre)
+        {
+            bool result = false;
+            string query = "Select `autor` = \"" + nombre + "\" FROM `posts` WHERE `nombre` = \"" + nombreasunto + "\"";
+            //string query2 = "Select `numero` = \"" + nombreasunto + "\" FROM `comentarios` WHERE `autor` = \"" + nombre + "\"";
+            string query3 = "Select `creador` = \"" + nombre + "\" FROM `circulos` WHERE `nombre` = \"" + nombreasunto + "\"";
+            AbrirConexion();
+            MySqlCommand comando = new MySqlCommand(query, conexion);
+            //MySqlCommand comando2 = new MySqlCommand(query2, conexion);
+            MySqlCommand comando3 = new MySqlCommand(query3, conexion);
+
+            MySqlDataReader reg  = comando.ExecuteReader();
+            if (reg.Read())
+            {
+                result = true;
+            }
+            reg.Close();
+            //MySqlDataReader reg2 = comando2.ExecuteReader();
+            //if (reg2.Read())
+            //{
+            //    result = true;
+            //}
+            reg2.Close();
+            MySqlDataReader reg3 = comando3.ExecuteReader();
+
+            if (reg3.Read())
+            {
+                result = true;
+            }
+            reg3.Close();
+            CerrarConexion();
+            return result;
+        }
 
         public static Post ObtenPost(string nombrePost)
         {
@@ -490,6 +522,24 @@ namespace ProjectoFinal.Data
             Post post = new Post(table.Rows[0].ItemArray[0].ToString(), table.Rows[0].ItemArray[1].ToString(), table.Rows[0].ItemArray[4].ToString(), 
                 (DateTime)table.Rows[0].ItemArray[5], edad);
             return post;
+        }
+
+        public static bool RevisaSiSuscrito(string nombreCirculo, string nombrePerfil)
+        {
+            string query = "SELECT * FROM circulos_perfiles WHERE circulo_nombre = " + "'" + nombreCirculo + "'" + "AND perfil_nombre = " + "'" + nombrePerfil + "'";
+            DataTable table = new DataTable();
+            using (MySqlConnection conexion = new MySqlConnection(conexionString))
+            {
+                conexion.Open();
+                MySqlCommand comando = new MySqlCommand(query, conexion);
+                MySqlDataAdapter adp = new MySqlDataAdapter(comando);
+                adp.Fill(table);
+            }
+
+            if (table.Rows.Count > 0)
+                return true;
+            else
+                return false;
         }
     }
 }
