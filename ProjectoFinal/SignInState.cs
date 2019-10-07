@@ -34,7 +34,9 @@ namespace ProjectoFinal
                 Perfil perfil = new Perfil(nombreCompleto,correo,contraseña,edad, rating);
                 SQLManager.CerrarConexion();
                 //Console.WriteLine("Usuario Existe");
-                appState.ChangeState(new MainMenuState(perfil));
+                MainMenuState state = new MainMenuState();
+                state.Inicializar(perfil); //Pasale los valores que necesitas al singleton.
+                appState.ChangeState(state);
             }
             else
             {
