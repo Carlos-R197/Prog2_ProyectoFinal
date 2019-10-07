@@ -26,7 +26,7 @@ namespace ProjectoFinal
                 while (true)
                 {
                     Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Magenta;
                     Console.WriteLine("Has entrado al circulo: {0}", circuloActual);
                     Console.ForegroundColor = ConsoleColor.Gray;
                     //Hacer que se impriman todos los posts existentes. 
