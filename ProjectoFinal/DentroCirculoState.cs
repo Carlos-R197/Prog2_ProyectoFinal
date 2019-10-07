@@ -52,12 +52,27 @@ namespace ProjectoFinal
                             string tituloPost = Console.ReadLine();
                             Console.Write("¿Qué desea poner como su comentario? ");
                             string comentario = Console.ReadLine();
+                            Console.Write("¿Cuál sera la edad minima para ver el post? ");
+                            int edad;
+                            if (int.TryParse(Console.ReadLine(), out edad))
+                            {
+                                if (edad > 150 || edad < 0)
+                                {
+                                    Console.Write("Numero demasiado grande o demasiado pequeño.");
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                Console.Write("Entrada no valida");
+                                break;
+                            }
                             int rating = 0;
                             DateTime today = DateTime.Today;
                             int numero = ObtenNumeroPost(currentCirculo) + 1;
 
                             string query = "INSERT INTO posts VALUES('" + tituloPost + "', '" + currentPerfil + "','" +
-                                            currentCirculo + "', " + rating + ", '" + comentario + "', '" + today.ToString("yyyy-MM-dd") + "', " + numero + ")";
+                                     currentCirculo + "', " + rating + ", '" + comentario + "', '" + today.ToString("yyyy-MM-dd") + "', " + numero + ", " + edad + ")";
                             SQLManager.EjecutarQuery(query);
                             Console.WriteLine("El post ha sido creado con exito");
                             Console.ReadLine();
@@ -85,7 +100,12 @@ namespace ProjectoFinal
                             string nombrePost = Console.ReadLine();
                             if (SQLManager.RevisaSiNombreExiste("posts", nombrePost))
                             {
-                                appState.ChangeState(new DentroDePostState(nombrePost, currentPerfil));
+                                Perfil actualPerfil  = SQLManager.ObtenPerfil(currentPerfil);
+                                Post actualPost = SQLManager.ObtenPost(nombrePost);
+                                if (actualPerfil.Edad >= actualPost.Edad)
+                                    appState.ChangeState(new DentroDePostState(nombrePost, currentPerfil));
+                                else
+                                    Console.Write("Usted no tiene la edad suficiente para entrar a este post");
                             }
                             else
                                 Console.Write("Ese post no existe");

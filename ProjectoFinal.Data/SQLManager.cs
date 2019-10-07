@@ -436,5 +436,22 @@ namespace ProjectoFinal.Data
             }
 
         }
+
+        public static Post ObtenPost(string nombrePost)
+        {
+            string query = "SELECT * FROM posts WHERE nombre = " + "'" + nombrePost + "'";
+            DataTable table = new DataTable();
+            using (MySqlConnection conexion = new MySqlConnection(conexionString))
+            {
+                conexion.Open();
+                MySqlCommand comando = new MySqlCommand(query, conexion);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(comando);
+                adapter.Fill(table);
+            }
+            int edad = int.Parse(table.Rows[0].ItemArray[7].ToString());
+            Post post = new Post(table.Rows[0].ItemArray[0].ToString(), table.Rows[0].ItemArray[1].ToString(), table.Rows[0].ItemArray[4].ToString(), 
+                (DateTime)table.Rows[0].ItemArray[5], edad);
+            return post;
+        }
     }
 }
