@@ -25,7 +25,7 @@ namespace ProjectoFinal
                 Console.WriteLine("¿Qué desea hacer?");
                 Console.WriteLine("1. Revisar propio perfil");
                 Console.WriteLine("2. Buscar un perfil existente");
-                Console.WriteLine("3. Crear un chat privado");
+                Console.WriteLine("3. chat privado");
                 Console.WriteLine("4. Ver Lista de circulos existentes");
                 Console.WriteLine("5. Crear nuevo círculo.");
                 Console.WriteLine("6. Borrar un circulo existente");
@@ -73,7 +73,25 @@ namespace ProjectoFinal
                             Console.ReadLine();
                             break;
                         case 3:
-                            appState.ChangeState(new CreatingChatState(currentPerfil));
+                            Console.WriteLine("1. Crear un chat privado");
+                            Console.WriteLine("2. Ver chats");
+                            byte opcion;
+
+                            if(byte.TryParse(Console.ReadLine(),out opcion))
+                            {
+                                switch (opcion)
+                                {
+                                    case 1:
+                                        appState.ChangeState(new CreatingChatState(currentPerfil));
+                                        break;
+                                    case 2:
+                                        SQLManager.VerChats(currentPerfil);
+                                        Console.WriteLine("Escriba el nombre del Chat al que desea ingresar");
+                                        string perfil = Console.ReadLine();
+                                        //appState.ChangeState(new ChattingState(chat));
+                                        break;
+                                }
+                            }                           
                             break;
                         case 4:
                             {

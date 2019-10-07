@@ -28,7 +28,7 @@ namespace ProjectoFinal
                 {
                     perfil.ImprimirNombre();
                 }
-
+                
                 Console.Write("Escriba el nombre del perfil que desea añadir al chat: ");
                 string input = Console.ReadLine();
 
@@ -43,6 +43,7 @@ namespace ProjectoFinal
                     }
 
                     currentChat = new Chat(person1, person2);
+                    appState.ChangeState(new ChattingState(currentChat));
                 }
                 else
                 {

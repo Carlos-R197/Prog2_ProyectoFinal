@@ -17,7 +17,7 @@ namespace ProjectoFinal
         {
             Console.Clear();
             Console.WriteLine("Presione 1 para salir");
-
+            SQLManager.VerMensajes(currentChat);
             while (true)
             { 
                 string message = Console.ReadLine();
@@ -25,6 +25,8 @@ namespace ProjectoFinal
                 {
                     Mensaje mensaje = new Mensaje(DateTime.Now, currentChat.Perfil1, message);
                     currentChat.AddMensaje(mensaje);
+                    SQLManager.GuardarChat(currentChat);
+                    SQLManager.VerMensajes(currentChat);
                 }
                 else
                     appState.ChangeState(new MainMenuState(currentChat.Perfil1));

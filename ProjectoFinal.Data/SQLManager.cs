@@ -9,7 +9,7 @@ namespace ProjectoFinal.Data
 {
     public static class SQLManager
     {
-        public static MySqlConnection conexion = new MySqlConnection("Server=remotemysql.com; Database=QRqGefDOkx; Uid=QRqGefDOkx; Pwd=P80kXnXOFM;");
+        public static MySqlConnection conexion = new MySqlConnection("Server=remotemysql.com; Database= ; Uid=QRqGefDOkx; Pwd=P80kXnXOFM;");
         private static string conexionString = "Server=remotemysql.com; Database=QRqGefDOkx; Uid=QRqGefDOkx; Pwd=P80kXnXOFM;";
 
         public static void AbrirConexion()
@@ -25,7 +25,7 @@ namespace ProjectoFinal.Data
         public static bool Comprobar(string nombre, string contrasena)
         {
             bool result = false;
-            string query = "SELECT * FROM perfiles_registrados WHERE nombre='"+nombre+"' AND contrasena='"+contrasena+"'";
+            string query = "use QRqGefDOkx; SELECT * FROM perfiles_registrados WHERE nombre='" + nombre+"' AND contrasena='"+contrasena+"'";
             AbrirConexion();
             MySqlCommand comando = new MySqlCommand(query, conexion);
             MySqlDataReader reg = null;
@@ -369,6 +369,69 @@ namespace ProjectoFinal.Data
             }
             CerrarConexion();
             return result;
+        }
+
+        public static void GuardarChat(Chat chat)
+        {
+            string mensajero = chat.Perfil1.Nombre;
+            string receptor = chat.Perfil2.Nombre;
+            string mensaje = chat.Conversacion.ToString();
+
+            string query = "insert into chat(mensajero,receptor,mensaje) value('" + mensajero + "','" + receptor + "','" + mensaje + "')";
+            AbrirConexion();
+            MySqlCommand cmd = new MySqlCommand(query, conexion);
+            cmd.ExecuteNonQuery();
+            CerrarConexion();
+        }
+        
+        public static void VerMensajes(Chat chat)
+        {
+            string mensajero = chat.Perfil1.Nombre;
+            string receptor = chat.Perfil2.Nombre;
+
+            string query = "select mensaje from chat where mensajero='"+mensajero+"'and receptor='"+receptor+"' OR mensajero='"+receptor+"' and receptor='"+mensajero+"'";
+            AbrirConexion();
+            MySqlCommand cmd = new MySqlCommand(query, conexion);
+            DataTable table = new DataTable();
+
+            MySqlDataAdapter dap = new MySqlDataAdapter(cmd);
+
+            dap.Fill(table);
+            CerrarConexion();
+
+            foreach (DataRow row in table.Rows)
+            {
+                foreach (var item in row.ItemArray)
+                {
+                    Console.WriteLine("{0}", item);
+                    
+                }
+            }
+        }
+
+        public static void VerChats(Perfil perfil)
+        {
+            string mensajero = perfil.Nombre;
+
+
+            string query = "select receptor from chat where mensajero='"+mensajero+"'";
+            AbrirConexion();
+            MySqlCommand cmd = new MySqlCommand(query, conexion);
+            DataTable table = new DataTable();
+
+            MySqlDataAdapter dap = new MySqlDataAdapter(cmd);
+            dap.Fill(table);
+            CerrarConexion();
+
+            foreach (DataRow row in table.Rows)
+            {
+                foreach (var item in row.ItemArray)
+                {
+                    Console.WriteLine("{0}", item);
+
+                }
+            }
+
         }
     }
 }
