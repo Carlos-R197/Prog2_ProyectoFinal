@@ -35,11 +35,13 @@ namespace ProjectoFinal
                 if (organizacion == true)
                 {
                     Console.WriteLine("7. Ordenar por fecha");
+                    Console.WriteLine("\n_________________________________________________\n");
                     SortPorRating(postActual);
                 }
                 else
                 {
                     Console.WriteLine("7. Ordenar por rating");
+                    Console.WriteLine("\n_________________________________________________\n");
                     SortPorFecha(postActual);
                 }
                 byte choice;
@@ -87,7 +89,18 @@ namespace ProjectoFinal
                                 break;
                             }
                         case 5:
-                            //appState.ChangeState(new DentroDeComentarioState());    
+                            Console.Write("Escriba el numero del comentario al que desea ir: ");
+                            byte num;
+                            if (byte.TryParse(Console.ReadLine(), out num))
+                            {
+                                if (num <= ObtenNumeroComentarios(postActual))
+                                {
+                                    string nombreComentario = SQLManager.ObtenNombreComentario(postActual, num);
+                                    appState.ChangeState(new DentroDeComentarioState(nombreComentario, postActual, perfilActual));
+                                }
+                            }
+                            else
+                                Console.WriteLine("Entrada no válida");
                             break;
                         case 6:
                             appState.GoBackToPrevious();    
@@ -150,6 +163,7 @@ namespace ProjectoFinal
         }
         private void ImprimirTodosComentarios(DataTable table)
         {
+            Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Green;
             foreach (DataRow row in table.Rows)
             {

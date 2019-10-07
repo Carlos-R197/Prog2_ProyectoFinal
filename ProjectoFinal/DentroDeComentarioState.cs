@@ -27,8 +27,9 @@ namespace ProjectoFinal
             int numeroDeComentario = DentroDePostState.ObtenNumeroComentarios(comentarioActual) + 1;
 
             string query = "INSERT INTO comentarios VALUES('" + perfilActual + "', '" + postActual + "', '" +
-                comentario + "', " + rating + ", '" + today.ToString("yyyy-MM-dd") + "', '" + numeroDeComentario + "')";
+                comentario + "', " + rating + ", '" + today.ToString("yyyy-MM-dd") + "', '" + numeroDeComentario + "', '" +  comentarioActual + "')";
             SQLManager.EjecutarQuery(query);
+            Console.Write("Su comentario fue guardado");
         }
     }
 }

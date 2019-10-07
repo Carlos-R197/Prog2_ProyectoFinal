@@ -58,6 +58,7 @@ namespace ProjectoFinal
                             appState.GoBackToFirst();
                             break;
                         case 1:
+                            Console.Clear();
                             currentPerfil.ImprimirInformacion();
                             Console.WriteLine("Presione (U) para visualizar su lista de amigos");
                             Console.WriteLine("Presione (Y) para modificar sus datos");
@@ -80,9 +81,23 @@ namespace ProjectoFinal
                             }
                             break;
                         case 2:
-                            Console.Write("Escriba el nombre: ");
+                            Console.Clear();
+                            Console.Write("Escriba el nombre de la persona a agregar: ");
                             string nom = Console.ReadLine();
                             SQLManager.EncuentraPerfilesQueContienen(nom);
+                            Console.WriteLine("Presione (Y) para agregar a una persona, (N) para ir atras");
+                            char des = Console.ReadLine()[0];
+                            switch (char.ToLower(des))
+                            {
+                                case 'y':
+                                    Console.Write("Escriba el nombre de la persona: ");
+                                    string nombre = Console.ReadLine();
+                                    SQLManager.EnviarInvitacion("perfiles_registrados", nombre, this.currentPerfil);
+                                    Console.ReadLine();
+                                    break;
+                                case 'n':
+                                    break;
+                            }
                             Console.ReadLine();
                             break;
                         case 3:
@@ -103,13 +118,12 @@ namespace ProjectoFinal
                                         SQLManager.VerChats(currentPerfil);
                                         Console.WriteLine("Escriba el nombre del Chat al que desea ingresar");
                                         string perfil = Console.ReadLine();
-                                        
                                         Perfil perfil2 = new Perfil(perfil,"","",0,0);
                                         Chat chat = new Chat(currentPerfil,perfil2);
                                         appState.ChangeState(new ChattingState(chat));
                                         break;
                                     case 3:
-                                        return;
+                                        break;
                                     default:
                                         continue;
                                 }
@@ -117,6 +131,7 @@ namespace ProjectoFinal
                             break;
                         case 4:
                             {
+                                Console.Clear();
                                 SQLManager.ImprimirTodosCirculos();
                                 Console.Write("Escriba el nombre del circulo al que desea entrar: ");
                                 string nombreCirculo = Console.ReadLine();
@@ -154,6 +169,7 @@ namespace ProjectoFinal
                             }
                         case 7:
                             {
+                                Console.Clear();
                                 Console.ForegroundColor = ConsoleColor.Cyan;
                                 Console.WriteLine("Círculos existentes: ");
                                 SQLManager.ImprimirTodosNombre("circulos");
@@ -191,13 +207,6 @@ namespace ProjectoFinal
                                     break;
                                 }
                             }
-                            break;
-                        //Casos de prueba debajo, deben de ser implementados corretamente
-                        case 10:
-                            Console.Write("Escriba el nombre de la persona: ");
-                            string nombre = Console.ReadLine();
-                            SQLManager.EnviarInvitacion("perfiles_registrados", nombre, this.currentPerfil);
-                            Console.ReadLine();
                             break;
                         default:
                             continue;
