@@ -29,7 +29,7 @@ namespace ProjectoFinal
                     SQLManager.GuardarChat(currentChat);                    
                 }
                 else
-                    appState.ChangeState(new MainMenuState(currentChat.Perfil1));
+                    appState.ChangeState(MainMenuState.Instance);
             }
         }
     }
