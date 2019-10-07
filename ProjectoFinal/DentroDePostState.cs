@@ -54,22 +54,43 @@ namespace ProjectoFinal
                         case 2:
                             {
                                 Console.Write("Escriba el numero del comentario que desea borrar: ");
-                                short opcion;
-                                if (short.TryParse(Console.ReadLine(), out opcion))
-                                {
-                                    if (opcion <= ObtenNumeroComentarios(postActual))
-                                    {
-                                        string query = "DELETE FROM comentarios WHERE post_pertenece = " + "'" + postActual + "'" + " AND numero = " + opcion;
-                                        SQLManager.EjecutarQuery(query);
-                                    }
-                                }
-                                else
-                                    Console.Write("Ese comentario no existe.");
+                                string query = "DELETE FROM comentarios WHERE post_pertenece = " + "'" + postActual + "'" + " AND numero = ";
+                                AfectarComentario(query);
+                                break;
+                            }
+                        case 3:
+                            {
+                                Console.Write("Escriba el número del comentario al que desea subirle el rating: ");
+                                string query = "UPDATE comentarios SET rating = rating + 1 WHERE post_pertenece = " +
+                                            "'" + postActual + "'" + "AND numero = ";
+                                AfectarComentario(query);
+                                break;
+                            }
+                        case 4:
+                            {
+                                Console.Write("Escriba el número del comentario al que desea bajarle el rating: ");
+                                string query = "UPDATE comentarios SET rating = rating - 1 WHERE post_pertenece = " +
+                                            "'" + postActual + "'" + "AND numero = ";
+                                AfectarComentario(query);
                                 break;
                             }
                     }
                 }
             }
+        }
+        private void AfectarComentario(string query)
+        {
+            short opcion;
+            if (short.TryParse(Console.ReadLine(), out opcion))
+            {
+                if (opcion <= ObtenNumeroComentarios(postActual))
+                {
+                    query += opcion;
+                    SQLManager.EjecutarQuery(query);
+                }
+            }
+            else
+                Console.Write("Ese comentario no existe.");
         }
 
         private void ImprimirComentarioDeAutor(string nombrePost)
