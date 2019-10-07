@@ -39,6 +39,8 @@ namespace ProjectoFinal
                 {
                     Console.WriteLine("4. Ordenar por rating");
                 }
+                Console.WriteLine("5. Subir el rating de un post");
+                Console.WriteLine("6. Bajar el rating de un post");
                 byte input = byte.Parse(Console.ReadLine());
 
                 switch (input)
