@@ -318,7 +318,7 @@ namespace ProjectoFinal.Data
         public static string MayusculasNombres(string nombre)
         {
             char[] MayusNombre = nombre.ToCharArray();
-            // Handle the first letter in the string.  
+            // Pon la primera letra en el string
             if (MayusNombre.Length >= 1)
             {
                 if (char.IsLower(MayusNombre[0]))
@@ -326,8 +326,8 @@ namespace ProjectoFinal.Data
                     MayusNombre[0] = char.ToUpper(MayusNombre[0]);
                 }
             }
-            // Scan through the letters, checking for spaces.  
-            // ... Uppercase the lowercase letters following spaces.  
+            // Ve letra por letra buscando espacios vacios
+            // ... Has que la letras que vienen despues de espacios en blancos se vuelvan mayúsculas.  
             for (int i = 1; i < MayusNombre.Length; i++)
             {
                 if (MayusNombre[i - 1] == ' ')
@@ -399,8 +399,6 @@ namespace ProjectoFinal.Data
             CerrarConexion();
             return result;
         }
-
-        
 
         public static void GuardarChat(Chat chat)
         {
@@ -487,28 +485,6 @@ namespace ProjectoFinal.Data
                 }
             }
         }
-
-        public static bool ComprobarMensajeNuevo(string receptor)
-        {
-            bool result = false;
-            string query = "select count(*) from chat where receptor='"+receptor+"'";
-            string smsquery = "select mensaje from perfil_registrado where nombre='" + receptor + "'";
-            AbrirConexion();
-            MySqlCommand cmd2 = new MySqlCommand(smsquery, conexion);
-            MySqlCommand cmd = new MySqlCommand(query, conexion);
-            int smsvalue = Convert.ToInt32(cmd.ExecuteScalar());
-            int getvalue = Convert.ToInt32(cmd.ExecuteScalar());
-            CerrarConexion();
-            if( getvalue > smsvalue)
-            {
-                result = true;
-            }
-            else
-            {
-                result = false;
-            }
-            return result;
-        }
         public static bool RevisaSiPuedesBorrar(string nombreasunto, string nombre)
         {
             bool result = false;
@@ -592,11 +568,5 @@ namespace ProjectoFinal.Data
 
             return table.Rows[0].ItemArray[0].ToString();
         }
-        /*
-        public static string ObtenComentarioComentario(string nombrePost, int numero)
-        {
-            string query = "SELECT comentario FROM comentarios "
-        }
-        */
     }
 }
