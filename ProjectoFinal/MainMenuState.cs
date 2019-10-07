@@ -34,7 +34,7 @@ namespace ProjectoFinal
                 Console.WriteLine("0. Cerrar sesión");
                 Console.WriteLine("1. Revisar propio perfil");
                 Console.WriteLine("2. Buscar un perfil existente");
-                Console.WriteLine("3. Chat privado");                            
+                Console.WriteLine("3. chat privado");
                 Console.WriteLine("4. Ver Lista de circulos existentes");
                 Console.WriteLine("5. Crear nuevo círculo.");
                 Console.WriteLine("6. Borrar un circulo existente");
@@ -54,6 +54,7 @@ namespace ProjectoFinal
                     switch (input)
                     {
                         case 0:
+                            instance = null;
                             appState.GoBackToFirst();
                             break;
                         case 1:
@@ -85,10 +86,8 @@ namespace ProjectoFinal
                             Console.ReadLine();
                             break;
                         case 3:
-                            Console.Clear();
                             Console.WriteLine("1. Crear un chat privado");
                             Console.WriteLine("2. Ver chats");
-                            Console.WriteLine("3. Atras");
                             byte opcion;
 
                             if(byte.TryParse(Console.ReadLine(),out opcion))
@@ -106,8 +105,6 @@ namespace ProjectoFinal
                                         Chat chat = new Chat(currentPerfil,perfil2);
                                         appState.ChangeState(new ChattingState(chat));
                                         break;
-                                    case 3:
-                                        return;
                                 }
                             }                           
                             break;
@@ -136,15 +133,12 @@ namespace ProjectoFinal
 
                                 if (SQLManager.RevisaSiNombreExiste("circulos", nombreCirculo))
                                 {
-                                    if (SQLManager.RevisaSiPuedesBorrar(nombreCirculo, this.currentPerfil.Nombre))
-                                    {
-                                        string query = "DELETE FROM circulos WHERE nombre = " + "'" + nombreCirculo + "'";
-                                        //SQLManager.BorrarCirculo(nombreCirculo);
-                                        SQLManager.EjecutarQuery(query);
-                                        Console.WriteLine("El círculo fue borrado.");
-                                    }
-                                    else
-                                        Console.WriteLine("No eres el creador de este circulo");
+                                    string query = "DELETE FROM circulos WHERE nombre = " + "'" + nombreCirculo + "'";
+                                    string query2 = "DELETE FROM posts WHERE circulo_pertenece = " + "'" + nombreCirculo + "'";
+                                    string query3 = "DELETE FROM comentarios WHERE circulo_pertenece =" + "'" + nombreCirculo + "'";
+                                    //SQLManager.BorrarCirculo(nombreCirculo);
+                                    SQLManager.EjecutarQuery(query);
+                                    Console.WriteLine("El círculo fue borrado.");
                                 }
                                 else
                                     Console.WriteLine("Ese círculo no existe.");

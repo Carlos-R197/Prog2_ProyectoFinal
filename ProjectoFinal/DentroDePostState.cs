@@ -30,15 +30,16 @@ namespace ProjectoFinal
                 Console.WriteLine("2. Eliminar un comentario dentro del post");
                 Console.WriteLine("3. Subir el rating de un comentario");
                 Console.WriteLine("4. Bajar el rating de un comentario");
-                Console.WriteLine("5. Volver");
+                Console.WriteLine("5. Entrar a un comentario");
+                Console.WriteLine("6. Volver");
                 if (organizacion == true)
                 {
-                    Console.WriteLine("6. Ordenar por fecha");
+                    Console.WriteLine("7. Ordenar por fecha");
                     SortPorRating(postActual);
                 }
                 else
                 {
-                    Console.WriteLine("6. Ordenar por rating");
+                    Console.WriteLine("7. Ordenar por rating");
                     SortPorFecha(postActual);
                 }
                 byte choice;
@@ -56,7 +57,7 @@ namespace ProjectoFinal
                                 int numeroDeComentario = ObtenNumeroComentarios(postActual) + 1;
 
                                 string query = "INSERT INTO comentarios VALUES('" + perfilActual + "', '" + postActual + "', '" +
-                                    comentario + "', " + rating + ", '" + today.ToString("yyyy-MM-dd") + "', '" + numeroDeComentario + "')";
+                                    comentario + "', " + rating + ", '" + today.ToString("yyyy-MM-dd") + "', '" + numeroDeComentario + "', '" + postActual + "')";
                                 SQLManager.EjecutarQuery(query);
 
                                 Console.Write("Su comentario ha sido añadido al post");
@@ -86,9 +87,13 @@ namespace ProjectoFinal
                                 break;
                             }
                         case 5:
-                            appState.GoBackToPrevious();    
+                            
+                            
                             break;
                         case 6:
+                            appState.GoBackToPrevious();    
+                            break;
+                        case 7:
                             {
                                 if (organizacion == true)
                                 {
@@ -154,7 +159,7 @@ namespace ProjectoFinal
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
-        private int ObtenNumeroComentarios(string nombrePost)
+        public static int  ObtenNumeroComentarios(string nombrePost)
         {
             DataTable table = SQLManager.ObtenTodosComentarios(nombrePost);
             return table.Rows.Count;
