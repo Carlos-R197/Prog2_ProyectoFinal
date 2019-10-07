@@ -10,11 +10,13 @@ namespace ProjectoFinal
     {
         private string postActual;
         private string perfilActual;
+        private string circuloActual;
         private bool organizacion;
-        public DentroDePostState(string nombrePost, string nombrePerfil)
+        public DentroDePostState(string nombrePost, string nombrePerfil, string nombreCirculo)
         {
             this.postActual = nombrePost;
             this.perfilActual = nombrePerfil;
+            this.circuloActual = nombreCirculo;
         }
         public void Handle(StateMachine appState)
         {
@@ -59,7 +61,7 @@ namespace ProjectoFinal
                                 int numeroDeComentario = ObtenNumeroComentarios(postActual) + 1;
 
                                 string query = "INSERT INTO comentarios VALUES('" + perfilActual + "', '" + postActual + "', '" +
-                                    comentario + "', " + rating + ", '" + today.ToString("yyyy-MM-dd") + "', '" + numeroDeComentario + "', '" + postActual + "')";
+                                    comentario + "', " + rating + ", '" + today.ToString("yyyy-MM-dd") + "', '" + numeroDeComentario + "', '" + circuloActual + "')";
                                 SQLManager.EjecutarQuery(query);
 
                                 Console.Write("Su comentario ha sido añadido al post");
@@ -96,7 +98,8 @@ namespace ProjectoFinal
                                 if (num <= ObtenNumeroComentarios(postActual))
                                 {
                                     string nombreComentario = SQLManager.ObtenNombreComentario(postActual, num);
-                                    appState.ChangeState(new DentroDeComentarioState(nombreComentario, postActual, perfilActual));
+                                    appState.ChangeState(new DentroDeComentarioState(nombreComentario, postActual, perfilActual, circuloActual));
+
                                 }
                             }
                             else

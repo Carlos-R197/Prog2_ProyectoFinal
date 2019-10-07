@@ -117,7 +117,7 @@ namespace ProjectoFinal
                                     Perfil actualPerfil = SQLManager.ObtenPerfil(perfilActual);
                                     Post actualPost = SQLManager.ObtenPost(nombrePost);
                                     if (actualPerfil.Edad >= actualPost.Edad)
-                                        appState.ChangeState(new DentroDePostState(nombrePost, perfilActual));
+                                        appState.ChangeState(new DentroDePostState(nombrePost, perfilActual, circuloActual));
                                     else
                                         Console.Write("Usted no tiene la edad suficiente para entrar a este post");
                                 }
