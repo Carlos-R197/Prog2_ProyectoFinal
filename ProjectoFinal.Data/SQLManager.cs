@@ -460,14 +460,12 @@ namespace ProjectoFinal.Data
             MySqlDataAdapter dap = new MySqlDataAdapter(cmd);
             MySqlDataAdapter dap2 = new MySqlDataAdapter(cmd2);
             dap.Fill(table);
-            dap2.Fill(table2);
+            dap2.Fill(table);
             CerrarConexion();
 
             DataView vista = new DataView(table);
             DataTable dt = vista.ToTable(true, "receptor");
-
-            DataView vista2 = new DataView(table2);
-            DataTable dt2 = vista2.ToTable(true, "mensajero");
+            DataTable dt2 = vista.ToTable(true, "mensajero");
 
             foreach (DataRow row in dt.Rows)
             {
@@ -478,14 +476,6 @@ namespace ProjectoFinal.Data
                 }
             }
 
-            foreach (DataRow row in dt2.Rows)
-            {
-                foreach (var item in row.ItemArray)
-                {
-                    Console.WriteLine("{0}", item);
-
-                }
-            }
         }
 
         public static bool ComprobarMensajeNuevo(string receptor)
