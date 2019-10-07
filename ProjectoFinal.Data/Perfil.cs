@@ -46,8 +46,9 @@ namespace ProjectoFinal.Data
         {
             RatingGeneral--;
         }
-        public void ModificarInfo()
+        public string ModificarInfo()
         {
+            string nombreViejo = this.Nombre;
             while (true)
             {
                 Console.Clear();
@@ -82,7 +83,7 @@ namespace ProjectoFinal.Data
                             }
                             else
                             {
-                                return; 
+                                return nombreViejo; 
                             }
                     }
                 }

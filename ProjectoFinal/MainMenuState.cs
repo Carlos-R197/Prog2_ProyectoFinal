@@ -53,8 +53,8 @@ namespace ProjectoFinal
                             {
                                 case 'y':
                                     Console.Clear();
-                                    currentPerfil.ModificarInfo();
-                                    SQLManager.CambiarPerfil(this.currentPerfil);
+                                    string nombreViejo = currentPerfil.ModificarInfo();
+                                    SQLManager.CambiarPerfil(this.currentPerfil, nombreViejo);
                                     Console.ReadLine();
                                     break;
                                 case 'u':
