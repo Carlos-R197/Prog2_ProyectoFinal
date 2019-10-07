@@ -54,10 +54,12 @@ namespace ProjectoFinal.Data
             dap.Dispose();
             CerrarConexion();
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
             foreach (DataRow row in table.Rows)
             {
                 Console.WriteLine("{0}", row.ItemArray[0]);
             }
+            Console.ResetColor();
         }
         //Imprimira la columna de nombres de una tabla si le pasas el nombre de la tabla
         public static void ImprimirTodosNombre(string nombreTabla) 
