@@ -283,6 +283,7 @@ namespace ProjectoFinal.Data
             }
             else
                 result = false;
+            CerrarConexion();
             return result;
         }
 
