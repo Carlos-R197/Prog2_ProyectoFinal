@@ -86,8 +86,10 @@ namespace ProjectoFinal
                             Console.ReadLine();
                             break;
                         case 3:
+                            Console.Clear();
                             Console.WriteLine("1. Crear un chat privado");
                             Console.WriteLine("2. Ver chats");
+                            Console.WriteLine("3. Volver");
                             byte opcion;
 
                             if(byte.TryParse(Console.ReadLine(),out opcion))
@@ -105,6 +107,8 @@ namespace ProjectoFinal
                                         Chat chat = new Chat(currentPerfil,perfil2);
                                         appState.ChangeState(new ChattingState(chat));
                                         break;
+                                    case 3:
+                                        return;
                                 }
                             }                           
                             break;
