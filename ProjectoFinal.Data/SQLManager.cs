@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
 
@@ -120,14 +121,31 @@ namespace ProjectoFinal.Data
         {
             if (RevisaSiNombreExiste(nombreTabla, nombre))
             {
-                string query = "INSERT INTO `invitaciones`(`usuario`, `amigo`) VALUE(\"" + perfil.Nombre + "\", \"" + nombre + "\")";
+                string query = "INSERT INTO `invitaciones`(`invitador`, `invitado`) VALUE(\"" + perfil.Nombre + "\", \"" + nombre + "\")";
                 SQLManager.EjecutarQuery(query);
                 Console.WriteLine("Invitacion enviada");
             }
         }
-        public static void ObtenerAmigos(Perfil perfil) 
+        public static bool RevisaSiInvitado(Perfil perfil)
         {
-            string query = "SELECT `amigo` FROM `lista_amigos` WHERE `usuario` = \"" + perfil.Nombre + "\"";
+            bool result = false;
+            string query = "Select invitado FROM invitaciones WHERE invitado = \"" + perfil.Nombre + "\"";
+            AbrirConexion();
+            MySqlCommand comando = new MySqlCommand(query, conexion);
+
+            MySqlDataReader reg = null;
+            reg = comando.ExecuteReader();
+
+            if (reg.Read())
+            {
+                result = true;
+            }
+            CerrarConexion();
+            return result;
+        }
+        public static void VerInvitaciones(string nombretabla, Perfil perfil)
+        {
+            string query = "SELECT `invitador` FROM `invitaciones` WHERE `invitado` = \"" + perfil.Nombre + "\"";
             AbrirConexion();
             MySqlCommand comando = new MySqlCommand(query, conexion);
             DataTable table = new DataTable();
@@ -141,6 +159,70 @@ namespace ProjectoFinal.Data
             {
                 list.Add(row[0].ToString());
             }
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            foreach (string nombre in list)
+            {
+                Console.WriteLine(nombre);
+            }
+            Console.ResetColor();
+        }
+        public static string AceptarRechazar(Perfil perfil) 
+        {
+            char separador = ' ';
+            int count = 2;
+            string statement = Console.ReadLine();
+            string[] desicion = statement.Split(separador, count, StringSplitOptions.RemoveEmptyEntries);
+
+            switch (desicion[0].ToLower())
+            {
+                case "aceptar":
+                     if (RevisaSiNombreExisteInvitacion("invitaciones", desicion[1]))
+                    {
+                        string query1 = "INSERT INTO `lista_amigos`(`usuario`, `amigo`) VALUE(\"" + desicion[1] + "\", \"" + perfil.Nombre + "\")";
+                        string query2 = "DELETE FROM `invitaciones` WHERE `invitador` = \"" + desicion[1] + "\" AND `invitado` = \"" + perfil.Nombre + "\"";
+                        SQLManager.EjecutarQuery(query1);
+                        SQLManager.EjecutarQuery(query2);
+                        Console.WriteLine("Invitacion aceptada");
+                        Console.ReadLine();
+                    }
+                    return desicion[0];
+                case "rechazar":
+                    string query22 = "DELETE FROM `invitaciones` WHERE `invitador` = \"" + desicion[1] + "\" AND `invitado` = \"" + perfil.Nombre + "\"";
+                    EjecutarQuery(query22);
+                    Console.WriteLine("Invitacion rechazada");
+                    Console.ReadLine();
+                    return desicion[0];
+                case "1":
+                    return desicion[0];
+                default:
+                    return desicion[0];
+            }
+        }
+        public static void ObtenerAmigos(Perfil perfil) 
+        {
+            string query1 = "SELECT `amigo` FROM `lista_amigos` WHERE `usuario` = \"" + perfil.Nombre + "\"";
+            string query2 = "SELECT `usuario` FROM `lista_amigos` WHERE `amigo` = \"" + perfil.Nombre + "\"";
+            AbrirConexion();
+            MySqlCommand comando1 = new MySqlCommand(query1, conexion);
+            MySqlCommand comando2 = new MySqlCommand(query2 , conexion);
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter(comando1);
+            adapter.Fill(table);
+            adapter.Dispose();
+            MySqlDataAdapter adapter2 = new MySqlDataAdapter(comando2);
+            adapter2.Fill(table);
+            adapter2.Dispose();
+            CerrarConexion();
+
+            List<string> list = new List<string>();
+            foreach (DataRow row in table.Rows)
+            {
+                if (row[0] != null)
+                { list.Add(row[0].ToString()); }
+                if (row[1] != null)
+                { list.Add(row[1].ToString()); }
+            }
+            list = list.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
             foreach (string nombre in list)
             {
                 Console.WriteLine(nombre);
@@ -178,6 +260,34 @@ namespace ProjectoFinal.Data
         {
             DataTable table = new DataTable();
             string query = "SELECT * FROM posts WHERE circulo_pertenece = " + "'" + nombreCirculo + "'"; 
+            using (MySqlConnection conexion = new MySqlConnection(conexionString))
+            {
+                conexion.Open();
+                MySqlCommand comando = new MySqlCommand(query, conexion);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(comando);
+                adapter.Fill(table);
+            }
+            return table;
+        }
+
+        public static DataTable ObtenTodosComentarios(string nombrePost)
+        {
+            DataTable table = new DataTable();
+            string query = "SELECT * FROM comentarios WHERE post_pertenece = " + "'" + nombrePost + "'";
+            using (MySqlConnection conexion = new MySqlConnection(conexionString))
+            {
+                conexion.Open();
+                MySqlCommand comando = new MySqlCommand(query, conexion);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(comando);
+                adapter.Fill(table);
+            }
+            return table;
+        }
+
+        public static DataTable ObtenComentarioAutor(string nombrePost)
+        {
+            DataTable table = new DataTable();
+            string query = "SELECT comentario FROM posts WHERE nombre = " + "'" + nombrePost + "'";
             using (MySqlConnection conexion = new MySqlConnection(conexionString))
             {
                 conexion.Open();
@@ -226,7 +336,7 @@ namespace ProjectoFinal.Data
                 }
             }
         }
-
+         
         public static void CambiarPerfil(Perfil perfil)
         {
             string nombre = perfil.Nombre;
@@ -242,6 +352,23 @@ namespace ProjectoFinal.Data
             comando.ExecuteNonQuery();
             Console.WriteLine("Modificado exitosamente");
             CerrarConexion();
+        }
+        public static bool RevisaSiNombreExisteInvitacion(string nombreTabla, string nombre)
+        {
+            bool result = false;
+            string query = "Select invitador" + " FROM " + nombreTabla + " WHERE invitador = " + "\"" + nombre + "\"";
+            AbrirConexion();
+            MySqlCommand comando = new MySqlCommand(query, conexion);
+
+            MySqlDataReader reg = null;
+            reg = comando.ExecuteReader();
+
+            if (reg.Read())
+            {
+                result = true;
+            }
+            CerrarConexion();
+            return result;
         }
     }
 }

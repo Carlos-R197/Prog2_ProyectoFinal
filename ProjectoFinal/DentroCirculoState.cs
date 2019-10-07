@@ -57,7 +57,8 @@ namespace ProjectoFinal
                             if (SQLManager.RevisaSiNombreExiste("posts", nombrePost))
                             {
                                 string query = "DELETE FROM posts WHERE nombre = " + "'" + nombrePost + "'";
-                                SQLManager.EjecutarQuery(query);
+                                string query2 = "DELETE FROM comentarios WHERE post_pertenece = " + "'" + nombrePost + "'";
+                                SQLManager.EjecutarQuery(query, query2);
                                 Console.Write("El post fue borrado");
                             }
                             else
@@ -66,7 +67,14 @@ namespace ProjectoFinal
                         }
                     case 3:
                         {
-
+                            Console.Write("Escriba el nombre del post al que desea entrar: ");
+                            string nombrePost = Console.ReadLine();
+                            if (SQLManager.RevisaSiNombreExiste("posts", nombrePost))
+                            {
+                                appState.ChangeState(new DentroDePostState(nombrePost, currentPerfil));
+                            }
+                            else
+                                Console.Write("Ese post no existe");
                         }
                         break;
                 }
