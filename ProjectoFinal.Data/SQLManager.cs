@@ -9,7 +9,7 @@ namespace ProjectoFinal.Data
 {
     public static class SQLManager
     {
-        public static MySqlConnection conexion = new MySqlConnection("Server=remotemysql.com; Database= ; Uid=QRqGefDOkx; Pwd=P80kXnXOFM;");
+        public static MySqlConnection conexion = new MySqlConnection("Server=remotemysql.com; Database=QRqGefDOkx; Uid=QRqGefDOkx; Pwd=P80kXnXOFM; port=3306");
         private static string conexionString = "Server=remotemysql.com; Database=QRqGefDOkx; Uid=QRqGefDOkx; Pwd=P80kXnXOFM;";
 
         public static void AbrirConexion()
@@ -337,21 +337,32 @@ namespace ProjectoFinal.Data
             }
         }
          
-        public static void CambiarPerfil(Perfil perfil)
+        public static void CambiarPerfil(Perfil perfil, string nombreViejo)
         {
             string nombre = perfil.Nombre;
             string correo = perfil.Correo;
             string contraseña = perfil.Contraseña;
             byte edad = perfil.Edad;
-            //Query funcional dentro de sql
-            //UPDATE `perfiles_registrados` SET `nombre`="a",`contrasena`="b",`correo`="c",`edad`="14" WHERE `nombre`="juju"
-            //UPDATE `perfiles_registrados` SET `nombre`=[value-1],`contrasena`=[value-2],`correo`=[value-3],`edad`=[value-4] WHERE 1
+            //Actualizar perfil
             string query = "UPDATE `perfiles_registrados` SET `nombre`= \"" + nombre + "\", `contrasena`= \""+contraseña+"\", `edad`= \""+edad+"\" WHERE `correo`= \""+correo+"\"" ;
-            AbrirConexion();
-            MySqlCommand comando = new MySqlCommand(query, conexion);
-            comando.ExecuteNonQuery();
+            //Actualizar chat
+            string query2 = "UPDATE `chat` SET `mensajero`= \"" + nombre + "\"  WHERE `mensajero`= \"" + nombreViejo + "\"";
+            string query3 = "UPDATE `chat` SET `receptor`= \"" + nombre + "\"  WHERE `receptor`= \"" + nombreViejo + "\"";
+            //Actualizar circulo_perfil
+            string query4 = "UPDATE `circulos_perfiles` SET `perfil_nombre`= \"" + nombre + "\"  WHERE `perfil_nombre`= \"" + nombreViejo + "\"";
+            //Actualizar comentarios
+            string query5 = "UPDATE `comentarios` SET `autor`= \"" + nombre + "\"  WHERE `autor`= \"" + nombreViejo + "\"";
+            //Actualizar invitaciones
+            string query6 = "UPDATE `invitaciones` SET `invitador`= \"" + nombre + "\"  WHERE `invitador`= \"" + nombreViejo + "\"";
+            string query7 = "UPDATE `invitaciones` SET `invitado`= \"" + nombre + "\"  WHERE `invitado`= \"" + nombreViejo + "\"";
+            //Actualizar lista_amigos
+            string query8 = "UPDATE `lista_amigos` SET `usuario`= \"" + nombre + "\"  WHERE `usuario`= \"" + nombreViejo + "\"";
+            string query9 = "UPDATE `lista_amigos` SET `amigo`= \"" + nombre + "\" WHERE `amigo`= \"" + nombreViejo + "\"";
+            //Actualizar post
+            string query10 = "UPDATE `posts` SET `autor`= \"" + nombre + "\"  WHERE `autor`= \"" + nombreViejo + "\"";
+
+            SQLManager.EjecutarQuery(query, query2, query3, query4, query5, query6, query7, query8, query9, query10);
             Console.WriteLine("Modificado exitosamente");
-            CerrarConexion();
         }
         public static bool RevisaSiNombreExisteInvitacion(string nombreTabla, string nombre)
         {
@@ -439,6 +450,23 @@ namespace ProjectoFinal.Data
                 }
             }
 
+        }
+
+        public static Post ObtenPost(string nombrePost)
+        {
+            string query = "SELECT * FROM posts WHERE nombre = " + "'" + nombrePost + "'";
+            DataTable table = new DataTable();
+            using (MySqlConnection conexion = new MySqlConnection(conexionString))
+            {
+                conexion.Open();
+                MySqlCommand comando = new MySqlCommand(query, conexion);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(comando);
+                adapter.Fill(table);
+            }
+            int edad = int.Parse(table.Rows[0].ItemArray[7].ToString());
+            Post post = new Post(table.Rows[0].ItemArray[0].ToString(), table.Rows[0].ItemArray[1].ToString(), table.Rows[0].ItemArray[4].ToString(), 
+                (DateTime)table.Rows[0].ItemArray[5], edad);
+            return post;
         }
     }
 }

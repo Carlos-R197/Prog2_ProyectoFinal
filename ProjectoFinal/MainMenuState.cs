@@ -7,11 +7,19 @@ namespace ProjectoFinal
 {
     public class MainMenuState : IState
     {
-        private Perfil currentPerfil;
-        public MainMenuState(Perfil perfil)
+        private static MainMenuState instance;
+
+        public static MainMenuState Instance
         {
-            this.currentPerfil = perfil;
+            get
+            {
+                if (instance == null)
+                    instance = new MainMenuState();
+                return instance;
+            }
         }
+
+        private Perfil currentPerfil;
 
         public void Handle(StateMachine appState)
         {
@@ -23,6 +31,7 @@ namespace ProjectoFinal
                 Console.WriteLine("Rating General: {0} \n", currentPerfil.RatingGeneral);
 
                 Console.WriteLine("¿Qué desea hacer?");
+                Console.WriteLine("0. Cerrar sesión");
                 Console.WriteLine("1. Revisar propio perfil");
                 Console.WriteLine("2. Buscar un perfil existente");
                 Console.WriteLine("3. chat privado");
@@ -44,6 +53,9 @@ namespace ProjectoFinal
                 {
                     switch (input)
                     {
+                        case 0:
+                            appState.GoBackToFirst();
+                            break;
                         case 1:
                             currentPerfil.ImprimirInformacion();
                             Console.WriteLine("Presione (U) para visualizar su lista de amigos");
@@ -53,8 +65,8 @@ namespace ProjectoFinal
                             {
                                 case 'y':
                                     Console.Clear();
-                                    currentPerfil.ModificarInfo();
-                                    SQLManager.CambiarPerfil(this.currentPerfil);
+                                    string nombreViejo = currentPerfil.ModificarInfo();
+                                    SQLManager.CambiarPerfil(this.currentPerfil, nombreViejo);
                                     Console.ReadLine();
                                     break;
                                 case 'u':
@@ -181,6 +193,16 @@ namespace ProjectoFinal
                             continue;
                     }
                 }
+            }
+        }
+
+
+        public void Inicializar(Perfil perfil)
+        {
+            if (instance == null)
+            {
+                this.currentPerfil = perfil;
+                instance = this;
             }
         }
     }
