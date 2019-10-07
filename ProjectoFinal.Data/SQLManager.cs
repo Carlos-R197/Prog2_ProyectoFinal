@@ -381,6 +381,8 @@ namespace ProjectoFinal.Data
             return result;
         }
 
+        
+
         public static void GuardarChat(Chat chat)
         {
             string mensajero = chat.Perfil1.Nombre;

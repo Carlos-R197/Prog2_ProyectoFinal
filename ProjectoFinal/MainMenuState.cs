@@ -103,12 +103,15 @@ namespace ProjectoFinal
                                         SQLManager.VerChats(currentPerfil);
                                         Console.WriteLine("Escriba el nombre del Chat al que desea ingresar");
                                         string perfil = Console.ReadLine();
+                                        
                                         Perfil perfil2 = new Perfil(perfil,"","",0,0);
                                         Chat chat = new Chat(currentPerfil,perfil2);
                                         appState.ChangeState(new ChattingState(chat));
                                         break;
                                     case 3:
                                         return;
+                                    default:
+                                        continue;
                                 }
                             }                           
                             break;
