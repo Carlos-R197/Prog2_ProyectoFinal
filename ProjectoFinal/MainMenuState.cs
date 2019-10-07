@@ -34,7 +34,12 @@ namespace ProjectoFinal
                 Console.WriteLine("0. Cerrar sesión");
                 Console.WriteLine("1. Revisar propio perfil");
                 Console.WriteLine("2. Buscar un perfil existente");
-                Console.WriteLine("3. chat privado");
+                if(SQLManager.ComprobarMensajeNuevo(currentPerfil.Nombre)==true)
+                {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("3. chat privado"); ;
+                    Console.ResetColor();
+                }
                 Console.WriteLine("4. Ver Lista de circulos existentes");
                 Console.WriteLine("5. Crear nuevo círculo.");
                 Console.WriteLine("6. Borrar un circulo existente");
