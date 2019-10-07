@@ -71,9 +71,20 @@ namespace ProjectoFinal
                             }
                         case 2:
                             {
-                                string numero = Console.ReadLine();
-                                string query = "DELETE FROM comentarios WHERE post_pertenece = " + "'" + postActual + "'" + " AND numero = ";
-                                AfectarComentario(query);
+                                Console.Write("Escriba el numero del comentario que desea borrar: ");
+                                short opcion;
+                                if (short.TryParse(Console.ReadLine(), out opcion))
+                                {
+                                    if (opcion <= ObtenNumeroComentarios(postActual))
+                                    {
+                                        string query = "DELETE FROM comentarios WHERE post_pertenece = " + "'" + postActual + "'" + " AND numero = " + opcion;
+                                        string nombreComentario = SQLManager.ObtenNombreComentario(postActual, opcion);
+                                        string query2 = "DELETE FROM comentarios_comentarios WHERE post_pertenece = " + "'" + nombreComentario + "'";
+                                        SQLManager.EjecutarQuery(query, query2);
+                                    }
+                                }
+                                else
+                                    Console.Write("Ese comentario no existe.");
                                 break;
                             }
                         case 3:
@@ -136,7 +147,7 @@ namespace ProjectoFinal
                 if (opcion <= ObtenNumeroComentarios(postActual))
                 {
                     query += opcion;
-                    SQLManager.EjecutarQuery(query);
+                    SQLManager.EjecutarQuery(query);         
                 }
             }
             else

@@ -574,5 +574,11 @@ namespace ProjectoFinal.Data
 
             return table.Rows[0].ItemArray[0].ToString();
         }
+        /*
+        public static string ObtenComentarioComentario(string nombrePost, int numero)
+        {
+            string query = "SELECT comentario FROM comentarios "
+        }
+        */
     }
 }
