@@ -133,6 +133,8 @@ namespace ProjectoFinal
                                 if (SQLManager.RevisaSiNombreExiste("circulos", nombreCirculo))
                                 {
                                     string query = "DELETE FROM circulos WHERE nombre = " + "'" + nombreCirculo + "'";
+                                    string query2 = "DELETE FROM posts WHERE circulo_pertenece = " + "'" + nombreCirculo + "'";
+                                    string query3 = "DELETE FROM comentarios WHERE circulo_pertenece =" + "'" + nombreCirculo + "'";
                                     //SQLManager.BorrarCirculo(nombreCirculo);
                                     SQLManager.EjecutarQuery(query);
                                     Console.WriteLine("El círculo fue borrado.");
