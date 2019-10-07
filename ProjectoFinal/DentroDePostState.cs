@@ -87,8 +87,7 @@ namespace ProjectoFinal
                                 break;
                             }
                         case 5:
-                            
-                            
+                            //appState.ChangeState(new DentroDeComentarioState());    
                             break;
                         case 6:
                             appState.GoBackToPrevious();    

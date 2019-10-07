@@ -7,11 +7,15 @@ namespace ProjectoFinal
 {
     public class DentroDeComentarioState : IState
     {
+        private string postActual;
         private string comentarioActual;
+        private string perfilActual;
 
-        public DentroDeComentarioState(string nombreComentario)
+        public DentroDeComentarioState(string nombreComentario, string nombrePost, string nombrePerfil)
         {
             this.comentarioActual = nombreComentario;
+            this.postActual = nombrePost;
+            this.perfilActual = nombrePerfil;
         }
 
         public void Handle(StateMachine appState)

@@ -542,5 +542,20 @@ namespace ProjectoFinal.Data
             else
                 return false;
         }
+
+        public static string ObtenNombreComentario(string nombrePost, int numero)
+        {
+            string query = "SELECT comentario FROM comentarios WHERE post_pertenece = " + "'" + nombrePost + "'" + "AND numero = " + numero;
+            DataTable table = new DataTable();
+            using (MySqlConnection conexion = new MySqlConnection(conexionString))
+            {
+                conexion.Open();
+                MySqlCommand comando = new MySqlCommand(query, conexion);
+                MySqlDataAdapter adp = new MySqlDataAdapter(comando);
+                adp.Fill(table);
+            }
+
+            return table.Rows[0].ItemArray[0].ToString();
+        }
     }
 }

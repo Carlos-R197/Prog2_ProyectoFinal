@@ -206,11 +206,8 @@ namespace ProjectoFinal
 
         public void Inicializar(Perfil perfil)
         {
-            if (instance == null)
-            {
-                this.currentPerfil = perfil;
-                instance = this;
-            }
+             this.currentPerfil = perfil;
+             instance = this;
         }
     }
 }
