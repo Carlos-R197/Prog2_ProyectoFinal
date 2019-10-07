@@ -25,8 +25,8 @@ namespace ProjectoFinal
                 {
                     Mensaje mensaje = new Mensaje(DateTime.Now, currentChat.Perfil1, message);
                     currentChat.AddMensaje(mensaje);
-                    SQLManager.GuardarChat(currentChat);
-                    SQLManager.VerMensajes(currentChat);
+                    //currentChat.Conversacion.Add(mensaje);
+                    SQLManager.GuardarChat(currentChat);                    
                 }
                 else
                     appState.ChangeState(new MainMenuState(currentChat.Perfil1));

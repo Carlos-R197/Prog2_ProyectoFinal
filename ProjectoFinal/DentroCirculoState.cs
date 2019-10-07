@@ -98,7 +98,6 @@ namespace ProjectoFinal
                             ManejaVotos(1);
                             break;
                         }
-                        break;
                     case 5:
                         {
                             Console.Write("Escriba el número del post al que desea bajarle el rating: ");

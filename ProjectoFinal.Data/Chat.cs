@@ -10,8 +10,10 @@ namespace ProjectoFinal.Data
         public Perfil Perfil2 { get; set; }
         public List<Mensaje> Conversacion { get; set; }
 
+       
         public void AddMensaje(Mensaje mensaje)
         {
+            Conversacion = new List<Mensaje>();
             Conversacion.Add(mensaje);
         }
         public Chat(Perfil perfil1, Perfil perfil2)

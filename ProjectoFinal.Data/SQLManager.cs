@@ -423,7 +423,10 @@ namespace ProjectoFinal.Data
             dap.Fill(table);
             CerrarConexion();
 
-            foreach (DataRow row in table.Rows)
+            DataView vista = new DataView(table);
+            DataTable dt = vista.ToTable(true, "receptor");
+
+            foreach (DataRow row in dt.Rows)
             {
                 foreach (var item in row.ItemArray)
                 {
