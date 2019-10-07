@@ -13,6 +13,7 @@ namespace ProjectoFinal
             while (true)
             {
                 Console.Clear();
+                Console.WriteLine("Reddut by Marino Vasquez 1087284 - Carlos Roque 1088452 - Carlos Luciano 1090096");
                 Console.WriteLine("¿Qué desea hacer?");
                 Console.WriteLine("1. Ingresar");
                 Console.WriteLine("2. Registrarse");
