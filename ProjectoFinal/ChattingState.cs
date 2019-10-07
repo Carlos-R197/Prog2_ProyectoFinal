@@ -24,7 +24,7 @@ namespace ProjectoFinal
                 if (message != "1")
                 {
                     Mensaje mensaje = new Mensaje(DateTime.Now, currentChat.Perfil1, message);
-                    currentChat.AddMensaje(mensaje);
+                    currentChat.AddMensaje(message);
                     //currentChat.Conversacion.Add(mensaje);
                     SQLManager.GuardarChat(currentChat);                    
                 }

@@ -8,12 +8,12 @@ namespace ProjectoFinal.Data
     {
         public Perfil Perfil1 { get; set; }
         public Perfil Perfil2 { get; set; }
-        public List<Mensaje> Conversacion { get; set; }
+        public List<string> Conversacion { get; set; }
 
        
-        public void AddMensaje(Mensaje mensaje)
+        public void AddMensaje(string mensaje)
         {
-            Conversacion = new List<Mensaje>();
+            Conversacion = new List<string>();
             Conversacion.Add(mensaje);
         }
         public Chat(Perfil perfil1, Perfil perfil2)
