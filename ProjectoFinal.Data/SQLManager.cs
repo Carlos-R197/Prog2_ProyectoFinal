@@ -389,15 +389,11 @@ namespace ProjectoFinal.Data
             for (int i = 0; i < chat.Conversacion.Count; i++)
             {
                 mensaje += chat.Conversacion[i] + "\n";
-            }
-           
-            string query = "insert into chat(mensajero,receptor,mensaje) value('" + mensajero + "','" + receptor + "','" + mensaje + "')";
-            string addsmsquery = "insert into perfiles_registrados(mensaje) value ("+1+") where nombre='"+receptor+"'";
+            }          
+            string query = "insert into chat(mensajero,receptor,mensaje) value('" + mensajero + "','" + receptor + "','" + mensaje + "')";         
             AbrirConexion();
             MySqlCommand cmd = new MySqlCommand(query, conexion);
-            MySqlCommand cmd2 = new MySqlCommand(addsmsquery, conexion);
             cmd.ExecuteNonQuery();
-            cmd2.ExecuteNonQuery();
             CerrarConexion();
         }
         
@@ -453,27 +449,7 @@ namespace ProjectoFinal.Data
             }
         }
 
-        public static bool ComprobarMensajeNuevo(string receptor)
-        {
-            bool result = false;
-            string query = "select count(*) from chat where receptor='"+receptor+"'";
-            string smsquery = "select mensaje from perfil_registrado where nombre='" + receptor + "'";
-            AbrirConexion();
-            MySqlCommand cmd2 = new MySqlCommand(smsquery, conexion);
-            MySqlCommand cmd = new MySqlCommand(query, conexion);
-            int smsvalue = Convert.ToInt32(cmd.ExecuteScalar());
-            int getvalue = Convert.ToInt32(cmd.ExecuteScalar());
-            CerrarConexion();
-            if( getvalue > smsvalue)
-            {
-                result = true;
-            }
-            else
-            {
-                result = false;
-            }
-            return result;
-        }
+  
         public static bool RevisaSiPuedesBorrar(string nombreasunto, string nombre)
         {
             bool result = false;
