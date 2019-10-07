@@ -10,9 +10,7 @@ namespace ProjectoFinal
         static void Main(string[] args)
         {
             StateMachine appState = new StateMachine();
-
             appState.ChangeState(new InicioState());
-
         }
     }
 }

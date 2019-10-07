@@ -30,7 +30,8 @@ namespace ProjectoFinal
                 if (byte.TryParse(Console.ReadLine(), out edad))
                 {
                     Perfil newPerfil = new Perfil(nombreCompleto, correo, contraseña, edad, 0);
-                    string query = "INSERT perfiles_registrados (nombre,contrasena,correo,edad) VALUE ('" + newPerfil.Nombre + "','" + newPerfil.Contraseña + "','" + newPerfil.Correo + "','" + newPerfil.Edad + "')";
+                    string query = "INSERT perfiles_registrados (nombre,contrasena,correo,edad,rating) VALUE " +
+                        "('" + newPerfil.Nombre + "','" + newPerfil.Contraseña + "','" + newPerfil.Correo + "','" + newPerfil.Edad + "', " + 0 + ")";
                     SQLManager.EjecutarQuery(query);
                     Console.WriteLine("Usuario registrado");
                     appState.ChangeState(new InicioState());

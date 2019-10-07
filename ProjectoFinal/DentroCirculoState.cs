@@ -21,13 +21,14 @@ namespace ProjectoFinal
         public void Handle(StateMachine appState)
         {
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Has entrado al circulo: {0}", circuloActual);
-            Console.ForegroundColor = ConsoleColor.Gray;
             if (SQLManager.RevisaSiSuscrito(circuloActual, perfilActual))
             {
                 while (true)
                 {
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Has entrado al circulo: {0}", circuloActual);
+                    Console.ForegroundColor = ConsoleColor.Gray;
                     //Hacer que se impriman todos los posts existentes. 
                     Console.WriteLine("¿Qué desea hacer?");
                     Console.WriteLine("1. Crear un post");
@@ -48,7 +49,7 @@ namespace ProjectoFinal
                         Console.WriteLine("\n_________________________________________________\n");
                         SortPorFecha();
                     }
-                    byte input = byte.Parse(Console.ReadLine());
+                    byte input = byte.Parse(Console.ReadLine()); //fix this
 
                     switch (input)
                     {
@@ -159,6 +160,9 @@ namespace ProjectoFinal
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Has entrado al circulo: {0}", circuloActual);
+                Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("1. Volver");
                 Console.WriteLine("2. Suscribirse al círculo");
                 byte opcion;
