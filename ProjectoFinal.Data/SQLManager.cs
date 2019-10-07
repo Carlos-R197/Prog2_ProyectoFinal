@@ -432,6 +432,7 @@ namespace ProjectoFinal.Data
             dap.Fill(table);
             CerrarConexion();
 
+            Console.ForegroundColor = ConsoleColor.Cyan;
             foreach (DataRow row in table.Rows)
             {
                 foreach (var item in row.ItemArray)
@@ -440,6 +441,7 @@ namespace ProjectoFinal.Data
                     
                 }
             }
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         public static void VerChats(Perfil perfil)
@@ -465,6 +467,7 @@ namespace ProjectoFinal.Data
             DataTable dt = vista.ToTable(true, "receptor");
             DataTable dt2 = vista.ToTable(true, "mensajero");
 
+            Console.ForegroundColor = ConsoleColor.Cyan;
             foreach (DataRow row in dt.Rows)
             {
                 foreach (var item in row.ItemArray)
@@ -473,7 +476,7 @@ namespace ProjectoFinal.Data
 
                 }
             }
-
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
         public static bool RevisaSiPuedesBorrar(string nombreasunto, string nombre)
         {
