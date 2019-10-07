@@ -392,7 +392,7 @@ namespace ProjectoFinal.Data
             }
            
             string query = "insert into chat(mensajero,receptor,mensaje) value('" + mensajero + "','" + receptor + "','" + mensaje + "')";
-            string addsmsquery = "insert into perfiles_registrados(mensaje) value ("+1+") where nombre='"+receptor+"'";
+            string addsmsquery = "update perfiles_registrados set mensaje = "+1+" WHERE nombre=\"" + receptor + "\"";
             AbrirConexion();
             MySqlCommand cmd = new MySqlCommand(query, conexion);
             MySqlCommand cmd2 = new MySqlCommand(addsmsquery, conexion);

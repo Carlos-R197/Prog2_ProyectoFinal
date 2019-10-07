@@ -54,6 +54,7 @@ namespace ProjectoFinal
                     switch (input)
                     {
                         case 0:
+                            instance = null;
                             appState.GoBackToFirst();
                             break;
                         case 1:
