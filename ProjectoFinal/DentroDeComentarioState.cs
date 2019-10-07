@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ProjectoFinal.Data;
+using System.Data;
 
 namespace ProjectoFinal
 {
@@ -26,12 +27,18 @@ namespace ProjectoFinal
             string comentario = Console.ReadLine();
             int rating = 0;
             DateTime today = DateTime.Today;
-            int numeroDeComentario = DentroDePostState.ObtenNumeroComentarios(comentarioActual) + 1;
+            int numeroDeComentario = ObtenNumeroComentarios(comentarioActual) + 1;
 
             string query = "INSERT INTO comentarios_comentarios VALUES('" + perfilActual + "', '" + comentarioActual + "', '" +
                 comentario + "', " + rating + ", '" + today.ToString("yyyy-MM-dd") + "', '" + numeroDeComentario + "', '" +  circuloActual + "')";
             SQLManager.EjecutarQuery(query);
             Console.Write("Su comentario fue guardado");
+        }
+
+        private int ObtenNumeroComentarios(string nombrePost)
+        {
+            DataTable table = SQLManager.ObtenTodosComentarios("comentarios_comentarios", nombrePost);
+            return table.Rows.Count;
         }
     }
 }
