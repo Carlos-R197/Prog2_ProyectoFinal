@@ -143,6 +143,17 @@ namespace ProjectoFinal
             }
             Console.ForegroundColor = ConsoleColor.Gray;
         }
+        private void ImprimirNombreTodosPost()
+        {
+            DataTable table = SQLManager.ObtenTodosPost(currentCirculo);
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            foreach (DataRow row in table.Rows)
+            {
+                Console.WriteLine("{0}. Post: {1}, por {2} - {3}", row.ItemArray[6], row.ItemArray[0], row.ItemArray[1], row.ItemArray[3]);
+            }
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
         private void ManejaVotos(int cantidad)
         {
             string query = "UPDATE posts SET rating = rating + " + cantidad + " WHERE circulo_pertenece = " +
