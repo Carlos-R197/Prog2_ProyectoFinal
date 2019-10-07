@@ -139,7 +139,7 @@ namespace ProjectoFinal
             Console.ForegroundColor = ConsoleColor.Yellow;
             foreach (DataRow row in table.Rows)
             {
-                Console.WriteLine("Post: {0}, por {1} - {2}", row.ItemArray[0], row.ItemArray[1], row.ItemArray[3]);
+                Console.WriteLine("{0}. Post: {0}, por {1} - {2}", row.ItemArray[6], row.ItemArray[0], row.ItemArray[1], row.ItemArray[3]);
             }
             Console.ForegroundColor = ConsoleColor.Gray;
         }
