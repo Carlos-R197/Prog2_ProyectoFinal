@@ -132,7 +132,7 @@ namespace ProjectoFinal
                             {
                                 Console.Clear();
                                 SQLManager.ImprimirTodosCirculos();
-                                Console.Write("Escriba el nombre del circulo al que desea entrar: ");
+                                Console.Write("\nEscriba el nombre del circulo al que desea entrar: ");
                                 string nombreCirculo = Console.ReadLine();
 
                                 if (SQLManager.RevisaSiNombreExiste("circulos", nombreCirculo))

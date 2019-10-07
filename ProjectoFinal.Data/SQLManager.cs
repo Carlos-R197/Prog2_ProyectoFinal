@@ -54,10 +54,12 @@ namespace ProjectoFinal.Data
             dap.Dispose();
             CerrarConexion();
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
             foreach (DataRow row in table.Rows)
             {
                 Console.WriteLine("{0}", row.ItemArray[0]);
             }
+            Console.ResetColor();
         }
         //Imprimira la columna de nombres de una tabla si le pasas el nombre de la tabla
         public static void ImprimirTodosNombre(string nombreTabla) 
@@ -226,26 +228,6 @@ namespace ProjectoFinal.Data
                 Console.WriteLine(nombre);
             }
         }
-
-        public static bool ValidarExistenciaAmigo(string usuario, string amigo)
-        {
-            bool result = false;
-            string query = "select * from lista_amigos where usuario='" + usuario + "' and amigo='" + amigo + "'";
-            AbrirConexion();
-            MySqlCommand cmd = new MySqlCommand(query, conexion);
-            MySqlDataReader reg = cmd.ExecuteReader();
-            if (reg.Read())
-            {
-                result = true;
-            }
-            else
-                result = false;
-            CerrarConexion();
-
-            return result;
-
-        }
-
         public static Perfil[] EncuentraPerfilesQueContienen(string nombre)
         {
             string query = "SELECT * FROM perfiles_registrados WHERE nombre LIKE '%" + nombre + "%' ";
@@ -414,11 +396,9 @@ namespace ProjectoFinal.Data
             }
            
             string query = "insert into chat(mensajero,receptor,mensaje) value('" + mensajero + "','" + receptor + "','" + mensaje + "')";
-         
             AbrirConexion();
             MySqlCommand cmd = new MySqlCommand(query, conexion);
             cmd.ExecuteNonQuery();
-   
             CerrarConexion();
         }
         
