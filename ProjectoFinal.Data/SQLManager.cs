@@ -223,10 +223,12 @@ namespace ProjectoFinal.Data
                 { list.Add(row[1].ToString()); }
             }
             list = list.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+            Console.ForegroundColor = ConsoleColor.Cyan;
             foreach (string nombre in list)
             {
                 Console.WriteLine(nombre);
             }
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
         public static Perfil[] EncuentraPerfilesQueContienen(string nombre)
         {
