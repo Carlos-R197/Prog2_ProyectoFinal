@@ -226,6 +226,26 @@ namespace ProjectoFinal.Data
                 Console.WriteLine(nombre);
             }
         }
+
+        public static bool ValidarExistenciaAmigo(string usuario, string amigo)
+        {
+            bool result = false;
+            string query = "select * from lista_amigos where usuario='" + usuario + "' and amigo='" + amigo + "'";
+            AbrirConexion();
+            MySqlCommand cmd = new MySqlCommand(query, conexion);
+            MySqlDataReader reg = cmd.ExecuteReader();
+            if (reg.Read())
+            {
+                result = true;
+            }
+            else
+                result = false;
+            CerrarConexion();
+
+            return result;
+
+        }
+
         public static Perfil[] EncuentraPerfilesQueContienen(string nombre)
         {
             string query = "SELECT * FROM perfiles_registrados WHERE nombre LIKE '%" + nombre + "%' ";
@@ -394,12 +414,11 @@ namespace ProjectoFinal.Data
             }
            
             string query = "insert into chat(mensajero,receptor,mensaje) value('" + mensajero + "','" + receptor + "','" + mensaje + "')";
-            string addsmsquery = "update perfiles_registrados set mensaje = "+1+" WHERE nombre=\"" + receptor + "\"";
+         
             AbrirConexion();
             MySqlCommand cmd = new MySqlCommand(query, conexion);
-            MySqlCommand cmd2 = new MySqlCommand(addsmsquery, conexion);
             cmd.ExecuteNonQuery();
-            cmd2.ExecuteNonQuery();
+   
             CerrarConexion();
         }
         

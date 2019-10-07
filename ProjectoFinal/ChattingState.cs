@@ -8,15 +8,20 @@ namespace ProjectoFinal
     public class ChattingState : IState
     {
         private readonly Chat currentChat;
-        public ChattingState(Chat chat)
+        private string perfil;
+        public ChattingState(Chat chat,string perfil)
         {
             this.currentChat = chat;
+            this.perfil = perfil;
         }
 
         public void Handle(StateMachine appState)
         {
+            
             Console.Clear();
+            Console.WriteLine("Chat con: " + perfil);
             Console.WriteLine("Presione 1 para salir");
+            Console.WriteLine();
             SQLManager.VerMensajes(currentChat);
             while (true)
             { 
