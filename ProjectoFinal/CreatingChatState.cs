@@ -9,7 +9,6 @@ namespace ProjectoFinal
     public class CreatingChatState : IState
     {
         private Perfil person1;
-        private Chat currentChat;
 
         public CreatingChatState(Perfil currentPerfil)
         {
@@ -17,18 +16,31 @@ namespace ProjectoFinal
         }
         public void Handle(StateMachine appState)
         {
-            Console.WriteLine("Lista de Amigos");
-            SQLManager.ObtenerAmigos(this.person1);
-            Console.WriteLine();
-            Console.WriteLine("Escriba el nombre de los perfiles que desea encontrar: ");
-            string perfilNombre = Console.ReadLine();
-            //Check if that perfil exist, if it does then add it to the chat class.
-            Perfil[] perfilesEncontrados = SQLManager.EncuentraPerfilesQueContienen(perfilNombre);
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Lista de Amigos");
+                SQLManager.ObtenerAmigos(this.person1);
+                Console.WriteLine();
+                Console.WriteLine("Escriba el nombre de los perfiles que desea encontrar: ");
+                Console.Write("R: ");
+                string amigo = Console.ReadLine();
 
-           
-
-
-          
+                if (SQLManager.ValidarExistenciaAmigo(person1.Nombre, amigo) == true)
+                {
+                    Perfil persona2 = new Perfil(amigo, "", "", 0, 0);
+                    //Check if that perfil exist, if it does then add it to the chat class.
+                    Chat createchat = new Chat(person1, persona2);
+                    appState.ChangeState(new ChattingState(createchat,amigo));
+                }
+                else
+                {
+                    Console.WriteLine("El Usuario no esta en su lista de amigo");
+                    Console.ReadKey();
+                    continue;
+                }
+                
+            }     
         }
     }
 }
