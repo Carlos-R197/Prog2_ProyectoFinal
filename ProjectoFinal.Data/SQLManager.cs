@@ -463,6 +463,7 @@ namespace ProjectoFinal.Data
             MySqlCommand cmd = new MySqlCommand(query, conexion);
             int smsvalue = Convert.ToInt32(cmd.ExecuteScalar());
             int getvalue = Convert.ToInt32(cmd.ExecuteScalar());
+            CerrarConexion();
             if( getvalue > smsvalue)
             {
                 result = true;
@@ -495,7 +496,7 @@ namespace ProjectoFinal.Data
             //{
             //    result = true;
             //}
-            reg2.Close();
+            //reg2.Close();
             MySqlDataReader reg3 = comando3.ExecuteReader();
 
             if (reg3.Read())
