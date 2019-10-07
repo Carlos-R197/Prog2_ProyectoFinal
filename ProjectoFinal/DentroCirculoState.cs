@@ -31,6 +31,8 @@ namespace ProjectoFinal
                 Console.WriteLine("1. Crear un post");
                 Console.WriteLine("2. Eliminar un post");
                 Console.WriteLine("3. Ver un post existente");
+                Console.WriteLine("4. Subir el rating de un post");
+                Console.WriteLine("5. Bajar el rating de un post");
                 byte input = byte.Parse(Console.ReadLine());
 
                 switch (input)
@@ -43,9 +45,10 @@ namespace ProjectoFinal
                             string comentario = Console.ReadLine();
                             int rating = 0;
                             DateTime today = DateTime.Today;
+                            int numero = ObtenNumeroPost(currentCirculo) + 1;
 
                             string query = "INSERT INTO posts VALUES('" + tituloPost + "', '" + currentPerfil + "','" +
-                                            currentCirculo + "', " + rating + ", '" + comentario + "', '" + today.ToString("yyyy-MM-dd") + "')";
+                                            currentCirculo + "', " + rating + ", '" + comentario + "', '" + today.ToString("yyyy-MM-dd") + "', " + numero  + ")";
                             SQLManager.EjecutarQuery(query);
                             Console.WriteLine("El post ha sido creado con exito");
                             break;
@@ -75,11 +78,47 @@ namespace ProjectoFinal
                             }
                             else
                                 Console.Write("Ese post no existe");
+                            break;
                         }
-                        break;
+                    case 4:
+                        {
+                            Console.Write("Escriba el número del post al que desea subirle el rating: ");
+                            ManejaVotos(1);
+                            break;
+                        }
+                    case 5:
+                        {
+                            Console.Write("Escriba el número del post al que desea subirle el rating: ");
+                            ManejaVotos(-1);
+                            break;
+                        }
                 }
                 Console.ReadLine();
             }
+        }
+
+        private void ManejaVotos(int cantidad)
+        {
+            string query = "UPDATE posts SET rating = rating + " + cantidad + " WHERE circulo_pertenece = " +
+                                        "'" + currentCirculo + "'" + "AND numero = ";
+
+            short opcion;
+            if (short.TryParse(Console.ReadLine(), out opcion))
+            {
+                if (opcion <= ObtenNumeroPost(currentCirculo))
+                {
+                    query += opcion;
+                    SQLManager.EjecutarQuery(query);
+                }
+            }
+            else
+                Console.Write("Ese comentario no existe.");
+        }
+
+        private int ObtenNumeroPost(string nombreCirculo)
+        {
+            DataTable table = SQLManager.ObtenTodosPost(nombreCirculo);
+            return table.Rows.Count;
         }
 
         private void ImprimirNombreTodosPost()
@@ -89,7 +128,7 @@ namespace ProjectoFinal
             Console.ForegroundColor = ConsoleColor.Yellow;
             foreach (DataRow row in table.Rows)
             {
-                Console.WriteLine("Post: {0}, por {1} - {2}", row.ItemArray[0], row.ItemArray[1], row.ItemArray[3]);
+                Console.WriteLine("{0}. Post: {1}, por {2} - {3}", row.ItemArray[6] , row.ItemArray[0], row.ItemArray[1], row.ItemArray[3]);
             }
             Console.ForegroundColor = ConsoleColor.Gray;
         }
