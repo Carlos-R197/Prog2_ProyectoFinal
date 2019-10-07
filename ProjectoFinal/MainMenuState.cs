@@ -114,13 +114,25 @@ namespace ProjectoFinal
                                         appState.ChangeState(new CreatingChatState(currentPerfil));
                                         break;
                                     case 2:
+                                        Console.Clear();
+                                        Console.WriteLine("Chats Existentes");
+                                        Console.WriteLine();
                                         SQLManager.VerChats(currentPerfil);
+                                        Console.WriteLine();
+                                        Console.WriteLine("1. Volver");
                                         Console.WriteLine("Escriba el nombre del Chat al que desea ingresar");
                                         string perfil = Console.ReadLine();
-                                        Perfil perfil2 = new Perfil(perfil,"","",0,0);
-                                        Chat chat = new Chat(currentPerfil,perfil2);
-                                        appState.ChangeState(new ChattingState(chat,perfil));
-                                        break;
+                                        if (perfil == "1")
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            Perfil perfil2 = new Perfil(perfil, "", "", 0, 0);
+                                            Chat chat = new Chat(currentPerfil, perfil2);
+                                            appState.ChangeState(new ChattingState(chat, perfil));
+                                            break;
+                                        }   
                                     case 3:
                                         break;
                                     default:
