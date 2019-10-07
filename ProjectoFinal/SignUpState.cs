@@ -7,14 +7,7 @@ namespace ProjectoFinal
 {
     public class SignUpState : IState
     {
-        private StateMachine appState;
-
-        public SignUpState(StateMachine machine)
-        {
-            this.appState = machine;
-        }
-
-        public void Enter()
+        public void Handle(StateMachine appState)
         {
             while (true)
             {
@@ -36,10 +29,11 @@ namespace ProjectoFinal
                 
                 if (byte.TryParse(Console.ReadLine(), out edad))
                 {
-                    Perfil newPerfil = new Perfil(nombreCompleto, correo, contraseña, edad);
-                    SQLManager.llenartabla(newPerfil.Nombre,newPerfil.Contraseña,newPerfil.Correo,newPerfil.Edad);
+                    Perfil newPerfil = new Perfil(nombreCompleto, correo, contraseña, edad, 0);
+                    string query = "INSERT perfiles_registrados (nombre,contrasena,correo,edad) VALUE ('" + newPerfil.Nombre + "','" + newPerfil.Contraseña + "','" + newPerfil.Correo + "','" + newPerfil.Edad + "')";
+                    SQLManager.EjecutarQuery(query);
                     Console.WriteLine("Usuario registrado");
-                    appState.ChangeState(new InicioState(appState));
+                    appState.ChangeState(new InicioState());
                 }
                 else
                     continue; //Make the user write everything again.

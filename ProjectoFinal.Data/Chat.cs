@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ProjectoFinal.Data
 {
-    class Chat
+    public class Chat
     {
         public Perfil Perfil1 { get; set; }
         public Perfil Perfil2 { get; set; }

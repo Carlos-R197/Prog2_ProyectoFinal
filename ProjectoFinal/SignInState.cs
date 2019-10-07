@@ -10,14 +10,7 @@ namespace ProjectoFinal
 {
     public class SignInState : IState
     {
-        private StateMachine appState;
-
-        public SignInState(StateMachine machine)
-        {
-            this.appState = machine;
-        }
-
-        public void Enter()
+        public void Handle(StateMachine appState)
         {
             Console.Clear();
             Console.Write("Escriba sus nombres y apellidos: ");
@@ -25,20 +18,23 @@ namespace ProjectoFinal
             Console.Write("Escriba su contraseña: ");
             string contraseña = Console.ReadLine(); 
             //Check if the perfil exist in the database y log in if it does.
-            if (SQLManager.comprobar(nombreCompleto,contraseña) == true)
+            if (SQLManager.Comprobar(nombreCompleto,contraseña) == true)
             {
                 SQLManager.AbrirConexion();
-                string Querycorreo = "Select correo from perfiles_registrados where nombre='" + nombreCompleto + "';";
-                string Queryedad = "Select edad from perfiles_registrados where nombre='" + nombreCompleto + "';";
-                MySqlCommand Correocomando = new MySqlCommand(Querycorreo, SQLManager.conexion);
-                MySqlCommand Edadcomando = new MySqlCommand(Queryedad, SQLManager.conexion);
+                string QueryCorreo = "Select correo from perfiles_registrados where nombre='" + nombreCompleto + "';";
+                string QueryEdad = "Select edad from perfiles_registrados where nombre='" + nombreCompleto + "';";
+                string QueryRating = "Select rating from perfiles_registrados where nombre='" + nombreCompleto + "';";
+                MySqlCommand Correocomando = new MySqlCommand(QueryCorreo, SQLManager.conexion);
+                MySqlCommand Edadcomando = new MySqlCommand(QueryEdad, SQLManager.conexion);
+                MySqlCommand Ratingcomando = new MySqlCommand(QueryRating, SQLManager.conexion);
                 string correo = Convert.ToString(Correocomando.ExecuteScalar());
                 string tempedad = Convert.ToString(Edadcomando.ExecuteScalar());
+                int rating = Convert.ToInt32(Ratingcomando.ExecuteScalar());
                 byte edad = byte.Parse(tempedad);
-                Perfil perfil = new Perfil(nombreCompleto,contraseña,correo,edad);
-                appState.ChangeState(new MainMenuState(appState,perfil));
+                Perfil perfil = new Perfil(nombreCompleto,correo,contraseña,edad, rating);
                 SQLManager.CerrarConexion();
-                Console.WriteLine("Usuario Existe");              
+                //Console.WriteLine("Usuario Existe");
+                appState.ChangeState(new MainMenuState(perfil));
             }
             else
             {
