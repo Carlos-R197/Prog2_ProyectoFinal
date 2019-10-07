@@ -7,10 +7,18 @@ namespace ProjectoFinal
 {
     public class MainMenuState : IState
     {
+        private static MainMenuState instance;
+
+        public static MainMenuState Instance
+        {
+            get { return instance; }
+        }
+
         private Perfil currentPerfil;
         public MainMenuState(Perfil perfil)
         {
             this.currentPerfil = perfil;
+            instance = this;
         }
 
         public void Handle(StateMachine appState)

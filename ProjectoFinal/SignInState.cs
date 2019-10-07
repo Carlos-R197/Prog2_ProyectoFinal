@@ -39,10 +39,7 @@ namespace ProjectoFinal
             else
             {
                 Console.WriteLine("Datos Erroneos");
-
             }
-
-            Thread.Sleep(1000);
         }
     }
 }

@@ -100,6 +100,8 @@ namespace ProjectoFinal
                                 }
                             }
                             break;
+                        default:
+                            continue;
                     }
                 }
             }

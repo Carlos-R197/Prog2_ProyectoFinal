@@ -126,7 +126,7 @@ namespace ProjectoFinal
                             break;
                         }
                     case 6:
-                        appState.GoBackToPrevious();
+                        appState.ChangeState(MainMenuState.Instance);
                         break;
                     case 7:
                         {
@@ -140,6 +140,8 @@ namespace ProjectoFinal
                             }
                             break;
                         }
+                    default:
+                        continue;
                 }
             }
         }
