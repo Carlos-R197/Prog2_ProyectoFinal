@@ -51,9 +51,10 @@ namespace ProjectoFinal
                             string comentario = Console.ReadLine();
                             int rating = 0;
                             DateTime today = DateTime.Today;
+                            int numero = ObtenNumeroPost(currentCirculo) + 1;
 
                             string query = "INSERT INTO posts VALUES('" + tituloPost + "', '" + currentPerfil + "','" +
-                                            currentCirculo + "', " + rating + ", '" + comentario + "', '" + today.ToString("yyyy-MM-dd") + "')";
+                                            currentCirculo + "', " + rating + ", '" + comentario + "', '" + today.ToString("yyyy-MM-dd") + "', " + numero + ")";
                             SQLManager.EjecutarQuery(query);
                             Console.WriteLine("El post ha sido creado con exito");
                             Console.ReadLine();
@@ -98,6 +99,18 @@ namespace ProjectoFinal
                             SortPorRating();
                         }
                         break;
+                    case 5:
+                        {
+                            Console.Write("Escriba el número del post al que desea subirle el rating: ");
+                            ManejaVotos(1);
+                            break;
+                        }
+                    case 6:
+                        {
+                            Console.Write("Escriba el número del post al que desea subirle el rating: ");
+                            ManejaVotos(-1);
+                            break;
+                        }
                 }
             }
         }
@@ -128,5 +141,28 @@ namespace ProjectoFinal
             }
             Console.ForegroundColor = ConsoleColor.Gray;
         }
+        private void ManejaVotos(int cantidad)
+        {
+            string query = "UPDATE posts SET rating = rating + " + cantidad + " WHERE circulo_pertenece = " +
+                                        "'" + currentCirculo + "'" + "AND numero = ";
+
+            short opcion;
+            if (short.TryParse(Console.ReadLine(), out opcion))
+            {
+                if (opcion <= ObtenNumeroPost(currentCirculo))
+                {
+                    query += opcion;
+                    SQLManager.EjecutarQuery(query);
+                }
+            }
+            else
+                Console.Write("Ese comentario no existe.");
+        }
+        private int ObtenNumeroPost(string nombreCirculo)
+        {
+            DataTable table = SQLManager.ObtenTodosPost(nombreCirculo);
+            return table.Rows.Count;
+        }
+
     }
 }
