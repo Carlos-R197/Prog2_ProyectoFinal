@@ -32,14 +32,15 @@ namespace ProjectoFinal
                 Console.WriteLine("3. Ver un post existente");
                 Console.WriteLine("4. Subir el rating de un post");
                 Console.WriteLine("5. Bajar el rating de un post");
+                Console.WriteLine("6. Volver");
                 if (organizacion == true)
                 {
-                    Console.WriteLine("6. Ordenar por fecha");
+                    Console.WriteLine("7. Ordenar por fecha");
                     SortPorRating();
                 }
                 else
                 {
-                    Console.WriteLine("6. Ordenar por rating");
+                    Console.WriteLine("7. Ordenar por rating");
                     SortPorFecha();
                 }
                 byte input = byte.Parse(Console.ReadLine());
@@ -125,6 +126,9 @@ namespace ProjectoFinal
                             break;
                         }
                     case 6:
+                        appState.GoBackToPrevious();
+                        break;
+                    case 7:
                         {
                             if (organizacion == true)
                             {

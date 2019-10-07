@@ -23,6 +23,7 @@ namespace ProjectoFinal
                 Console.WriteLine("Rating General: {0} \n", currentPerfil.RatingGeneral);
 
                 Console.WriteLine("¿Qué desea hacer?");
+                Console.WriteLine("0. Cerrar sesión");
                 Console.WriteLine("1. Revisar propio perfil");
                 Console.WriteLine("2. Buscar un perfil existente");
                 Console.WriteLine("3. chat privado");
@@ -44,6 +45,9 @@ namespace ProjectoFinal
                 {
                     switch (input)
                     {
+                        case 0:
+                            appState.GoBackToFirst();
+                            break;
                         case 1:
                             currentPerfil.ImprimirInformacion();
                             Console.WriteLine("Presione (U) para visualizar su lista de amigos");

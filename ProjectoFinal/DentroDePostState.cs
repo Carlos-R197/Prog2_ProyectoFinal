@@ -30,14 +30,15 @@ namespace ProjectoFinal
                 Console.WriteLine("2. Eliminar un comentario dentro del post");
                 Console.WriteLine("3. Subir el rating de un comentario");
                 Console.WriteLine("4. Bajar el rating de un comentario");
+                Console.WriteLine("5. Volver");
                 if (organizacion == true)
                 {
-                    Console.WriteLine("5. Ordenar por fecha");
+                    Console.WriteLine("6. Ordenar por fecha");
                     SortPorRating(postActual);
                 }
                 else
                 {
-                    Console.WriteLine("5. Ordenar por rating");
+                    Console.WriteLine("6. Ordenar por rating");
                     SortPorFecha(postActual);
                 }
                 byte choice;
@@ -85,6 +86,9 @@ namespace ProjectoFinal
                                 break;
                             }
                         case 5:
+                            appState.GoBackToPrevious();    
+                            break;
+                        case 6:
                             {
                                 if (organizacion == true)
                                 {

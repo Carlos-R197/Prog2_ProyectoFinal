@@ -8,10 +8,16 @@ namespace ProjectoFinal
     {
         private IState currentState;
         private IState firstState;
+        private IState previusState;
 
-        public void GoBackToMainMenu()
+        public void GoBackToFirst()
         {
             ChangeState(firstState);
+        }
+
+        public void GoBackToPrevious()
+        {
+            ChangeState(previusState);
         }
 
         public void ChangeState(IState newState)
@@ -19,6 +25,7 @@ namespace ProjectoFinal
             if (currentState == null)
                 firstState = newState;
 
+            previusState = currentState;
             currentState = newState;
             currentState.Handle(this);
         }

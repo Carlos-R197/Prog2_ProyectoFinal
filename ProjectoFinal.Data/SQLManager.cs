@@ -9,7 +9,7 @@ namespace ProjectoFinal.Data
 {
     public static class SQLManager
     {
-        public static MySqlConnection conexion = new MySqlConnection("Server=remotemysql.com; Database= ; Uid=QRqGefDOkx; Pwd=P80kXnXOFM;");
+        public static MySqlConnection conexion = new MySqlConnection("Server=remotemysql.com; Database=QRqGefDOkx; Uid=QRqGefDOkx; Pwd=P80kXnXOFM; port=3306");
         private static string conexionString = "Server=remotemysql.com; Database=QRqGefDOkx; Uid=QRqGefDOkx; Pwd=P80kXnXOFM;";
 
         public static void AbrirConexion()
