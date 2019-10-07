@@ -270,6 +270,22 @@ namespace ProjectoFinal.Data
             return table;
         }
 
+        public static bool  ValidarExistenciaAmigo(string perfil, string amigo)
+        {
+            bool result = false;
+            string query = "select * from lista_amigos where usuario='" + perfil + "' and amigo='" + amigo + "'";
+            AbrirConexion();
+            MySqlCommand cmd = new MySqlCommand(query, conexion);
+            MySqlDataReader dp = cmd.ExecuteReader();
+            if (dp.Read())
+            {
+                result = true;
+            }
+            else
+                result = false;
+            return result;
+        }
+
         public static DataTable ObtenTodosComentarios(string nombrePost)
         {
             DataTable table = new DataTable();

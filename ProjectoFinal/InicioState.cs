@@ -17,6 +17,7 @@ namespace ProjectoFinal
                 Console.WriteLine("1. Ingresar");
                 Console.WriteLine("2. Registrarse");
                 Console.WriteLine("3. Salir de la aplicación");
+                Console.Write("R: ");
                 byte input;
 
                 if (byte.TryParse(Console.ReadLine(), out input))

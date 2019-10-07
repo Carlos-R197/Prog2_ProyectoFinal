@@ -23,6 +23,7 @@ namespace ProjectoFinal
                 SQLManager.ObtenerAmigos(this.person1);
                 Console.WriteLine();
                 Console.WriteLine("Escriba el nombre de los perfiles que desea encontrar: ");
+                Console.Write("R: ");
                 string amigo = Console.ReadLine();
 
                 if (SQLManager.ValidarExistenciaAmigo(person1.Nombre, amigo) == true)

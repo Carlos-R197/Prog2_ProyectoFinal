@@ -15,6 +15,7 @@ namespace ProjectoFinal
         public void Handle(StateMachine appState)
         {
             Console.Write("¿Qué nombre desea para el círculo? ");
+            Console.Write("R: ");
             string nombreCirculo = Console.ReadLine();
 
             //Check if the circle alredy exists, if it doesnt, create it otherwise throw an error.
