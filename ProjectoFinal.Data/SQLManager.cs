@@ -273,7 +273,7 @@ namespace ProjectoFinal.Data
         public static bool  ValidarExistenciaAmigo(string perfil, string amigo)
         {
             bool result = false;
-            string query = "select * from lista_amigos where usuario='" + perfil + "' and amigo='" + amigo + "'";
+            string query = "select * from lista_amigos where usuario='" + perfil + "' and amigo='" + amigo + "' or usuario='" + amigo + "' and amigo='" + perfil + "'";
             AbrirConexion();
             MySqlCommand cmd = new MySqlCommand(query, conexion);
             MySqlDataReader dp = cmd.ExecuteReader();
@@ -450,18 +450,35 @@ namespace ProjectoFinal.Data
 
 
             string query = "select receptor from chat where mensajero='"+mensajero+"'";
+            string query2 = "select mensajero from chat where receptor='" + mensajero + "'";
+
             AbrirConexion();
             MySqlCommand cmd = new MySqlCommand(query, conexion);
+            MySqlCommand cmd2 = new MySqlCommand(query2, conexion);
             DataTable table = new DataTable();
-
+            DataTable table2 = new DataTable();
             MySqlDataAdapter dap = new MySqlDataAdapter(cmd);
+            MySqlDataAdapter dap2 = new MySqlDataAdapter(cmd2);
             dap.Fill(table);
+            dap2.Fill(table2);
             CerrarConexion();
 
             DataView vista = new DataView(table);
             DataTable dt = vista.ToTable(true, "receptor");
 
+            DataView vista2 = new DataView(table2);
+            DataTable dt2 = vista2.ToTable(true, "mensajero");
+
             foreach (DataRow row in dt.Rows)
+            {
+                foreach (var item in row.ItemArray)
+                {
+                    Console.WriteLine("{0}", item);
+
+                }
+            }
+
+            foreach (DataRow row in dt2.Rows)
             {
                 foreach (var item in row.ItemArray)
                 {
