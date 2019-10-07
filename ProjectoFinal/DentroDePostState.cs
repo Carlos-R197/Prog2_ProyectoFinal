@@ -171,8 +171,20 @@ namespace ProjectoFinal
             foreach (DataRow row in table.Rows)
             {
                 Console.WriteLine("Comentario {0}: {1} - {2} opina: {3}", row.ItemArray[5] , row.ItemArray[3], row.ItemArray[0], row.ItemArray[2]);
+
+                ImprimirComentariosDeComentarios(row.ItemArray[2].ToString());
             }
             Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
+        private void ImprimirComentariosDeComentarios(string comentario)
+        {
+            DataTable table = SQLManager.ObtenTodosComentarios(comentario);
+
+            foreach (DataRow row in table.Rows)
+            {
+                Console.WriteLine("             Comentario {0}: {1} - {2} opina: {3}", row.ItemArray[5], row.ItemArray[3], row.ItemArray[0], row.ItemArray[2]);
+            }
         }
 
         public static int  ObtenNumeroComentarios(string nombrePost)

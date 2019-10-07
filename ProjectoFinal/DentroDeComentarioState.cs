@@ -28,7 +28,7 @@ namespace ProjectoFinal
             DateTime today = DateTime.Today;
             int numeroDeComentario = DentroDePostState.ObtenNumeroComentarios(comentarioActual) + 1;
 
-            string query = "INSERT INTO comentarios VALUES('" + perfilActual + "', '" + comentarioActual + "', '" +
+            string query = "INSERT INTO comentarios_comentarios VALUES('" + perfilActual + "', '" + comentarioActual + "', '" +
                 comentario + "', " + rating + ", '" + today.ToString("yyyy-MM-dd") + "', '" + numeroDeComentario + "', '" +  circuloActual + "')";
             SQLManager.EjecutarQuery(query);
             Console.Write("Su comentario fue guardado");
