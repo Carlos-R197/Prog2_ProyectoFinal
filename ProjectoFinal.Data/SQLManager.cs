@@ -270,10 +270,10 @@ namespace ProjectoFinal.Data
             return table;
         }
 
-        public static DataTable ObtenTodosComentarios(string nombrePost)
+        public static DataTable ObtenTodosComentarios(string nombreTabla, string nombrePost)
         {
             DataTable table = new DataTable();
-            string query = "SELECT * FROM comentarios WHERE post_pertenece = " + "'" + nombrePost + "'";
+            string query = "SELECT * FROM " + nombreTabla +  " WHERE post_pertenece = " + "'" + nombrePost + "'";
             using (MySqlConnection conexion = new MySqlConnection(conexionString))
             {
                 conexion.Open();

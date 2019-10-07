@@ -49,112 +49,115 @@ namespace ProjectoFinal
                         Console.WriteLine("\n_________________________________________________\n");
                         SortPorFecha();
                     }
-                    byte input = byte.Parse(Console.ReadLine()); //fix this
+                    byte input;
 
-                    switch (input)
+                    if (byte.TryParse(Console.ReadLine(), out input))
                     {
-                        case 1:
-                            {
-                                Console.Write("¿Cuál sera el título del post? ");
-                                string tituloPost = Console.ReadLine();
-                                Console.Write("¿Qué desea poner como su comentario? ");
-                                string comentario = Console.ReadLine();
-                                Console.Write("¿Cuál sera la edad minima para ver el post? ");
-                                int edad;
-                                if (int.TryParse(Console.ReadLine(), out edad))
+                        switch (input)
+                        {
+                            case 1:
                                 {
-                                    if (edad > 150 || edad < 0)
+                                    Console.Write("¿Cuál sera el título del post? ");
+                                    string tituloPost = Console.ReadLine();
+                                    Console.Write("¿Qué desea poner como su comentario? ");
+                                    string comentario = Console.ReadLine();
+                                    Console.Write("¿Cuál sera la edad minima para ver el post? ");
+                                    int edad;
+                                    if (int.TryParse(Console.ReadLine(), out edad))
                                     {
-                                        Console.Write("Numero demasiado grande o demasiado pequeño.");
+                                        if (edad > 150 || edad < 0)
+                                        {
+                                            Console.Write("Numero demasiado grande o demasiado pequeño.");
+                                            break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Console.Write("Entrada no valida");
                                         break;
                                     }
-                                }
-                                else
-                                {
-                                    Console.Write("Entrada no valida");
+                                    int rating = 0;
+                                    DateTime today = DateTime.Today;
+                                    int numero = ObtenNumeroPost(circuloActual) + 1;
+
+                                    string query = "INSERT INTO posts VALUES('" + tituloPost + "', '" + perfilActual + "','" +
+                                    circuloActual + "', " + rating + ", '" + comentario + "', '" + today.ToString("yyyy-MM-dd") + "', " + numero + ", " + edad + ")";
+                                    SQLManager.EjecutarQuery(query);
+                                    Console.WriteLine("El post ha sido creado con exito");
+                                    Console.ReadLine();
                                     break;
                                 }
-                                int rating = 0;
-                                DateTime today = DateTime.Today;
-                                int numero = ObtenNumeroPost(circuloActual) + 1;
-
-                                string query = "INSERT INTO posts VALUES('" + tituloPost + "', '" + perfilActual + "','" +
-                                circuloActual + "', " + rating + ", '" + comentario + "', '" + today.ToString("yyyy-MM-dd") + "', " + numero + ", " + edad + ")";
-                                SQLManager.EjecutarQuery(query);
-                                Console.WriteLine("El post ha sido creado con exito");
+                            case 2:
+                                {
+                                    Console.Write("¿Cómo se llama el post que desea eliminar? ");
+                                    string nombrePost = Console.ReadLine();
+                                    if (SQLManager.RevisaSiNombreExiste("posts", nombrePost))
+                                    {
+                                        if (SQLManager.RevisaSiPuedesBorrar(nombrePost, this.perfilActual))
+                                        {
+                                            string query = "DELETE FROM posts WHERE nombre = " + "'" + nombrePost + "'";
+                                            string query2 = "DELETE FROM comentarios WHERE post_pertenece = " + "'" + nombrePost + "'";
+                                            SQLManager.EjecutarQuery(query, query2);
+                                            Console.Write("El post fue borrado");
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("No eres el creador de este post");
+                                        }
+                                    }
+                                    else
+                                    { Console.Write("Ese post no existe."); }
+                                    Console.ReadLine();
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    Console.Write("Escriba el nombre del post al que desea entrar: ");
+                                    string nombrePost = Console.ReadLine();
+                                    if (SQLManager.RevisaSiNombreExiste("posts", nombrePost))
+                                    {
+                                        Perfil actualPerfil = SQLManager.ObtenPerfil(perfilActual);
+                                        Post actualPost = SQLManager.ObtenPost(nombrePost);
+                                        if (actualPerfil.Edad >= actualPost.Edad)
+                                            appState.ChangeState(new DentroDePostState(nombrePost, perfilActual, circuloActual));
+                                        else
+                                            Console.Write("Usted no tiene la edad suficiente para entrar a este post");
+                                    }
+                                    else
+                                        Console.Write("Ese post no existe");
+                                }
                                 Console.ReadLine();
                                 break;
-                            }
-                        case 2:
-                            {
-                                Console.Write("¿Cómo se llama el post que desea eliminar? ");
-                                string nombrePost = Console.ReadLine();
-                                if (SQLManager.RevisaSiNombreExiste("posts", nombrePost))
+                            case 4:
                                 {
-                                    if (SQLManager.RevisaSiPuedesBorrar(nombrePost, this.perfilActual))
+                                    Console.Write("Escriba el número del post al que desea subirle el rating: ");
+                                    ManejaVotos(1);
+                                    break;
+                                }
+                            case 5:
+                                {
+                                    Console.Write("Escriba el número del post al que desea bajarle el rating: ");
+                                    ManejaVotos(-1);
+                                    break;
+                                }
+                            case 6:
+                                appState.ChangeState(MainMenuState.Instance);
+                                break;
+                            case 7:
+                                {
+                                    if (organizacion == true)
                                     {
-                                        string query = "DELETE FROM posts WHERE nombre = " + "'" + nombrePost + "'";
-                                        string query2 = "DELETE FROM comentarios WHERE post_pertenece = " + "'" + nombrePost + "'";
-                                        SQLManager.EjecutarQuery(query, query2);
-                                        Console.Write("El post fue borrado");
+                                        SortPorFecha();
                                     }
                                     else
                                     {
-                                        Console.WriteLine("No eres el creador de este post");
+                                        SortPorRating();
                                     }
+                                    break;
                                 }
-                                else
-                                { Console.Write("Ese post no existe."); }
-                                Console.ReadLine();
-                                break;
-                            }
-                        case 3:
-                            {
-                                Console.Write("Escriba el nombre del post al que desea entrar: ");
-                                string nombrePost = Console.ReadLine();
-                                if (SQLManager.RevisaSiNombreExiste("posts", nombrePost))
-                                {
-                                    Perfil actualPerfil = SQLManager.ObtenPerfil(perfilActual);
-                                    Post actualPost = SQLManager.ObtenPost(nombrePost);
-                                    if (actualPerfil.Edad >= actualPost.Edad)
-                                        appState.ChangeState(new DentroDePostState(nombrePost, perfilActual, circuloActual));
-                                    else
-                                        Console.Write("Usted no tiene la edad suficiente para entrar a este post");
-                                }
-                                else
-                                    Console.Write("Ese post no existe");
-                            }
-                            Console.ReadLine();
-                            break;
-                        case 4:
-                            {
-                                Console.Write("Escriba el número del post al que desea subirle el rating: ");
-                                ManejaVotos(1);
-                                break;
-                            }
-                        case 5:
-                            {
-                                Console.Write("Escriba el número del post al que desea bajarle el rating: ");
-                                ManejaVotos(-1);
-                                break;
-                            }
-                        case 6:
-                            appState.ChangeState(MainMenuState.Instance);
-                            break;
-                        case 7:
-                            {
-                                if (organizacion == true)
-                                {
-                                    SortPorFecha();
-                                }
-                                else
-                                {
-                                    SortPorRating();
-                                }
-                                break;
-                            }
-                        default:
-                            continue;
+                            default:
+                                continue;
+                        }
                     }
                 }
             }

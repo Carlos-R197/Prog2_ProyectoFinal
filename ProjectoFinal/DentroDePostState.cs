@@ -23,7 +23,9 @@ namespace ProjectoFinal
             while (true)
             {
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Has entrado al post: {0}", postActual);
+                Console.ForegroundColor = ConsoleColor.Gray;
                 //Imprime todos los comentarios existentes.
                 ImprimirComentarioDeAutor(postActual);
                 //Preguntale al usuario que desea hacer
@@ -149,7 +151,7 @@ namespace ProjectoFinal
         private void SortPorRating(string nombrePost)
         {
             organizacion = true;
-            DataTable table = SQLManager.ObtenTodosComentarios(nombrePost);
+            DataTable table = SQLManager.ObtenTodosComentarios("comentarios", nombrePost);
 
             table.DefaultView.Sort = table.Columns[3].ColumnName + " DESC";
             table = table.DefaultView.ToTable();
@@ -158,7 +160,7 @@ namespace ProjectoFinal
         private void SortPorFecha(string nombrePost)
         {
             organizacion = false;
-            DataTable table = SQLManager.ObtenTodosComentarios(nombrePost);
+            DataTable table = SQLManager.ObtenTodosComentarios("comentarios", nombrePost);
 
             table.DefaultView.Sort = table.Columns[5].ColumnName + " DESC";
             table = table.DefaultView.ToTable();
@@ -179,7 +181,7 @@ namespace ProjectoFinal
 
         private void ImprimirComentariosDeComentarios(string comentario)
         {
-            DataTable table = SQLManager.ObtenTodosComentarios(comentario);
+            DataTable table = SQLManager.ObtenTodosComentarios("comentarios_comentarios", comentario);
 
             foreach (DataRow row in table.Rows)
             {
@@ -189,7 +191,7 @@ namespace ProjectoFinal
 
         public static int  ObtenNumeroComentarios(string nombrePost)
         {
-            DataTable table = SQLManager.ObtenTodosComentarios(nombrePost);
+            DataTable table = SQLManager.ObtenTodosComentarios("comentarios", nombrePost);
             return table.Rows.Count;
         }
     }
