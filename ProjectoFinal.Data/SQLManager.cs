@@ -54,10 +54,12 @@ namespace ProjectoFinal.Data
             dap.Dispose();
             CerrarConexion();
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
             foreach (DataRow row in table.Rows)
             {
                 Console.WriteLine("{0}", row.ItemArray[0]);
             }
+            Console.ResetColor();
         }
         //Imprimira la columna de nombres de una tabla si le pasas el nombre de la tabla
         public static void ImprimirTodosNombre(string nombreTabla) 
@@ -394,12 +396,9 @@ namespace ProjectoFinal.Data
             }
            
             string query = "insert into chat(mensajero,receptor,mensaje) value('" + mensajero + "','" + receptor + "','" + mensaje + "')";
-            string addsmsquery = "update perfiles_registrados set mensaje = "+1+" WHERE nombre=\"" + receptor + "\"";
             AbrirConexion();
             MySqlCommand cmd = new MySqlCommand(query, conexion);
-            MySqlCommand cmd2 = new MySqlCommand(addsmsquery, conexion);
             cmd.ExecuteNonQuery();
-            cmd2.ExecuteNonQuery();
             CerrarConexion();
         }
         
